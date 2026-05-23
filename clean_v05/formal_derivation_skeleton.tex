@@ -1,0 +1,90 @@
+% =====================================================================
+% Formal derivation skeleton of the CSG-KP pipeline
+% First principles -> prediction, with explicit status per step.
+% Status tags: [THM] theorem | [DER|X] derived given X | [POST] postulate
+%              | [CONV] convention/choice | [OPEN] open
+% Every [THM] step is symbolically verified (SymPy/mpmath).
+% This skeleton does NOT close the open postulates; it makes them precise.
+% =====================================================================
+
+\section{Formal derivation skeleton}
+\label{sec:formal}
+
+\paragraph{Objects.}
+$M=S^4$ (unit), $D^4\subset S^4$ the no-boundary hemisphere, $\partial D^4=S^3$
+the equator. $A$ the gauge-fixed Maxwell operator, $Q_4$ the Branson
+$Q$-curvature, $\Lambda_{S^3}$ the Dirichlet-to-Neumann operator,
+$\Phi$ the analytic (Wick) continuation $D^4\to$ present Lorentzian patch
+furnished by the no-boundary axiom A1.
+
+\paragraph{Axioms (inputs, not derived here).}
+\begin{description}[nosep,leftmargin=3.4em]
+\item[A1] No-boundary (Hartle--Hawking) construction supplies $\Phi$.
+\item[A2] Kaloper--Padilla sequestering of the radiative vacuum.
+\item[A3] In the infrared only the massless photon contributes
+          (Komargodski--Schwimmer $a$-theorem).
+\item[B1] The cap-shifted instanton is the relevant saddle.
+\end{description}
+
+\paragraph{Deductive chain.}
+\begin{description}[nosep,leftmargin=3.4em,itemsep=2pt]
+\item[\textnormal{S1} {[THM]}]
+  $\displaystyle \ag=-\tfrac14\,\zeta(0;A;S^4)=\tfrac{31}{180}$,
+  from the heat-kernel coefficient $b_4$ (Gilkey); scalar control
+  $\zeta(0)\!\Rightarrow\!1/360$. \emph{Verified symbolically.}
+\item[\textnormal{S2} {[THM]}]
+  $\displaystyle \CQ=\!\int_{D^4}\! Q_4 = Q_4\,\mathrm{vol}(S^3)\!\int_0^{\pi/2}\!\sin^3\!\theta\,d\theta
+   = 6\cdot 2\pi^2\cdot\tfrac23 = 8\pi^2$ (Chang--Yang). \emph{Verified.}
+\item[\textnormal{S3} {[THM]}]
+  $\displaystyle \rho_E:=\frac{\ag}{\CQ}=\frac{31}{1440\pi^2}\approx 2.181\times10^{-3}$,
+  scale-invariant ($H$, $\Mpl$ cancel). \emph{Verified.}
+\item[\textnormal{S4} {[DER\,$|$\,B1]}]
+  Cap-saddle stationarity $\ag\cos^4\!\delta=\sin\delta$ has the unique root
+  $\delta^*=0.16391>0$; $\delta^*>0\Leftrightarrow\ag>0$, fixing the
+  \emph{open} sign $\Ok>0$. \emph{Root verified.}
+\item[\textnormal{S5} {[DER\,$|$\,A2; conv.\ numeric]}]
+  The sequestering map has a unique fixed point $\Lambda^*$ of
+  $\langle T\rangle_{\mathrm{ren}}=0$ on a closed history; uniqueness by
+  IVT$+$monotonicity ($G'<0$, analytic), convergence by $|G'|<2$ (numeric).
+  $\Lambda^*$ is \emph{universal} ($\varphi_0$-independent) and therefore
+  cannot pin the contingent observable.
+\end{description}
+
+\paragraph{The single non-deductive transition, made precise.}
+\begin{description}[nosep,leftmargin=3.4em]
+\item[\textnormal{A5} {[POST]}]
+  $\Phi_{*}(\rho_E)=\Ok^{\mathrm{obs}}/\OL^{\mathrm{obs}}$.
+  Equivalently: the Wick map $\Phi$ acts as the identity on the
+  scale-free quotient. This decomposes as
+  A5a (the Euclidean half $\rho_E$, $=$ S1--S3, \emph{theorem}),
+  A5b (that $\Phi_*$ preserves the quotient, the \emph{actual jump}),
+  A5c (the reference epoch at which equality is imposed, \emph{convention}).
+  $\Phi$ is not uniquely defined in the field (conformal-factor problem,
+  Gibbons--Hawking--Perry), so A5b is unproven.
+\item[\textnormal{A6} {[POST, previously implicit]}]
+  Persistence: the anomaly geometry dominates the present curvature, i.e.\
+  is not overwritten by intervening dynamics (in standard inflation
+  $\Ok\to0$). Required for S7; should be stated as an axiom, not buried.
+\end{description}
+
+\paragraph{Prediction (given A5, A6).}
+\begin{description}[nosep,leftmargin=3.4em]
+\item[\textnormal{S7} {[DER\,$|$\,A5,A6]}]
+  $\displaystyle \frac{\Ok}{\OL}=\rho_E=\frac{\ag}{8\pi^2}$;
+  with $\OL\simeq0.6889$, $\Ok\simeq1.50\times10^{-3}$ (open).
+  Magnitude (absolute $\Ok$) requires the separate postulate P5 and does
+  \emph{not} enter this scale-free ratio.
+\end{description}
+
+\paragraph{Reading of the skeleton.}
+The chain S1--S5 is deductively closed and symbolically reproducible. The
+entire empirical content passes through exactly one unproven jump, A5b,
+now stated as a sharp question about a single map $\Phi$: \emph{does the
+no-boundary Wick continuation preserve the scale-free anomaly quotient?}
+Deriving A5 is therefore equivalent to constructing $\Phi$ explicitly (e.g.\
+a de~Sitter holographic dictionary) and proving $\Phi_*=\mathrm{id}$ on the
+quotient --- the Strominger--Vafa-type step, here a defined target rather
+than an abstraction. The magnitude (P5) is a logically separate postulate
+entry; A6 (persistence) is a previously implicit assumption surfaced by the
+formalisation. No step of this skeleton closes A5b, P5, or A6; it makes
+their exact location and content explicit.

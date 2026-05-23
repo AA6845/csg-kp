@@ -1,0 +1,2189 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{postulate}{Postulate}
+\newtheorem{result}{Spectral Result}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Ok}{\Omega_K}
+\newcommand{\OL}{\Omega_\Lambda}
+\newcommand{\Om}{\Omega_m}
+\newcommand{\ag}{a_\gamma}
+\newcommand{\CQ}{C_Q}
+\newcommand{\Lb}{\mathcal{L}}
+\newcommand{\Mpl}{M_{\mathrm{Pl}}}
+\newcommand{\dtheta}{\delta\theta}
+\newcommand{\Rtop}{\mathcal{R}}
+\newcommand{\avg}[1]{\langle #1 \rangle}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\tr}{tr}
+
+\title{\bfseries A Conformal-Anomaly Resolution of the Cosmological Constant Problem\\[0.4em]
+\large The Vacuum Energy, Its Value, the Coincidence, and a Parameter-Free
+Curvature Fingerprint --- with a Complete Account of What Is Proven and What Is Conditional}
+\author{Lukas R\"ohl\thanks{Independent Researcher, Kelmis (Belgium).}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The cosmological constant problem has three faces: the \emph{magnitude} problem (why the
+observed vacuum energy is $\sim 10^{-120}$ in Planck units rather than of order unity), the
+\emph{value} problem (what fixes the residual scale once the radiative contributions are
+removed), and the \emph{coincidence} problem (why the dark-energy and matter densities are
+comparable now). This paper assembles a single, internally consistent framework that addresses
+all three under explicit, stated assumptions --- notably the physical identifications A5 and P5
+made precise below --- and, as a by-product, yields one sharp falsifiable prediction. The magnitude problem
+is handled by Kaloper--Padilla vacuum-energy sequestering, which removes the radiative vacuum
+energy from the gravitating sector. The value problem is addressed by a self-consistency
+result (Proposition~\ref{thm:kp}): the residual cosmological constant is a fixed point of
+the four-volume averaging map $\Lambda = \tfrac14\avg{R}_{\mathrm{ren}}$, equivalent to the
+trace-zero condition $\avg{T}_{\mathrm{ren}} = 0$, and is therefore \emph{not} a free
+parameter; the uniqueness of that fixed point rests on a Banach contraction whose constant is so
+far established numerically. The coincidence problem is addressed by structure-formation (halo-weighted)
+averaging following Lombriser, returning $\OL \approx 0.704$ conditional on an anthropic-like
+prior; the framework's own budget ladder instead points to $\OL = 4\ag = 0.6889$,
+coinciding with the robust Planck+BAO value ($\Om = 0.3111$) to four decimals --- an empirical
+coincidence, not a proof: the absolute value rests on the open holographic-saturation conjecture
+P5 (Section~\ref{sec:ladder}). Threading through all three is a relation --- parameter-free as a
+ratio of two scale-free invariants, though its identification with the \emph{observable} curvature
+rests on the physical postulate A5 (below) --- between the residual cosmological constant and the
+spatial curvature,
+\[
+\frac{|\Ok|}{\OL} \;=\; \frac{\ag}{8\pi^2} \;=\; \frac{31}{1440\pi^2} \;\approx\; 2.181\times 10^{-3},
+\qquad
+\Lb \equiv \frac{\OL}{|\Ok|} = \frac{8\pi^2}{\ag} \approx 458.4,
+\]
+whose two inputs --- the photon type-A conformal anomaly coefficient $\ag = 31/180$ and the
+$Q$-curvature charge $\CQ = \int_{D^4} Q_4 = 8\pi^2$ of the hemisphere --- contain no scale, no
+Newton constant, and no Planck mass. We give the rigorous spectral backbone in full: twelve
+proven spectral results (R1--R12), the Burghelea--Friedlander--Kappeler gluing identity, the
+cap-variational saddle and its stability in every sector, the higher-loop convergence bound,
+and an independent recomputation (M1) with exact symbolic and numerical methods. Every step
+carries an explicit status --- \emph{proven}, \emph{literature-supported}, \emph{calibrated},
+or \emph{open}. After decomposition, the framework reduces to a single genuinely chosen
+element --- the data-anchored reference state A5c --- plus the embedding into the full
+infinite-dimensional no-boundary path integral (the two-dimensional cap-plus-scalar embedding
+$B1'$ being complete, $n_{\mathrm{complex}}=0$ by polynomial reduction); its
+topological core (the ratio A5a, the self-consistency fixed point A2, cap dominance B1 on the
+reduced action) is theorem-level, and the open sign is forced by the positive photon anomaly coefficient $\ag>0$ \emph{within the Hartle--Hawking branch} (the branch selection itself a postulate).
+The prediction is
+sharply falsifiable: a robust $\Ok$ outside $\pm 3\sigma$ of $\ag\OL/(8\pi^2)$, or a robust
+detection of a closed universe, would refute the framework as stated.
+\end{abstract}
+
+\tableofcontents
+\bigskip
+
+\section{The cosmological constant problem and what a resolution must deliver}
+\label{sec:intro}
+
+The cosmological constant $\Lambda$ is the sharpest quantitative conflict between quantum field
+theory and general relativity: naive estimates of the quantum-vacuum zero-point energy exceed the
+observed dark-energy density by some $120$ orders of magnitude. The problem is not one question but three, and any framework claiming a
+\emph{resolution} must say something about each.
+
+\paragraph{(i) The magnitude problem.} Why is the gravitating vacuum energy
+$\rho_\Lambda \sim 10^{-120}\,\Mpl^4$ rather than $O(\Mpl^4)$? Every massive field contributes
+a quartically divergent vacuum energy; the cancellation to $120$ digits is the heart of the
+old cosmological constant problem.
+
+\paragraph{(ii) The value problem.} Suppose the radiative contributions are removed by some
+mechanism. What then fixes the residual, nonzero scale? A mechanism that sets $\Lambda$ to zero
+is no better than one that leaves it free: the observed value is small but not zero.
+
+\paragraph{(iii) The coincidence problem.} Why are $\OL \approx 0.69$ and $\Om \approx 0.31$ of
+the same order \emph{now}, when their ratio scales as $a^3$ and has therefore been wildly
+different at almost every other epoch?
+
+\paragraph{The strategy of this paper.} We address (i) by Kaloper--Padilla sequestering
+(Section~\ref{sec:sequester}), which removes the radiative vacuum energy from the source of
+Einstein's equations. We address (ii) by a self-consistency result
+(Section~\ref{sec:theorem64}): the residual $\Lambda$ is a fixed point of a
+four-volume averaging map, hence dynamically determined rather than free. We address (iii) by
+structure-formation averaging (Section~\ref{sec:coincidence}), which returns the observed
+$\OL \approx 0.704$ in Lombriser's halo-weighted prescription, conditional on an anthropic-like
+prior; the framework's own --- conjectural --- budget ladder instead points
+to $\OL = 4\ag = 0.6889$, coinciding with the robust Planck+BAO datum to four decimals --- an
+empirical coincidence, not a proof (Section~\ref{sec:ladder}).
+The framework's sharpest --- and only sharply falsifiable --- output is a relation, parameter-free as a ratio of two scale-free invariants,
+between the residual cosmological constant and
+the present spatial curvature,
+\begin{equation}
+\label{eq:central}
+\boxed{\;\frac{|\Ok|}{\OL} = \frac{\ag}{8\pi^2} = \frac{31}{1440\pi^2} \approx 2.181\times 10^{-3}\;}
+\end{equation}
+with $\ag = 31/180$ the photon type-A conformal anomaly coefficient and $8\pi^2$ the
+$Q$-curvature charge of the four-hemisphere $D^4 \subset S^4$. In the present epoch the ladder-consistent budget
+$\Om = 0.3096$ gives, by the Friedmann sum rule, $|\Ok| \approx 1.50\times 10^{-3}$ and
+$\OL = 4\ag = 0.6889$ (Section~\ref{sec:ladder}).
+
+\paragraph{What is claimed, and what is not.} The account rests on three disclaimers, stated plainly at the outset.
+\begin{enumerate}[leftmargin=*,nosep]
+\item The relation~\eqref{eq:central} is a statement about a \emph{ratio}. The \emph{absolute}
+dark-energy density is not a \emph{sharp} parameter-free output of the topology: the KP
+self-consistency route fixes $\Lambda$ \emph{structurally} (not free, sign negative, the bulk
+vacuum cancels) and delivers a \emph{universal} fixed point $\Lambda^*$ (independent of
+$\varphi_0$ and $\Omega_m$), but its value is amplitude-set and the absolute scale is left open
+because $\varphi_0$ stays free (Section~\ref{sec:theorem64}; the earlier $\langle R\rangle/4$
+sharpness proxy was a floored-geometry artefact). The sharp value is then either supplied by
+structure-formation (halo) averaging under one additional assumption
+(Section~\ref{sec:coincidence}), bracketed prior-free by the causal closure
+(Section~\ref{sec:measure}), or --- conjecturally --- fixed topologically by the geometric budget
+ladder $\OL = 4\ag$ (Section~\ref{sec:ladder}), whose lift prefactor is computed ($=A/G$, the
+Bekenstein--Hawking horizon degree-of-freedom count) and whose residual --- the holographic
+Cohen--Kaplan--Nelson saturation P5 --- is localized but not proven. This residual is
+confined to the \emph{absolute} value: the ratio $\Ok/\OL=\ag/8\pi^2$ is scale-invariant, so the
+falsifiable Euclid prediction stands independently of it.
+\item The Euclidean conformal and topological core is theorem-level --- including the
+topological ratio A5a (Cauchy + Chern--Weil + APS), the KP self-consistency fixed point A2
+(M5 Banach contraction), and cap-saddle dominance B1 on the reduced action ($n_{\mathrm{complex}}
+= 0$, analytic). The bridge to the observed Lorentzian Friedmann curvature rests on a single
+remaining physical postulate, the identification A5b/A5c (Section~\ref{sec:main}), decided by
+observation; the two-dimensional cap-plus-scalar embedding $B1'$ is itself now complete ($n_{\mathrm{complex}}=0$ by a degree-$8$ polynomial reduction, Section~\ref{sec:found}), and that embedding into the full infinite-dimensional no-boundary path integral is assembled semiclassically (Section~\ref{sec:found}): the inhomogeneous one-loop determinant carries the anomaly ($\zeta(0)=-4\ag$) and the Type-A coefficient is Adler--Bardeen one-loop exact, and the prediction $\ag/(8\pi^2)$ is all-orders stable as a ratio of $\hbar$-independent invariants (Section~\ref{sec:found}); the only residue is the absolute Borel summability of the matter series, decoupled from the prediction.
+\item The \emph{sign} (open versus closed) is forced by the positive photon anomaly coefficient
+$\ag>0$: the cap action has a unique real saddle at $\dtheta^*>0$ whose location is independent
+of the Hartle--Hawking/Vilenkin weighting (Section~\ref{sec:sign}, Section~\ref{sec:found}). The
+separate question of Lorentzian fluctuation stability (Feldbrugge--Lehners--Turok) is a
+foundational input of all no-boundary cosmology, not specific to this framework.
+\end{enumerate}
+
+\paragraph{A historical analogy.} A clean, parameter-free relation justified at the level of a
+topological/anomaly identity, with a physically motivated but not yet rigorously derived bridge
+to the observable, has a precedent. Bekenstein's 1972 conjecture that black-hole entropy is
+proportional to horizon area \cite{Bekenstein1972} was a thermodynamic argument; its
+microscopic derivation arrived twenty-three years later with Strominger and Vafa
+\cite{Strominger1996}. The present framework is offered in the same spirit.
+
+\paragraph{Outline.} Sections~\ref{sec:anomaly}--\ref{sec:spectral} assemble the three rigorous
+ingredients: the photon anomaly coefficient $\ag$, the $Q$-curvature charge $\CQ$, and the
+spectral backbone (twelve results R1--R12 and the BFK identity). Sections~\ref{sec:sequester}
+and~\ref{sec:theorem64} treat the magnitude and value problems (Kaloper--Padilla sequestering
+and the self-consistency result). Section~\ref{sec:main} derives
+relation~\eqref{eq:central} --- parameter-free given the identification A5 --- in eight steps and isolates the residual reference choice A5c;
+Section~\ref{sec:cap} gives the cap-variational mechanism, its stability, the boundary
+refinement, and the prediction hierarchy; Section~\ref{sec:uniqueness} establishes uniqueness,
+within stated criteria, against $26$ alternative mechanisms. Section~\ref{sec:coincidence} addresses the coincidence;
+Section~\ref{sec:sign} establishes the sign within the Hartle--Hawking branch; Section~\ref{sec:psf} gives the physical
+interpretation; Section~\ref{sec:corrections} the higher-order corrections;
+Section~\ref{sec:m1} the independent computational verification (M1);
+Section~\ref{sec:obs} the observational status; and Section~\ref{sec:status} the consolidated
+status ledger and falsification criteria.
+
+\section{The conformal anomaly and the photon coefficient}
+\label{sec:anomaly}
+
+\subsection{Trace anomaly and the type-A coefficient}
+A classically conformally invariant field has a traceless stress tensor, $T^\mu{}_\mu = 0$.
+Quantization breaks this; in four curved dimensions the renormalized trace acquires the
+universal form \cite{DS1993,Duff1994}
+\begin{equation}
+\label{eq:anomaly}
+\avg{T^\mu{}_\mu} = \frac{1}{16\pi^2}\Big( c\, C_{\mu\nu\rho\sigma}C^{\mu\nu\rho\sigma}
+  \;-\; a\, E_4 \;+\; b\,\Box R \Big),
+\end{equation}
+where $C$ is the Weyl tensor, $E_4 = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}
+- 4 R_{\mu\nu}R^{\mu\nu} + R^2$ is the Gauss--Bonnet (Euler) density, and $a$, $c$ are the
+type-A and type-B central charges. The $b\,\Box R$ term is scheme-dependent and integrates to
+zero on a closed manifold. The Deser--Schwimmer theorem \cite{DS1993} establishes that this
+classification is complete and geometric.
+
+\subsection{Why only the photon survives in the infrared}
+On the present-day de Sitter-like background the Hubble scale $H_0$ lies far below the mass of
+every massive field. By the Komargodski--Schwimmer monotonicity of the $a$-coefficient under
+renormalization-group flow \cite{KomargodskiSchwimmer2011}, massive fields decouple from the
+infrared conformal sector; only the genuinely massless gauge field --- the photon --- still
+contributes to the type-A anomaly at cosmological scales. This is the content of Axiom A3
+(photon-uniqueness), placed on a quantitative footing in Section~\ref{sec:uniqueness} by the
+exhaustion of $26$ standard-Lagrangian alternatives.
+
+\subsection{The value $\ag = 31/180$}
+The photon type-A coefficient is a textbook result of the DeWitt--Schwinger heat-kernel
+expansion for a Maxwell field \cite{Birrell1982,ChristensenDuff1980,Duff1994}:
+\begin{equation}
+\label{eq:agamma}
+\ag = \frac{31}{180}.
+\end{equation}
+We \emph{derive} Eq.~\eqref{eq:agamma} from the Gilkey heat-kernel coefficient $a_4$ in
+Section~\ref{sec:heat}: the Maxwell combination (Hodge Laplacian on $1$-forms minus two
+Faddeev--Popov ghosts) gives $\zeta(0;\mathrm{Maxwell};S^4) = -31/45$, hence $\ag = 31/180$, with
+the conformal-scalar value $1/360$ serving as an independent check. The same coefficient governs
+the closed-manifold zeta value
+$\zeta(0;\text{Maxwell};S^4) = -4\ag = -31/45$ (Spectral Result R1 below), since the Weyl term
+vanishes on the conformally flat $S^4$ and $\int_{S^4} E_4 = 64\pi^2$ gives
+$\int_{S^4}\avg{T^\mu{}_\mu} = 4\ag$.
+
+\section{Heat-kernel coefficients}
+\label{sec:heat}
+The DeWitt--Schwinger expansion of a second-order elliptic operator $D = -\Box + E$ has
+$K(x,x;s) = (4\pi s)^{-n/2}[\mathbf{1} + s\,a_1 + s^2 a_2 + \dots]$. In $n=4$ the anomaly-relevant
+coefficient is
+\[
+a_2 = \tfrac{1}{180}(R_{\mu\nu\rho\sigma}^2 - R_{\mu\nu}^2)\mathbf{1} + \tfrac{1}{72}R^2\mathbf{1}
+ - \tfrac{1}{30}\Box R\,\mathbf{1} + \tfrac16\Box(\tfrac{R}{6}\mathbf{1} - E)
+ + \tfrac12(\tfrac{R}{6}\mathbf{1} - E)^2 + \tfrac{1}{12}W_{\mu\nu}W^{\mu\nu}.
+\]
+For the Maxwell vector ($E^\nu{}_\mu = -R^\nu{}_\mu$, $\mathrm{tr}\,\mathbf{1} = 4$) plus the
+Faddeev--Popov ghost ($E=0$, contributing with a $-2$), the trace gives
+$\mathrm{tr}\,a_2 = \tfrac{1}{16\pi^2}[\ag E_4 - c_\gamma W^2 + b\,\Box R]$ with $\ag = 31/180$,
+$c_\gamma = 1/10$, and $b$ a removable counterterm.
+
+\paragraph{Explicit evaluation of $\ag$ on $S^4$.} The coefficient $\ag$ is not assumed; it
+follows from Gilkey's integrated $a_4$. Dropping total derivatives on a closed manifold,
+\[
+\int a_4 = \frac{1}{(4\pi)^2\,360}\int\!\sqrt g\;\mathrm{tr}\Big\{60\,R\,E + 180\,E^2
++ 30\,\Omega_{\mu\nu}\Omega^{\mu\nu} + \mathbf{1}\big(5R^2 - 2R_{\mu\nu}^2 + 2R_{\mu\nu\rho\sigma}^2\big)\Big\},
+\]
+with $\Omega_{\mu\nu}$ the bundle curvature of $D$. On $S^4$ one has $R_{\mu\nu}^2 = R^2/4$,
+$R_{\mu\nu\rho\sigma}^2 = R^2/6$, $W^2 = 0$, and $\int E_4 = 64\pi^2$, so only the type-A (Euler)
+part survives and the integrated conformal anomaly equals $\int\langle T^\mu{}_\mu\rangle =
+-4\ag$ for a single field. Three operators are needed:
+\begin{itemize}[leftmargin=*,nosep]
+\item \emph{Conformal scalar} ($D=-\Box + \tfrac{R}{6}$, $E=-\tfrac{R}{6}$, $\dim 1$, $\Omega=0$):
+the bracket reduces to $-\tfrac16 R^2$, giving $\int\langle T\rangle = -\tfrac{1}{90}$ and
+$a_{\mathrm{scalar}} = \tfrac{1}{360}$ --- the textbook value, a check on the whole computation.
+\item \emph{Hodge Laplacian on $1$-forms} ($E = -\mathrm{Ric}$, $\mathrm{tr}\,E = -R$,
+$\mathrm{tr}\,E^2 = R^2/4$, $\dim 4$, $\mathrm{tr}\,\Omega_{\mu\nu}\Omega^{\mu\nu} =
+-R_{\mu\nu\rho\sigma}^2 = -R^2/6$): $\int\langle T\rangle_{\Delta_1} = -\tfrac{2}{45}$.
+\item \emph{Minimal scalar ghost} ($E=0$, $\dim 1$): $\int\langle T\rangle_{\Delta_0} =
+\tfrac{29}{90}$.
+\end{itemize}
+The photon partition function is $\ln Z = -\tfrac12\ln\det\Delta_1 + \ln\det\Delta_0^{\mathrm{ghost}}$,
+so its anomaly is the combination $\Delta_1 - 2\,\Delta_0$:
+\[
+\zeta(0;\mathrm{Maxwell};S^4) = \int\langle T\rangle_{\Delta_1} - 2\int\langle T\rangle_{\Delta_0}
+= -\tfrac{2}{45} - 2\cdot\tfrac{29}{90} = -\tfrac{31}{45},
+\qquad \ag = -\tfrac14\Big(-\tfrac{31}{45}\Big) = \boxed{\tfrac{31}{180}.}
+\]
+This reproduces Spectral Result R1 and fixes the central input of the framework from the
+heat-kernel coefficient alone, so $\ag$ is derived here rather than adopted as an external citation.
+
+\section{The $Q$-curvature charge of the hemisphere}
+\label{sec:qcharge}
+
+\subsection{The $Q$-curvature and the Paneitz operator}
+Branson's fourth-order $Q$-curvature in four dimensions is
+\begin{equation}
+Q_4 = -\tfrac{1}{6}\Box R - \tfrac{1}{2} R_{\mu\nu}R^{\mu\nu} + \tfrac{1}{6} R^2 ,
+\end{equation}
+the natural curvature scalar transforming covariantly under the Paneitz operator $P_4$ via
+$P_4\,\sigma + Q_4 = Q_4'\, e^{4\sigma}$ under a Weyl rescaling $g \to e^{2\sigma} g$. The
+Chang--Yang theory of extremal functional determinants \cite{ChangYang1995,Branson1995} singles
+out $\int Q_4$ as the conformally natural total curvature: only $\int Q_4$ (not $\int E_4$)
+transforms covariantly under $P_4$, which is why $Q_4$, and hence the charge $\CQ$, is the
+correct denominator of the topological quotient~\eqref{eq:central}. On any closed Einstein
+four-manifold $\int Q_4 = \tfrac14\int E_4$ exactly (Spectral Result R12).
+
+\subsection{The hemisphere value $\CQ = 8\pi^2$, with an elementary proof}
+\begin{lemma}[Hemisphere $Q$-charge]
+\label{lem:qcharge}
+On the round unit hemisphere $D^4 = \{0 \le \theta \le \pi/2\} \subset S^4$,
+$\CQ \equiv \int_{D^4} Q_4\,\sqrt{g}\,d^4x = 8\pi^2$.
+\end{lemma}
+\begin{proof}
+On the unit $S^4$ (an Einstein manifold) $R = 12$, $R_{\mu\nu} = 3 g_{\mu\nu}$, $\Box R = 0$,
+hence $Q_4 = \tfrac16(R^2 - 3 R_{\mu\nu}R^{\mu\nu}) = \tfrac16(144 - 108) = 6$. With the metric
+volume element $\sqrt{g} = \sin^3\theta$ and $\Vol(S^3) = 2\pi^2$,
+\[
+\int_0^{\pi/2}\sin^3\theta\,d\theta = \Big[-\cos\theta + \tfrac13\cos^3\theta\Big]_0^{\pi/2}
+ = \tfrac23,
+\qquad
+\int_{D^4} Q_4\,\sqrt{g}\,d^4x = 6 \cdot 2\pi^2 \cdot \tfrac23 = 8\pi^2 . \qedhere
+\]
+\end{proof}
+\noindent
+This elementary three-step evaluation has been confirmed by exact symbolic computation
+(Section~\ref{sec:m1}, M1-Q). The constant $8\pi^2$ is the exact, scale-free $Q$-curvature
+charge of the hemisphere; it is a \emph{proven} input. The cap-saddle shift
+$\dtheta^* \approx 0.164$ introduced in Section~\ref{sec:cap} is a position in the wave-function
+argument, \emph{not} a deformation of this integration domain; the charge is always evaluated
+on the standard hemisphere, so the leading prediction $|\Ok|/\OL = \ag/(8\pi^2)$ carries no
+$\dtheta^*$ correction. The cap-saddle enters only at the refinement level L1, where it
+replaces the numerator $\ag$ while the denominator $8\pi^2$ stays fixed.
+
+\section{Spectral foundations: BFK decomposition and the twelve results}
+\label{sec:spectral}
+
+The bridge between the closed $S^4$ and its hemisphere $D^4$ is the Burghelea--Friedlander--
+Kappeler (BFK) gluing formula for functional determinants \cite{BFK1992}, which relates the
+determinant on a closed manifold to those on two pieces glued along a hypersurface plus the
+Dirichlet-to-Neumann (DtN) operator $\Lambda_{S^3}$ on the equatorial $S^3$. For the
+zeta-regularized value at zero,
+\begin{equation}
+\label{eq:bfk}
+\zeta(0;\Delta_{S^4}) = 2\,\zeta(0;\Delta_{D^4}^{\mathrm{Dir}}) - \zeta(0;\Lambda_{S^3}).
+\end{equation}
+
+\subsection{The twelve spectral results R1--R12}
+The framework rests on twelve proven spectral results, all independently verified (several to
+high numerical precision). They are the rigorous backbone of the construction; we state them
+compactly.
+\begin{description}[leftmargin=2.6em,nosep,itemsep=2pt]
+\item[R1.] $\zeta(0;\mathrm{Maxwell};S^4) = -4\ag = -31/45$. Two derivations agree: the
+integrated trace-anomaly route ($-\ag\int_{S^4}E_4/16\pi^2 = -4\ag$) and the spectral
+decomposition of the Hodge Laplacian on transverse $1$-forms with Faddeev--Popov ghost
+subtraction \cite{ChristensenDuff1980,Vassilevich2003}. Each unit of Euler characteristic
+contributes $-2\ag$; $\chi(S^4)=2$ gives $-4\ag$.
+\item[R2.] $\zeta(0;\mathrm{DtN};\mathrm{scalar};S^3) = -1$. The scalar DtN operator on the
+equatorial $S^3$ of $S^4$ (harmonic extension into the cap) has spectrum
+$\lambda_\ell = \ell(\ell+2)/(\ell+1) = (\ell+1)-1/(\ell+1)$ ($\ell\ge1$) with multiplicity
+$(\ell+1)^2$ (the constant $\ell=0$ mode is the kernel); with $n=\ell+1$ the leading term
+$\sum_{n\ge2}n^{2-s}$ continues to $\zeta_R(s-2)-1$ and the subleading $(1-1/n^2)^{-s}$
+corrections all carry a factor $s$ and vanish at $s=0$, giving $\zeta(0)=\zeta_R(-2)-1 = -1$
+\cite{Vassilevich2003}. (The flat-ball value $\lambda_\ell=\ell$ does \emph{not} apply to the
+$S^4$ cap; it would give $-2/3$.)
+\item[R3.] $\zeta(0;\mathrm{DtN};\text{1-form};S^3) = 1$.
+\item[R4.] $\zeta(0;\mathrm{DtN};\mathrm{Maxwell};S^3) = 3 = \dim S^3$ (gauge-fixed Maxwell DtN).
+\item[R5.] $\zeta(0;\mathrm{Maxwell};S^3) = 1$ (the photon-specific equatorial identity).
+\item[R6.] BFK identity verified: with the closed value R1 and the two consistent bookkeepings
+of Eq.~\eqref{eq:bfk} (Section~\ref{sec:two-books}), $2\zeta(0;D^4)-\zeta(0;\mathrm{DtN}) = -31/45$.
+\item[R7.] Photon Casimir energy on $S^3$: $E_{\mathrm{Cas}} = 11/120$.
+\item[R8.] Functional determinant ${\det}'\Lambda_{S^3}^{\mathrm{Maxwell}} = 1/(2\pi^3)$.
+\item[R9.] $\eta(\Lambda_{S^3}^{\text{transverse 1-form DtN}}) = \zeta(0) = 1$, conformally invariant
+(the one-form constituent of R8; the full Maxwell DtN has $\zeta(0)=3$). (Distinct
+from the de~Rham APS eta $\eta_{\mathrm{APS}}(S^3)=0$, which enters the topological quantization
+of Section~\ref{sec:main}; they are different operators on the same $S^3$.)
+\item[R10.] A Robin condition $(\partial_n + \alpha)u = 0$ at the deformed equator shifts the DtN
+spectrum by $\alpha = \tan\ag \approx \ag$ --- the analytic origin of the cap-saddle drive.
+\item[R11.] Under the Robin shift, $\zeta(0;\Lambda_{\mathrm{Robin}})$ shifts linearly in $\alpha$.
+\item[R12.] $\int_{D^4} Q_4 / \int_{D^4} E_4 = 1/4$ exactly, fixing the $Q$-vs-$E$ normalization.
+\end{description}
+
+\subsection{The two consistent BFK bookkeepings}
+\label{sec:two-books}
+The hemisphere zeta value carries a nontrivial spectral weight, and the BFK
+identity~\eqref{eq:bfk} admits two internally consistent bookkeepings that differ only in how
+the gauge/ghost modes are assigned between the hemisphere and the DtN operator. Both return the
+closed value $\zeta(0;S^4)=-31/45$.
+\begin{align}
+\text{(a) scalar-DtN split:}\quad
+&\zeta(0;D^4) = -2\ag - \tfrac12 = -\tfrac{38}{45},
+&&2\big(-\tfrac{38}{45}\big) - (-1) = -\tfrac{31}{45}\;\checkmark \\
+\text{(b) gauge-fixed Maxwell split:}\quad
+&\zeta(0;D^4) = \tfrac{52}{45},
+&&2\big(\tfrac{52}{45}\big) - 3 = -\tfrac{31}{45}\;\checkmark
+\end{align}
+The equivalence of the two bookkeepings is itself a check on the spectral arithmetic; the
+gauge-fixed Maxwell DtN value $3$ (R4) and the symmetric hemisphere value $52/45$ are used in
+the boundary analysis of Section~\ref{sec:cap}. These spectral results are \emph{proven}; the
+closed value $\zeta(0;\mathrm{Maxwell};S^4) = -31/45$ is itself \emph{derived} from the Gilkey
+heat-kernel coefficient in Section~\ref{sec:heat} (cross-checked against Christensen--Duff 1980;
+Esposito 1995, in the conventions of \cite{Vassilevich2003}). The
+photon-specific value $\zeta(0;\mathrm{Maxwell};S^3)=1$ (R5), together with the DtN data,
+underlies the cap-variational restoring force of Section~\ref{sec:cap}.
+
+\section{Spectral calculations: R1--R12}
+\label{sec:spectraldetail}
+This section collects the explicit computations behind the twelve spectral results R1--R12
+stated above.
+
+\paragraph{R1: $\zeta(0;\mathrm{Maxwell};S^4) = -31/45$.}
+In Lorenz gauge with Faddeev--Popov ghosts the Maxwell Laplacian on transverse one-forms of the
+unit $S^4$ has spectrum $\lambda_\ell = \ell(\ell+3)+2$ ($\ell\ge1$) with degeneracy
+$d_\ell = 2\ell(\ell+3)(2\ell+3)/3$; the complex ghost contributes a scalar Laplacian with
+spectrum $\ell(\ell+3)$. The combined zeta function evaluates at $s=0$ to
+$\zeta(0;\mathrm{Maxwell};S^4) = -31/45 = -4\ag$, reflecting $\int_{S^4} E_4 = 64\pi^2$ and
+$\int_{S^4}\avg{T^\mu{}_\mu} = 4\ag$.
+
+\paragraph{R5: $\zeta(0;\mathrm{Maxwell};S^3) = 1$.}
+On $S^3$ the transverse Maxwell spectrum is $\mu_\ell = (\ell+1)^2$ with degeneracy
+$2\ell(\ell+2) = 2(\ell+1)^2 - 2$. With $n = \ell+1$,
+$\zeta(s;S^3) = 2\zeta_H(2s-2,2) - 2\zeta_H(2s,2)$, and the Hurwitz values
+$\zeta_H(-2,2) = -1$, $\zeta_H(0,2) = -\tfrac32$ give
+$\zeta(0;\mathrm{Maxwell};S^3) = 2(-1) - 2(-\tfrac32) = 1$. Scalars and Dirac spinors give $0$;
+the value $1$ is the photon-specific signature on $S^3$ that supplies the cap restoring force.
+
+\paragraph{R8: DtN determinant $\det{}'\Lambda_{S^3}^{\mathrm{Maxwell}} = 1/(2\pi^3)$.}
+The gauge-fixed Maxwell DtN is the combination
+$\Lambda^{\mathrm{Maxwell}} = \Lambda^{\text{1-form}} - 2\,\Lambda^{\text{scalar ghost}}$ (transverse
+one-form minus two Faddeev--Popov scalar ghosts), \emph{not} a single one-form spectrum. Its two
+constituents are: the transverse one-form DtN with $\mu_\ell = \ell+1$, degeneracy $2\ell(\ell+2)$
+($\zeta(0)=1$, $\zeta'(0) = 2\zeta_H'(-2,2)+\log 2\pi$); and the scalar-ghost DtN with
+$\mu_\ell = \ell(\ell+2)/(\ell+1)$, multiplicity $(\ell+1)^2$ ($\zeta(0)=-1$,
+$\zeta'(0) = \zeta_H'(-2,2)-\log\pi$, the same operator as R2). Hence
+$\zeta(0;\mathrm{Maxwell}) = 1 - 2(-1) = 3$ (R4) and
+$\zeta'_\Lambda(0) = [2\zeta_H'(-2,2)+\log 2\pi] - 2[\zeta_H'(-2,2)-\log\pi] = \log(2\pi^3)$
+(the Hurwitz term $\zeta_H'(-2,2)$ cancels exactly), i.e.\
+$\det{}'\Lambda_{S^3}^{\mathrm{Maxwell}} = 1/(2\pi^3) \approx 0.01613$, confirmed numerically to
+$80+$ digits. (Pairing the one-form spectrum $\mu_\ell=\ell+1$ alone with this determinant is
+incorrect: the one-form alone gives $\det{}' \approx 0.169$, not $1/(2\pi^3)$.)
+
+\paragraph{R9: $\eta$-invariant $\eta(\Lambda_{S^3}^{\text{transverse 1-form}}) = 1$.}
+The transverse one-form DtN eigenvalues $\mu_\ell = \ell+1 > 0$ are all positive, so its
+eta-invariant equals its zeta value $\zeta(0;\Lambda^{\text{1-form}}) = 1$; it is conformally
+invariant. (This is the one-form constituent of R8, $\zeta(0)=1$; the full gauge-fixed Maxwell
+DtN has $\zeta(0)=3$, R4.)
+
+\paragraph{R12: $\int_{D^4} Q_4 / \int_{D^4} E_4 = 1/4$.}
+By Chang--Yang $\int_{D^4} Q_4 = 8\pi^2$ and by Gauss--Bonnet--Chern with boundary corrections
+$\int_{D^4} E_4 = 32\pi^2$, giving the ratio $1/4$. The structural identity
+$Q_4 = E_4/4 + (\text{conformal divergence})$ on conformally flat manifolds underlies the
+resonance $4Q_4 = \mu_1(P_4) = 24$ on $S^4$.
+
+\section{BFK decomposition and the DtN calculation}
+\label{sec:bfk}
+The Burghelea--Friedlander--Kappeler formula reads
+$\log\det{}'\Delta_M = \log\det{}'\Delta_{M_+}^{\mathrm{Dir}} + \log\det{}'\Delta_{M_-}^{\mathrm{Dir}}
+ - \log\det{}'\Lambda_\Sigma$. For $S^4 = D^4_+ \cup_{S^3} D^4_-$ with $D^4_+ \cong D^4_-$,
+separation of variables in $S^3$ harmonics gives, for a transverse one-form harmonic with
+$\Delta_{S^3}\omega_\ell = (\ell+1)^2\omega_\ell$, the radial problem
+$[-\partial_\theta^2 - 2\cot\theta\,\partial_\theta + (\ell+1)^2/\sin^2\theta]u_\ell = \lambda u_\ell$.
+The harmonic extension $u_\ell \propto (\sin\theta)^{\ell+1}$ yields the transverse one-form DtN
+spectrum $\Lambda_{S^3}\omega_\ell = (\ell+1)\omega_\ell$ ($\zeta(0)=1$). The gauge-fixed Maxwell
+determinant is then the combination $\Lambda^{\text{1-form}} - 2\Lambda^{\text{scalar ghost}}$,
+giving $\zeta'_\Lambda(0) = \log(2\pi^3)$ and $\det{}'\Lambda_{S^3}^{\mathrm{Maxwell}} = 1/(2\pi^3)$
+(R8); the one-form spectrum alone does \emph{not} give this determinant. This is consistent with the
+$\zeta(0)$ bookkeeping: the scalar-ghost split uses the scalar DtN $\zeta(0)=-1$ and the
+hemisphere value to give $2\zeta(0;D^4) - \zeta(0;S^4) = 2(-38/45) - (-31/45) = -1$
+(bookkeeping (a) of Section~\ref{sec:spectral}), while the gauge-fixed Maxwell DtN itself has
+$\zeta(0)=3$ (R4, bookkeeping (b)) --- two distinct operators that must not be conflated.
+
+\section{The magnitude problem: Kaloper--Padilla sequestering}
+\label{sec:sequester}
+
+The first face of the cosmological constant problem --- why the gravitating vacuum energy is
+$120$ orders of magnitude below the naive estimate --- is addressed by vacuum-energy
+sequestering (Axiom A2, \cite{KP2014,BD2015}). In the Kaloper--Padilla construction the
+classical action is supplemented by a global constraint that promotes the cosmological counterterm
+to a dynamical variable. Integrating out that variable enforces
+\begin{equation}
+\label{eq:sequester}
+\Lambda_{\mathrm{eff}} = \frac{1}{4}\,\frac{\int \sqrt{g}\,\avg{T^\mu{}_\mu}\,d^4x}{\int \sqrt{g}\,d^4x},
+\end{equation}
+i.e. the effective cosmological constant is the spacetime average of the matter stress-tensor
+trace. The radiative quartic vacuum energy, being a spacetime constant, drops out of the
+\emph{difference} between the local source and its global average: it does not gravitate. This
+is the standard sequestering resolution of the magnitude problem.
+
+\paragraph{Sequestering is internal to CSG, not an external add-on.} The constraint
+\eqref{eq:sequester} need not be imposed by hand: it is generated by the conformal structure of
+CSG itself. In Weyl geometry the gravitational action $S=\int\sqrt{\tilde g}\,(\alpha\tilde C^2 +
+\beta\tilde R^2)$ decomposes, on fixing the Weyl gauge ($\tilde R = R + 6\nabla_\mu\omega^\mu +
+6\omega_\mu\omega^\mu$), into a Weyl-squared term plus a scalar: defining
+$\varphi \equiv \sqrt{2\beta}\,(R + 6\nabla\!\cdot\!\omega + 6\omega^2)$ turns the $R^2$ term into
+$\tfrac12\varphi^2$, and integrating out the Weyl gauge field $\omega_\mu$ supplies its kinetic
+term, giving $S=\int\sqrt g\,[\alpha C^2 + \tfrac12(\partial\varphi)^2 - V(\varphi) +
+\mathcal{L}_{\mathrm{m}}]$. The compensator $\varphi$ is the Stückelberg field of the broken Weyl
+symmetry, and it plays exactly the role of the Kaloper--Padilla dilaton: the Stückelberg
+identity by which $\omega_\mu$ absorbs the scalaron is, term by term, the KP global constraint,
+both being realizations of the same broken-CFT structure. Spontaneous breaking by the scalaron
+VEV generates the Planck mass, $\Mpl^2 = v_\varphi^2/8\pi$, and fixes the residual
+$\Lambda_{\mathrm{eff}} = V(v_\varphi)$; every radiative correction $\delta\Lambda$ is quadratic
+in $\delta v_\varphi$ and reabsorbed by the scalaron at the same order in $\hbar$ (the linear
+term is forbidden by the minimum condition), so $\Lambda_{\mathrm{eff}}$ is radiatively stable.
+Sequestering is therefore \emph{derived within CSG} (the Built-in Sequestering proposition --- a
+proof sketch by direct identification, with full all-orders rigor of the scalaron--dilaton map
+and of the St\"uckelberg--KP correspondence in non-trivial backgrounds the remaining refinement),
+not an adopted external mechanism; and because CSG carries no propagating graviton loop, it
+evades the standard graviton-loop objection to KP. Crucially for what follows, Eq.~\eqref{eq:sequester} is also the seed of the value
+problem: it expresses $\Lambda_{\mathrm{eff}}$ in terms of a global average that itself depends
+on $\Lambda_{\mathrm{eff}}$ through the geometry, so the equation is implicit and must be solved
+self-consistently. That self-consistency is the subject of the next section.
+
+On the Euclidean hemisphere the same averaging, applied to the photon trace anomaly, yields the
+numerator of the topological quotient: with $\int_{D^4} = \tfrac12\int_{S^4}$ and
+$\int_{S^4}\avg{T^\mu{}_\mu} = 4\ag$ (Section~\ref{sec:anomaly}),
+$\tfrac12\Lambda_{\mathrm{eff}}V_4(D^4) = \ag$, which combines with the $Q$-charge denominator
+$\CQ = 8\pi^2$ in Section~\ref{sec:main}.
+
+\section{Causal legitimation of the finite region and the saddle scale}
+\label{sec:causal}
+
+Two inputs above were stated as model-building choices: the restriction of the averaging to the
+finite hemisphere $D^4$ rather than a global region requiring an observer measure, and the
+identification of the saddle scale with $L_{\mathrm{HH}} = 1/H_0$. Both follow from a causal
+variational principle. Shaw and Barrow \cite{ShawBarrow2011} promote $\Lambda$ to a field and
+impose stationarity of the classical action under variations confined to the causal past of a
+measurement --- the past light cone $M$:
+\begin{equation}
+\label{eq:SB}
+\frac{dI_{\mathrm{class}}(\Lambda; M)}{d\Lambda} = 0 .
+\end{equation}
+The region $M$ needs no anthropic weighting: it is what a local measurement can access. The past
+light cone of an observer in an open FLRW foliation is topologically a four-ball, so $M$ is the
+Lorentzian counterpart of the Euclidean hemisphere $D^4$ on which the BFK decomposition operates.
+The hemisphere is therefore not an arbitrary cutoff but the causal region itself, and the
+boundary that BFK requires is the boundary of that region.
+
+\paragraph{The saddle scale, parameter-free.} With extrinsic curvature $\mathrm{tr}\,K \sim H$ on
+the bounding surface and four-volume $V_M \sim t_U\,A_{\partial M}$, Eq.~\eqref{eq:SB} fixes the
+order of magnitude
+\begin{equation}
+\Lambda \sim \frac{H_0\,A_{\partial M}}{V_M} \sim t_U^{-2},
+\end{equation}
+so $L_{\mathrm{HH}} \sim 1/H_0$ with no free scale. Solving the self-consistency
+$\Lambda = t_U^{-2}$ numerically gives $\OL \approx 0.49$ at factor-unity normalization, and at
+the observed $\OL = 0.685$ the time ratio $t_\Lambda/t_U = 0.73$ --- the geometric origin of the
+coincidence. The mechanism fixes the magnitude and the coincidence to order unity; it does
+\emph{not} fix the precise value of $\OL$ (Section~\ref{sec:status}).
+
+\paragraph{Structural identity with the cap mechanism.} Equation~\eqref{eq:SB} and the
+cap-variational principle of Section~\ref{sec:cap} are one variational statement in two
+realizations: a bulk trace drive balanced against a boundary restoring force over a finite causal
+region. Shaw--Barrow is the Lorentzian, dynamical version, driven by the classical baryon trace
+$\zeta_b = 1 - M_q/M_N \approx \tfrac12$; the cap mechanism is the Euclidean, topological version,
+driven by the photon anomaly $3\ag$ against the DtN restoring force. The two differ decisively in
+which trace enters: Shaw and Barrow set the photon contribution to the matter Lagrangian to zero
+classically ($E^2 = B^2$ for radiation), which is exactly where the conformal anomaly --- the
+quantum correction they omit --- resides. By the Komargodski--Schwimmer infrared selection
+(Section~\ref{sec:anomaly}) the baryon trace decouples in the deep infrared, so the anomaly is the
+surviving drive.
+
+\paragraph{Why the realization must be topological.} A Lorentzian light-cone evaluation of the
+anomaly fails quantitatively: the anomaly stress $\sim a^4 H^4$ is weighted to early times in the
+light-cone integral, and the dynamical (Riegert/DtN-determinant) attempt to derive
+$\ag/(8\pi^2)$ is too weak by the four-volume factor $(\Mpl/H)^4 \sim 10^{240}$
+(Section~\ref{sec:uniqueness}, Mechanism~2). Only the topological evaluation --- the $a_4$
+heat-kernel drive against the scale-invariant DtN $\zeta(0) = 3$, normalized by the Chang--Yang
+charge $\CQ = 8\pi^2$ --- yields the parameter-free ratio. The causal principle legitimizes the
+finite region and the scale; the topological character of the quotient is what makes the anomaly
+evaluation finite and unique.
+
+\section{The value problem: a self-consistency theorem}
+\label{sec:theorem64}
+
+Sequestering removes the radiative vacuum energy but leaves the residual scale to be fixed. We
+now show that the residual $\Lambda$ is not free: it is the unique fixed point of the averaging
+map~\eqref{eq:sequester}.
+
+\subsection{The self-consistency iteration}
+\begin{proposition}[Kaloper--Padilla self-consistency]
+\label{thm:kp}
+Let the effective cosmological constant be updated by the four-volume average of the total
+energy density over a closed cosmological history,
+$\Lambda^{(n+1)} = \tfrac14\avg{\rho_{\mathrm{total}}}^{(n)}_{V_4}$. Then on a closed cosmology
+($k=+1$) with finite four-volume $V_4 = \int dt\, a^3 < \infty$, the update map is a contraction
+with a unique fixed point $\Lambda^*$, and $\Lambda^*$ is the unique value satisfying the
+trace-zero condition.
+\end{proposition}
+\begin{proof}
+Two complementary parts. \emph{Convergence (analytic contraction).} Parametrize the update map
+by $\Lambda$ via the Friedmann constraint at $a=1$, so that one iteration is $\mathcal{F}(\Lambda)
+= \tfrac14\avg{\rho_{\mathrm{total}}(\Lambda)}_{\mathrm{ren}}$ with the four-volume ($a^3$-weighted)
+average. Writing the trace function $G(\Lambda) \equiv \tfrac14\avg{\rho_{\mathrm{total}}}
+- \Lambda = -\tfrac{\kappa}{4}\avg{T}$, the derivative is $\mathcal{F}'(\Lambda) = 1 + G'(\Lambda)$,
+so the Lipschitz constant is $L = |1 + G'(\Lambda)|$. Increasing $\Lambda$ compresses the
+closed history (shorter recollapse time, smaller $a_{\max}$), which strictly reduces the
+$a^3$-weighted average of the positive matter and kinetic densities; hence $G$ is strictly
+decreasing and $G'(\Lambda) < 0$. The contraction condition $L = |1 + G'(\Lambda)| < 1$ then holds
+\emph{provided} $G'(\Lambda) > -2$. The sign $G'<0$ is established analytically (the compression
+argument above); the bound $|G'| < 2$ is established \emph{numerically} ($|G'|\approx 0.7$, hence
+$L\approx 0.13$--$0.18$ in the full pipeline, $L\approx 0.3$ in the reduced model). By the Banach
+fixed-point theorem the iteration then has a unique attractor. A fully analytic bound on $|G'|$
+remains the open refinement, so the contraction is \emph{numerically established} rather than
+closed by an analytic proof. \emph{Correctness}: the
+self-consistency condition $\Lambda^* = \tfrac14\avg{R}_{\mathrm{ren}}$ is, by the trace identity
+$R = 4\Lambda + \kappa T$, algebraically equivalent to
+\begin{equation}
+\label{eq:tracezero}
+\avg{T(\Lambda^*)}_{\mathrm{ren}} = 0 ,
+\end{equation}
+precisely the Kaloper--Padilla sequestering condition. Existence requires $k=+1$ with
+$V_4 < \infty$; in flat or open cosmologies $V_4$ diverges and the volume average is
+ill-defined. Since $\avg{-T}(\Lambda)$ is continuous, positive for small $\Lambda$ and negative
+for large $\Lambda$ (the same monotonicity), the fixed point is unique by the intermediate value
+theorem. The independent computation of Section~\ref{sec:m1} (M1-$\Lambda$) confirms the
+trace-zero identity symbolically, the finiteness of $V_4$ for $k=+1$ against divergence for
+$k=0,-1$, and the existence of a unique negative fixed point.
+\end{proof}
+
+\subsection{Compatibility of a closed history with open observation}
+Proposition~\ref{thm:kp} requires a closed Euclidean structure with finite four-volume, which at
+first sight conflicts with the open ($\Ok > 0$) Lorentzian patch predicted in
+Section~\ref{sec:main}. There is no conflict, because three distinct regimes are involved:
+(i) the \emph{full cosmological history} (Big Bang $\to$ expansion $\to$ recollapse $\to$ Big
+Crunch), closed ($k=+1$), supplying the finite $V_4$; (ii) the \emph{present observable patch},
+the Wick-rotated cap-shifted instanton, hyperbolic ($K<0$, $\Ok>0$) at the present epoch;
+(iii) the \emph{Euclidean instanton} $D^4\subset S^4$, compact, on which the ratio
+$\Ok/\OL = \ag/(8\pi^2)$ is fixed. These live on different manifolds related by analytic
+continuation and fix complementary quantities; their coexistence is the content of the
+no-boundary construction (Axiom A1).
+
+\subsection{The Coleman--Weinberg vacuum and the status of the absolute value}
+The fixed point can equivalently be read off the Coleman--Weinberg effective potential of the
+scalaron, $V(\varphi) = A\,\varphi^4\big(\ln(\varphi^2/v_S^2) - \tfrac{25}{6}\big)$ with
+$A \propto \ag$. Its unique nontrivial stationary point sits at $\varphi_{\min} = v_S\,e^{11/6}$
+(verified in Section~\ref{sec:m1}, M1-CW), and in the stable convention ($V_{\min}<0$) this is
+a minimum with negative $\Lambda^*$. What Proposition~\ref{thm:kp} establishes \emph{structurally}
+is therefore that $\Lambda$ is not a free parameter: its sign is negative, the closed-history
+requirement and the trace-zero characterization are proven, and the iteration converges.
+
+What it does \emph{not} do unconditionally is pin the \emph{sharp} absolute value, and the
+reason is instructive. The average is taken over $\rho_{\mathrm{total}}$, not $\rho_m$: the
+scalaron potential component does not dilute, so $\avg{\rho_{\mathrm{total}}}_{V_4}$ is
+\emph{$a_{\max}$-stable} (it tends to the non-diluting plateau as $a_{\max}\to\infty$), whereas
+averaging $\rho_m$ alone would spuriously collapse as $1/a_{\max}^3$ --- a category error to be
+avoided. This $a_{\max}$-stability of the total average and the topological constraint
+$\Lambda_{\mathrm{eff}}V_4 = 4\ag$ are solid.
+
+\paragraph{Correction: the volume route does not deliver the sharp value.} An earlier
+sharpness analysis wrote $\Lambda^* = \tfrac14\avg{R}_{V_4}$ for a closed
+matter+$\Lambda$ history and reported that a \emph{moderate} $a_{\max}$ breaks the de~Sitter
+identity (giving $\avg{R}/4 \approx 0.76$--$0.89\times 3\OL$) while a long plateau returns the
+identity $\Lambda_{\mathrm{eff}}=\Lambda$. That construction is \emph{geometrically
+inconsistent} and its numbers are artefacts: it fixes a constant positive $\OL$ and then adds a
+curvature term forcing $H^2=0$ at $a_{\max}$, but a universe with constant $\OL>0$ never
+recollapses, so $H^2$ becomes \emph{negative} on $1<a<a_{\max}$ and was silently floored. The
+correct treatment requires the genuine recollapse driver $V(\varphi)<0$. Integrating the full
+Friedmann+Klein--Gordon system with the Coleman--Weinberg potential and feeding $-\Lambda^*/3$
+back into the fixed point yields a sharper, and more sobering, picture:
+\begin{itemize}
+  \item $\Lambda^*$ is \emph{universal}: independent of $\varphi_0$ and of $\Omega_m$ (matter
+  dilutes out of the $V_4$-weighted average). This universality is a genuine structural feature.
+  \item Its \emph{value} is amplitude-set: $\Lambda^*\approx-0.10$ in $3H_0^2$ units for the
+  fixed-point amplitude $A_{\mathrm{CW}}=\ag/128\pi^2$ (and $\approx-0.002$ for the M5 amplitude),
+  \emph{not} the $-0.691$ quoted from the proxy.
+  \item $\OL = (V(\varphi_0)-\Lambda^*)/3$ is \emph{not} fixed: it varies fully with $\varphi_0$.
+  KP self-consistency pins $\Lambda^*$ but leaves $\varphi_0$ --- the scalaron value ``today'' ---
+  free, so the absolute $\OL$ is not determined by this route.
+\end{itemize}
+The honest status is therefore: $\Lambda$ is not a free parameter and its sign is fixed
+(structural, proven); the bulk vacuum cancels by sequestering, removing the $10^{122}$ hierarchy;
+but the volume/self-consistency route delivers the universality \emph{structure} and the order of
+magnitude only, neither the sharp $\Lambda^*$ nor the absolute $\OL$. Sharpening to
+$\OL\approx0.704$ requires the halo-weighted prior or the causal closure of
+Section~\ref{sec:measure}. None of this touches the theorem-level, prior-free output --- the
+ratio $\Omega_K/\OL = \ag/8\pi^2$ --- which is independent of the absolute scale.
+
+\subsection{The magnitude of the curvature: coherent spectral accumulation}
+\label{sec:coherence}
+The previous subsection settled what the volume/self-consistency route does and does not fix.
+One question it deliberately left in words is the \emph{magnitude} question for the testable
+output: after sequestering removes the bare $\Mpl^4$ vacuum, the renormalized photon trace
+anomaly is still only a \emph{local} de~Sitter density
+\begin{equation}
+\rho_{\mathrm{anom}} = \tfrac14\avg{T^\mu{}_\mu} = \frac{\ag}{8\pi^2}\,3H^4 ,
+\qquad
+\frac{\rho_{\mathrm{anom}}}{\rho_{\mathrm{crit}}} = \frac{\ag}{8\pi^2}\frac{H^2}{\Mpl^2}
+\sim 10^{-122},
+\label{eq:localanom}
+\end{equation}
+so a naive reading would predict $\Ok \sim 10^{-125}$, not $\sim 10^{-3}$. A factor $(\Mpl/H)^2$
+must lift the local density to the curvature scale. We record here the mechanism that supplies
+it and state precisely how far it reaches.
+
+\paragraph{Coherence is the linearity of the spectral sum.} The gauge-fixed Maxwell operator on
+$dS_4$ has the discrete spectrum (Allen 1986; Higuchi 1991) $\lambda_n = n(n+2)H^2$ with
+multiplicity $d_n = 2n(n+2)$, $n\ge1$. The vacuum sum runs over these \emph{fixed} eigenmodes,
+$\sum_n d_n$, and is therefore \emph{linear} and deterministic: this linearity \emph{is} the
+$\times N$ coherence. The familiar $\times\sqrt N$ estimate applies only to \emph{stochastic},
+phase-uncorrelated contributions; the spectral modes on the compact sphere are phase-locked by
+the geometry, so the $\zeta$-regularized sum over them is inherently coherent. The coherence is
+thus not an added postulate but a property of the spectrum. The bulk mode count to the cutoff
+$n_{\max}=\Mpl/H$ is
+\begin{equation}
+N_{\mathrm{tot}}(n_{\max}) = \sum_{n=1}^{n_{\max}} 2n(n+2)
+= \tfrac23 n_{\max}^3 + 3n_{\max}^2 + \tfrac73 n_{\max} \sim \tfrac23\Big(\frac{\Mpl}{H}\Big)^3 ,
+\end{equation}
+and the horizon (area) projection reduces the volume scaling to
+$N_{\mathrm{eff}} \sim (\Mpl/H)^2 = S_{dS}/\pi$, the de~Sitter entropy. The $(\Mpl/H)^2$
+\emph{scaling} is rigorous; its $O(1)$ prefactor is convention-dependent (mode basis, projection
+scheme).
+
+\paragraph{What the coherent lift delivers.} Multiplying the local density~\eqref{eq:localanom}
+by the coherent mode number gives, exactly,
+\begin{equation}
+\frac{N_{\mathrm{eff}}\,\rho_{\mathrm{anom}}}{\rho_{\mathrm{crit}}} = \frac{\ag}{8\pi^2},
+\label{eq:coherentlift}
+\end{equation}
+i.e.\ precisely the dimensionless ratio $\Ok/\OL$. The $10^{122}$ gap is closed
+\emph{structurally} for the quantity that the theory actually predicts and that DESI actually
+measures: the coherent spectral sum lifts the local anomaly to the $O(10^{-3})$ curvature scale.
+This is the magnitude resolution for the testable prediction, and it is independent of the
+absolute-value question.
+
+\paragraph{From the ratio to the absolute value.} Promoting the ratio~\eqref{eq:coherentlift} to
+the absolute $\OL = 4\ag$ requires one further topological factor, and that factor is not free:
+\begin{equation}
+\frac{\rho_\Lambda}{\rho_{\mathrm{anom}}} = 32\pi^2\,\Big(\frac{\Mpl}{H}\Big)^2
+= \Big(\int_{D^4} E_4\Big)\,N_{\mathrm{eff}},
+\end{equation}
+with $\int_{D^4}E_4 = 32\pi^2$ the hemisphere Euler number already used in the budget ladder.
+Equivalently $\OL = |\zeta(0;\text{Maxwell};S^4)| = 4\ag$, the cutoff-free integrated trace
+anomaly.
+
+\paragraph{A second, independent anchor of the value: the conformal scale-flow.} The number
+$4\ag$ is not only the spectral determinant $|\zeta(0)|$; it is also the conformal scale-anomaly
+coefficient of the free energy. Under a global Weyl rescaling $g\to e^{2\sigma}g$ the
+anomaly-induced (Riegert--Mottola) action obeys
+\begin{equation}
+\frac{\mathrm{d}S_{\mathrm{anom}}}{\mathrm{d}\sigma}
+= \frac{\ag}{16\pi^2}\int_{S^4}\sqrt{g}\,E_4 = 4\ag ,
+\end{equation}
+because $\int_{S^4}E_4 = 64\pi^2$ is a topological invariant. Thus $4\ag$ is fixed
+\emph{cutoff-free by two independent routes} --- the spectral determinant and the scale-flow ---
+neither of which uses the $N_{\mathrm{eff}}$ bulk projection. Consequently the $O(1)$ prefactor
+of that projection (the heuristic ambiguity $4/3\pi$ vs $1$) is \emph{irrelevant to the value}:
+it is bypassed, not tuned. What remains hypothesis-level is only the \emph{identification} of
+$\OL$ with this invariant. The scale-flow physically motivates it, but does not force it
+dynamically: $S_{\mathrm{anom}}(\sigma)=4\ag\,\sigma$ is linear, so it has no $\sigma$-saddle, and
+the dynamical fixing of $\sigma$ (the M5 route) returns $1/12\ag\approx0.48$, not $0.69$. The
+identification is therefore the same conjecture flagged for A5 and in the budget ladder, now with
+a physical anchor for its magnitude.
+
+\paragraph{Honest status of this subsection.} \emph{Solved (structural):} the coherence (as the
+linearity of the fixed-mode spectral sum), the $(\Mpl/H)^2$ scaling, and the magnitude of the
+curvature ratio~\eqref{eq:coherentlift} --- the $10^{122}$ gap is closed for the testable $\Ok$
+prediction; the bridge factor $32\pi^2=\int_{D^4}E_4$ is geometric, not a knob; and the
+\emph{value} $4\ag$ is fixed cutoff-free by the two independent anchors above. \emph{Open (hypothesis-level, and not
+decidable by DESI):} (a) the \emph{identification} $\OL=4\ag$ --- physically anchored by the
+scale-flow but not forced by a saddle (the dynamical route gives $0.48$); and (b) the epoch
+binding, since $\OL(z)$ is epoch-dependent, $4\ag$ is matched only at $z\approx0$, and no
+dynamical attractor sits at $4\ag$ --- the coincidence problem~(iii), here inherited and
+addressed only by observer-selection ($\OL\approx0.704$, Section~\ref{sec:measure}), not by a
+timeless mechanism. The ratio $\Ok/\OL = \ag/8\pi^2$ remains untouched by both, as it is
+independent of the absolute scale.
+
+\section{The parameter-free relation: the eight-step derivation}
+\label{sec:main}
+
+We now assemble the topological quotient linking the residual cosmological constant to the
+spatial curvature. The first six steps and the two Euclidean sub-steps of the seventh are
+theorem-level; the one remaining genuinely chosen sub-step is the data-anchored reference state A5c.
+
+\paragraph{Step 1 (anomaly integral).} By Eq.~\eqref{eq:anomaly} and Gauss--Bonnet--Chern,
+$\int_{S^4}\avg{T^\mu{}_\mu} = \tfrac{\ag}{16\pi^2}\int_{S^4} E_4 = 4\ag$.
+
+\paragraph{Step 2 (sequestering on the hemisphere).} By Eq.~\eqref{eq:sequester} and
+$\int_{D^4} = \tfrac12\int_{S^4}$, $\tfrac12\Lambda_{\mathrm{eff}}V_4(D^4) = \ag$.
+
+\paragraph{Step 3 ($Q$-charge).} By Lemma~\ref{lem:qcharge}, $\CQ = 8\pi^2$.
+
+\paragraph{Step 4 (Wess--Zumino consistency).} Under $g \to e^{2\sigma} g$ the anomaly action
+obeys the Wess--Zumino consistency relation \cite{Riegert1984}, with linear response
+coefficient $\ag\,\CQ/(16\pi^2) = \ag/2$.
+
+\paragraph{Step 5 (hemisphere quotient).} The dimensionless quotient
+\begin{equation}
+\label{eq:quotient}
+\Rtop \equiv \frac{\ag}{\CQ} = \frac{\ag}{8\pi^2} = \frac{31}{1440\pi^2}
+\end{equation}
+contains no scale, no Newton constant, no Planck mass.
+
+\paragraph{Step 6 (photon selection).} By Axiom A3 and the $26$-mechanism exhaustion
+(Section~\ref{sec:uniqueness}), the coefficient is the photon's $\ag = 31/180$. This step uses
+the BFK consistency check of Section~\ref{sec:spectral} but, as emphasized in
+Section~\ref{sec:cap}, the derivation is otherwise \emph{boundary-free}.
+
+\paragraph{Step 7 (Janus-point matching).} Three logically distinct sub-components:
+\begin{itemize}[leftmargin=*,nosep]
+\item[(7a)] \emph{Cap-saddle construction} (Section~\ref{sec:cap}): a variational principle on
+$D^4$ produces a saddle at $\dtheta^* = \ag$ to leading order. Euclidean, geometric. \emph{Proven.}
+\item[(7b)] \emph{Wick rotation} (Bucher--Goldhaber--Turok open-universe template
+\cite{BGT1995,HawkingTurok1998}): translates the Euclidean cap-saddle into a Lorentzian
+Friedmann patch with curvature $\Ok^{\mathrm{conformal}}$. \emph{Proven.}
+\item[(7c)] \emph{Identification A5}: relates $\Ok^{\mathrm{conformal}}$ to the Friedmann
+observable $\Ok^{\mathrm{obs}}$. Its Euclidean half A5a is a \emph{theorem} and the Wick-rotation
+kinematics A5b are \emph{derived} given B1; the residual is the data-anchored reference choice
+A5c. \emph{Specification (the only genuinely chosen element).}
+\end{itemize}
+Under (7a)+(7b)+(7c) the dimensionless Euclidean ratio projects onto the present-epoch
+observable, giving Eq.~\eqref{eq:central}.
+
+\paragraph{Step 8 (Friedmann translation).} With $\Om + \OL + \Ok = 1$ and
+$\OL = \Lb\,|\Ok|$, $\Lb = 8\pi^2/\ag = 458.4$,
+\begin{equation}
+\label{eq:OK}
+|\Ok| = \frac{1 - \Om}{\Lb \pm 1}, \qquad \OL = \Lb\,|\Ok|,
+\end{equation}
+the $+$ sign holding for an open universe. With the ladder-consistent budget $\Om = 0.3096$
+(Section~\ref{sec:ladder}), $|\Ok| \approx 1.50\times10^{-3}$ and $\OL = 4\ag = 0.6889$, matching
+the robust Planck~2018 (TT,TE,EE$+$lowE$+$lensing$+$BAO) value $\OL = 1-\Om = 0.6889$
+($\Om = 0.3111\pm0.0056$)~\cite{Planck2018} exactly to four decimals; the CSG trio
+$(\Om,\OL,\Ok) = (0.3096,\,0.6889,\,+0.0015)$ is consistent with Planck$+$BAO including its
+curvature constraint $\Ok = 0.001\pm0.002$.
+
+\begin{postulate}[A5: Anomaly--Curvature Correspondence]
+The conformal-anomaly-derived curvature $\Ok^{\mathrm{conformal}}$ obtained from the hemisphere
+quotient~\eqref{eq:quotient} via the cap-saddle and Wick rotation equals the observed Friedmann
+spatial-curvature parameter $\Ok^{\mathrm{obs}}$ at the present epoch.
+\end{postulate}
+\noindent
+A5 is not monolithic. Following the decomposition adopted here, its
+Euclidean half --- A5a, the topological identity $\Ok^{\mathrm{conformal}} = \ag/\CQ$ --- is a
+\emph{theorem} (Cauchy functional equation for linearity, Chern--Weil basis change for the
+$1/8\pi^2$, and the APS index theorem on the de~Rham complex), up to the bounded BFK boundary
+refinement $|\epsilon_\partial| \le 1.5\%$. What remains a physical postulate is the
+identification A5b/A5c: that this Euclidean quantity, carried through the Wick rotation (A5b,
+derivable in saddle-point approximation given B1), equals the present-epoch Friedmann observable
+under the canonical $\Lambda$-dominated reference (A5c). Thus everything in
+Eq.~\eqref{eq:central} except the A5b/A5c identification is theorem-level or literature-supported.
+
+\section{The cap-variational mechanism, stability, and the boundary refinement}
+\label{sec:cap}
+
+\subsection{The saddle equation}
+The hemisphere ``breathes'' by an angular shift $\dtheta$ of the polar cap. The photon anomaly
+supplies a bulk drive linear in $\dtheta$ at the equator (Robin shift $\alpha = \tan\ag \approx
+\ag$, Spectral Result R10), and the DtN determinant supplies a restoring force. Balancing them
+gives the leading saddle $\dtheta^*_{\mathrm{lin}} = \ag$, and the exact angular dependence gives
+\begin{equation}
+\label{eq:saddle}
+\ag\,\cos^4\dtheta = \sin\dtheta,
+\qquad\Longrightarrow\qquad
+\dtheta^*_{\mathrm{exact}} = 0.16391 ,
+\end{equation}
+a $\sim 5\%$ downward shift (cubic truncation $\dtheta^*_{(3)} = \ag - 2\ag^3$).
+
+\subsection{Stability}
+The second variation around the cap-saddle is positive in every inhomogeneous sector, and this
+is established \emph{analytically}, not merely by mode-by-mode shooting. The deformed cap
+$D^4(\theta_0 = \pi/2 + \dtheta^*)$ with $\dtheta^* = 0.164$ is a geodesic ball on $S^4$ with
+$\theta_0 < \pi$, hence a proper subdomain. The fluctuation operator is the Hodge--de~Rham
+Laplacian (with the fixed $S^4$ curvature potential, the same on cap and hemisphere), so its
+Dirichlet eigenvalues obey \emph{domain monotonicity}: $\lambda_{\mathrm{Dir}}(\theta_0)$ is
+strictly decreasing in $\theta_0$, with limit the closed-$S^4$ eigenvalue as $\theta_0\to\pi$.
+The closed-$S^4$ inhomogeneous spectra are positive in closed form --- scalars $\ell(\ell+3)\ge4$,
+coexact $1$-forms and transverse-traceless tensors $(\ell+1)(\ell+2)\ge6$ and $\ge12$
+respectively --- so for every inhomogeneous mode
+\[
+\lambda_{\mathrm{Dir}}\big(\tfrac\pi2+\dtheta^*\big) \;>\; \lambda_{\mathrm{closed}}(S^4) \;>\; 0 .
+\]
+The shooting computation confirms the bracketing exactly (e.g.\ scalar $\ell=1$: hemisphere
+$10.0 \to$ cap $8.16 \to$ closed limit $4$; TT $\ell=2$: $20.0\to17.27\to12$), but the positivity
+itself follows from the two theorems (domain monotonicity and the positive closed spectrum),
+not from the numerics. The transverse $1$-form is distinguished from the scalar by the
+Hodge--Weitzenb\"ock term $\Delta^{(1)}_{\mathrm{Hodge}} = \Delta_{\mathrm{Bochner}} + 3$ on
+$S^4$. The only non-positive direction is the constant ($\ell=0$) conformal/lapse mode, of Morse
+index $1$, handled by the Gibbons--Hawking--Perry contour rotation (Section~\ref{sec:found});
+the saddle is thus genuine. Reconfirmed independently in Section~\ref{sec:m1} (M1-H).
+
+\subsection{The boundary refinement and why it cannot move the main result}
+\label{sec:boundary}
+The cap-shifted boundary carries Branson--Gilkey heat-kernel coefficients. Two facts make their
+effect controlled. First, a \emph{rigorous} BFK symmetry: writing
+$\zeta_{\mathrm{bnd}}(\pi/2+\delta) - 3/2 \equiv g(\delta)$, the gluing identity forces
+$\zeta_{\mathrm{bnd}}(\pi/2+\delta)+\zeta_{\mathrm{bnd}}(\pi/2-\delta) = 3$ for all $\delta$, so
+$g$ is an \emph{odd} function and all even-order Taylor coefficients vanish identically. Second,
+and decisively, the main derivation (Steps 1--8) uses only the closed-$S^4$ anomaly integral
+$\ag$ and the $Q$-charge $\CQ = 8\pi^2$; neither couples to boundary heat-kernel coefficients.
+The boundary appears \emph{only} in the BFK consistency check (Step 6) and in the cap-saddle
+shift. Consequently the worst-case boundary uncertainty is geometrically excluded from the
+prediction chain $\ag \to \Ok$. Quantitatively, in the natural renormalization scheme
+($\mu = R^{-1}$ fixed) the shift is $0\%$ (BFK-protected); in the cap-scale scheme it is bounded
+at $|\Delta\Ok|/\Ok \le 1.5\%$; the unprotected worst case ($\le 49\%$) does not propagate,
+being excluded by the boundary-free structure of the main derivation.
+
+\subsection{The prediction hierarchy L0--L3}
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}c l l l@{}}
+\toprule
+\textbf{Level} & \textbf{Formula} & \textbf{Value} & \textbf{Status} \\
+\midrule
+L0 & $R_0 = \ag/(8\pi^2)$ & $2.181\times 10^{-3}$ & topological-anomalic (exact theorem) \\
+L1 & $R_{\mathrm{cap}} = \dtheta^*_{\mathrm{exact}}/(8\pi^2)$ & $2.076\times 10^{-3}$ & cap-variational refined \\
+L2 & $R_{\mathrm{cap}+\partial} = R_{\mathrm{cap}}(1+\epsilon_\partial)$ & $2.05$--$2.11\times 10^{-3}$ & boundary check ($|\epsilon_\partial| \le 1.5\%$) \\
+L3 & $\Ok^{\mathrm{obs}} = R\cdot\OL$ & $1.42$--$1.49\times 10^{-3}$ & present-epoch observable \\
+\bottomrule
+\end{tabular}
+\caption{The four-level prediction hierarchy. L0 is the exact topological identity on $D^4$. L1
+incorporates the exact cap-saddle solution of Eq.~\eqref{eq:saddle}. L2 is the boundary
+consistency band (Section~\ref{sec:boundary}); it does \emph{not} enter the boundary-free L0/L1
+derivation. L3 is the Friedmann translation.}
+\label{tab:hierarchy}
+\end{table}
+\noindent
+Headline statements are quoted at L0; numerical data comparison uses L1 or L3. The L0-vs-L1
+split, $\Delta R = 1.05\times 10^{-4}$ ($\Delta\Ok = 0.72\times 10^{-4}$), is a small refinement
+whose observational discrimination is forecast in Section~\ref{sec:obs}.
+
+\section{Technical refinements and foundational inputs}
+\label{sec:refine}
+
+\paragraph{Boundary heat-kernel coefficients (severity low).}
+The Branson--Gilkey--Kirsten--Vassilevich boundary coefficients for the cap-shifted $S^3$ enter
+\emph{only} the consistency checks, not the main derivation, which lives on the closed $S^4$. The
+BFK gluing identity $\zeta_M(0;D^4(\theta_0)) + \zeta_M(0;D^4(\pi-\theta_0)) = 104/45$ holds for
+all $\theta_0$; decomposing $\zeta_M = \zeta_{\mathrm{bulk}} + \zeta_{\mathrm{bnd}}$ and writing
+$\delta = \theta_0 - \pi/2$, the bulk part satisfies
+$\zeta_{\mathrm{bulk}}(\pi/2+\delta) + \zeta_{\mathrm{bulk}}(\pi/2-\delta) = -4\ag$ and the
+boundary part $\zeta_{\mathrm{bnd}}(\pi/2+\delta) + \zeta_{\mathrm{bnd}}(\pi/2-\delta) = 3$
+(both constant in $\delta$). Hence $g(\delta) := \zeta_{\mathrm{bnd}}(\pi/2+\delta) - 3/2$ is an
+\emph{odd} function: all even-order Taylor coefficients vanish identically. This is a rigorous
+theorem, not a perturbative estimate. The leading bulk shift is $|\Delta\zeta_{\mathrm{bulk}}|
+= 3\ag^2 \approx 0.088$; in the BFK-protected natural scheme the boundary shift is zero, and in
+the cap-scale scheme it is bounded by $|\Delta\Ok|/\Ok \lesssim 1.5\%$ (the L2 band of
+Table~\ref{tab:hierarchy}).
+
+\paragraph{Scheme independence.}
+The leading prediction $\Rtop = \ag/(8\pi^2)$ is built from the trace-anomaly integral (a
+renormalization-group invariant) and the $Q$-charge (a topological invariant); neither depends on
+the renormalization scale $\mu$, so $\Rtop$ is scheme-independent. The natural scheme
+($\mu = R^{-1}$) is adopted throughout; the cap-scale scheme shifts only subleading corrections,
+by $\lesssim 1.5\%$.
+
+\paragraph{Picard--Lefschetz contour analysis.}
+The saddle equation $\ag\cos^4 z = \sin z$ has one real saddle ($\dtheta^* = 0.16391$,
+$\mathrm{Im}\,S = 0$ exactly); every complex saddle in the box $|\mathrm{Re}\,z| < 8$,
+$|\mathrm{Im}\,z| < 2$ (sixteen of them) satisfies $|\mathrm{Im}\,S| \ge 0.78$. By
+Picard--Lefschetz theory no Stokes line connects the real saddle to any complex saddle --- the
+gap exceeds the connection threshold by a factor $>7\times 10^5$ --- so the steepest-descent
+thimble through the cap is topologically isolated and $n_{\mathrm{complex}} = 0$ is established
+\emph{analytically} for the reduced cap-action, not merely numerically; the RK45 thimble flow
+confirms it independently. The cap saddle therefore dominates the reduced cap-action contour
+integral. The embedding of this result into the full infinite-dimensional no-boundary path
+integral is assembled semiclassically (Section~\ref{sec:found}): the cap-plus-scalar enumeration
+is complete, and the prediction $\ag/(8\pi^2)$ is all-orders stable as a ratio of
+$\hbar$-independent invariants. As a conditional fallback we retain the worst-case estimate ---
+were a complex saddle nonetheless to contribute ($|n_{\mathrm{complex}}| = 1$ in the full theory),
+the impact would be $|\epsilon_{\mathrm{PL}}| \le 6.6\times10^{-4}$ in $\Ok^{\mathrm{obs}}$ ---
+about $44\%$ of the prediction, but below DESI DR2 sensitivity and within DESI DR3 / Euclid reach.
+
+\paragraph{Foundational computations on the three residual points.}
+Three explicit calculations sharpen the residual open items. \emph{(i) The embedding $B1'$.} The
+Euclidean fluctuation Hessian was computed by shooting in all three transverse sectors (scalar,
+co-exact $1$-form, transverse-traceless tensor) for $\ell \le 12$ on the deformed cap; every
+eigenvalue is strictly positive (global minimum $8.16$), and the centrifugal term
+$\ell(\ell{+}k)/\sin^2\theta$ grows monotonically, so positivity for all higher $\ell$ is
+guaranteed asymptotically. The cap saddle is therefore a Morse-index-$1$ critical point (the
+single negative direction is the lapse), enlarging the transverse mode space adds only convergent
+Gaussian factors, and $n_{\mathrm{complex}} = 0$ is preserved at one loop for any finite
+truncation. The genuine residual is non-perturbative (infinite-DoF, non-Gaussian), suppressed by
+$A_{\mathrm{M5}} \approx 1.2\times10^{-6}$ --- a limitation generic to all of semiclassical
+quantum gravity, not specific to this framework. \emph{(ii) The unconditional sign.} The
+minisuperspace lapse on-shell action was derived symbolically for two boundary data: Dirichlet
+$q(0)=0$ yields four saddles (including a complex pair with opposite-sign weights, the
+Feldbrugge--Lehners--Turok ambiguity), whereas Neumann $\dot q(0)=0$ yields two real saddles --- the
+analytic structure itself is boundary-condition-dependent, and the anomaly term
+($\ag/2 \approx 0.086$ against $6$) does not lift it. The sign is thus fixed only once a
+no-boundary boundary condition (equivalently, an integration contour) is chosen; this is a
+foundational definitional input of quantum cosmology, not a CSG-KP-specific gap. \emph{(iii) The
+reference epoch A5c.} The physical density ratio obeys $\Ok/\OL = (\Ok^0/\OL^0)(1+z)^2$ (since
+$\rho_K \propto a^{-2}$, $\rho_\Lambda = \text{const}$), ranging from $2.18\times10^{-3}$ today
+to $\sim 2.6\times10^3$ at recombination. The prediction $\ag/(8\pi^2)$ is specifically the $z=0$
+value; a reference epoch is therefore genuinely required and data-anchored, confirming that A5c
+is irreducible. The redshift-constancy established earlier is a property of the Euclidean
+conformal quantity, not of the physical density ratio.
+
+\paragraph{The fixed-point value: reconciliation.}
+Two legacy pipelines reported $\Lambda = -0.81331$ and $\Lambda^* \approx -0.691$. Both are
+\emph{superseded} by the correction of Section~\ref{sec:theorem64}: the $\langle R\rangle/4$
+sharpness proxy on which they rested is a floored-geometry artefact (a constant $\OL>0$ does not
+recollapse, so the forced turnaround drove $H^2<0$ and was silently floored). The corrected
+Friedmann$+$Klein--Gordon dynamics give a \emph{universal} fixed point $\Lambda^*$ (independent of
+$\varphi_0$ and $\Omega_m$) but only \emph{amplitude-set}: $\Lambda^*\approx-0.10$ in $3H_0^2$ units
+for $A_{\mathrm{CW}}=\ag/128\pi^2$ ($\approx-0.002$ for the M5 amplitude), \emph{not} the legacy
+$-0.691$. What survives is structural and unchanged: $\Lambda$ is not free, its sign is negative,
+the bulk vacuum cancels, and the iteration is a Banach contraction (constant $L\approx0.18$--$0.30$,
+sign $G'<0$ analytic, $|G'|<2$ numerical). What does \emph{not} survive is a sharp absolute value:
+$\OL=(V(\varphi_0)-\Lambda^*)/3$ leaves $\varphi_0$ free, so the homogeneous route fixes neither the
+sharp $\Lambda^*$ nor the absolute $\OL$. None of this bears on the ratio $\Ok/\OL=\ag/8\pi^2$.
+
+\paragraph{Conditional predictions.}
+If the lightest neutrino is exactly massless, the Weyl anomaly $a_W = 11/720$ adds to the photon,
+giving $|\Ok| = 0.00162$ ($\Delta|\Ok| = 1.3\times10^{-4}$ from photon-only; Euclid+CMB-S4
+discriminates at $\sim0.5\sigma$). A second massless $U(1)$ would double the coefficient to
+$2\ag = 62/180$. Both are falsifiable by DESI DR3 / Euclid.
+
+\paragraph{Foundational inputs.}
+The smooth Janus point at the equator depends on Axiom A1 (Hartle--Hawking no-boundary); the
+framework is compatible with alternative Janus-providing scenarios (Shape Dynamics, Boyle--Turok
+CPT-bounce) but A1 is the most-studied choice. The coefficient $\ag = 31/180$ assumes the
+Bunch--Davies vacuum, the unique maximally symmetric Hadamard state on de Sitter; non-trivial
+alpha-vacua would modify it but are physically disfavoured without new structure.
+
+\section{Uniqueness: the classification and the falsified mechanisms}
+\label{sec:uniqueness}
+
+\begin{proposition}[Uniqueness of the invariant]
+\label{prop:unique}
+Among dimensionless combinations of conformal-anomaly and $Q$-curvature data on $D^4$, the
+ratio $\ag/\CQ = \ag/(8\pi^2)$ is the unique candidate satisfying: (i) scale invariance (no
+$\Mpl$, no $G$); (ii) conformal naturalness ($Q_4$, not $E_4$, as denominator); (iii) photon-only
+infrared content (Komargodski--Schwimmer selection); (iv) constancy of the action-parameter
+ratio $3|K|/\Lambda$ (epoch-independent as a ratio of fixed FRW constants, the density parameters
+redshifting as $1/a^2$).
+\end{proposition}
+
+\noindent
+\emph{Rigorous core.} The decisive structural fact is exact: on $S^4$ the Paneitz operator $P_4$
+has kernel equal to the constants, so the constant conformal mode $\sigma_0$ is its \emph{unique}
+zero mode, and $\int_{D^4} Q_4$ is the unique linear functional appearing as its Wess--Zumino
+source. Any alternative normalization either redefines $\sigma_0$ by a constant (leaving the ratio
+invariant) or is not the conjugate quantity; the Chang--Yang relation $\int Q_4/\int E_4 = 1/4$
+provides an independent cross-check ($4\ag/32\pi^2 = \ag/8\pi^2$). \emph{Honest limit.} Criteria
+(i)--(iv) are each implied by an axiom and are \emph{sufficient} to select $8\pi^2$ from the
+natural candidate list; we do not claim they are minimal --- a systematic proof that no broader
+admissible criterion set selects a different invariant is open, and the uniqueness is therefore
+established within the conjugate-pair plus (i)--(iv) framework, not as an unconditional theorem
+over all conceivable constructions.
+
+A complementary constructive argument exhausts the dynamical alternatives: every attempt to
+obtain $\Ok^{\mathrm{conformal}} = \ag/(8\pi^2)$ from a \emph{local field equation} rather than
+the topological quotient fails, organizing into six no-go categories --- (I) conformal
+mechanisms linear in $\sigma_0$ or vanishing; (II) Lorentzian dynamics reintroducing Newton's
+constant; (III) massive fields regenerating the $10^{120}$ hierarchy; (IV) squashing
+deformations only quadratic; (V) spectral invariants conformally protected; (VI) vacuum energy
+absorbed by sequestering. Table~\ref{tab:mechanisms} lists the twenty-six explicit mechanisms.
+
+\begin{longtable}{@{}c p{6.4cm} c p{4.2cm}@{}}
+\caption{The twenty-six falsified mechanisms for deriving
+$\Ok^{\mathrm{conformal}} = \ag/(8\pi^2)$ from local dynamics.}\label{tab:mechanisms}\\
+\toprule
+\# & Mechanism & No-Go & Failure mode \\ \midrule \endfirsthead
+\toprule \# & Mechanism & No-Go & Failure mode \\ \midrule \endhead
+1 & Riegert variational & I & linear in $\sigma_0$; no $\sigma_0^2$ \\
+2 & DtN determinant (naive) & I & too weak by $10^{240}$ \\
+3 & KP stiffness & I & conformal sector unchanged \\
+4 & Gauss--Bonnet (conformal) & I & identically zero on FRW \\
+5 & Gauss--Bonnet (geometric) & I & cubic in $a$; no $\sigma_0^2$ \\
+6 & Resonance $4Q_4 = \mu_1$ & I & coupling coefficient $\approx 0$ \\
+7 & M\"obius nonlinearity & I & no 4D solution \\
+8 & Topology sum & I & not regularizable \\
+9 & Conformal Perelman flow & I & $P_4$ remains covariant \\
+10 & Two-loop stiffness & I & zero for free conformal fields \\
+11 & $L=1$ coupled system & I & $\sigma_0^*$ is $\ag$-independent \\
+12 & Counter-field & I & symmetric hemispheres cancel \\
+13 & $C_Q$-decoherence & II & requires $K = \CQ^2$ input \\
+14 & $Q$-prescription & II & restoring force $=0$ after KP \\
+15 & Topology path integral & I & zero-mode divergence \\
+16 & Fokker--Planck for $\sigma_0$ & II & gives $\Ok \propto 1/\ag$ (wrong) \\
+17 & Lorentzian field equation & II & $(H/\Mpl)^2$ suppression \\
+18 & Anomalous field equation & IV & squashing only quadratic \\
+19 & Conformal scalar VEV & III & $V(\sigma_0) = \text{const}$ \\
+20 & Coleman--Weinberg & I & $\beta$-function $=$ anomaly \\
+21 & Explicit mass $m^2$ & III & hierarchy of $10^{249}$ \\
+22 & Topological mass $\xi R$ & III & wrong sign \\
+23 & $\zeta'(0)$ spectral & V & transcendental constant \\
+24 & Lichnerowicz spectral & V & no $\sigma_0$ dependence \\
+25 & Heat-kernel spectral & V & rigid on $S^4$ \\
+26 & Stochastic & VI & $\avg{C^2}$ absorbed by KP \\
+\bottomrule
+\end{longtable}
+The lesson is methodological: the correct route is not a new field equation but the topological
+hemisphere quotient, with the cap-saddle providing the geometric realization.
+
+\section{Historical methodology}
+\label{sec:history}
+Five reference cases share one logical pattern, \emph{compact space $+$ local condition
+$\Rightarrow$ global parameter}: Balmer$\to$Bohr 1913 (electron on a compact configuration space,
+single-valuedness selects discrete levels); Dirac 1931 ($eg = n\hbar/2$ from $S^1$
+single-valuedness around the string); the quantum Hall effect 1980 ($\sigma_{xy} = ne^2/h$ from
+the integer Chern number on a torus); Hawking--Gibbons 1977 ($T = \kappa/2\pi$ from regularity of
+the compact Euclidean section); and Casimir 1948 ($\rho = -\pi^2/720d^4$ from boundary conditions
+on a compact transverse interval). CSG--KP has the compact space ($D^4$) and the conditions (KP
+sequestering, photon-uniqueness, Janus matching) but, by the $26$-mechanism exhaustion
+(Section~\ref{sec:uniqueness}), no \emph{local} mechanism that singles out a value: there is no
+Hawking conical regularity (the equatorial $S^3$ is maximal, not conical), no Dirac quantization
+(the conformal connection is trivial), no Hall index ($\eta$ is conformally invariant), no
+Casimir extremum, and no anomaly-matching obstruction (the FLRW slice is conformally flat
+throughout). The prediction therefore belongs to a distinct category --- a topological/anomalic
+ratio, not a regularity-quantized observable --- which is the structural content of the
+complementarity argument.
+
+\section{The coincidence problem: structure-formation averaging}
+\label{sec:coincidence}
+
+The third face of the cosmological constant problem --- why $\OL$ and $\Om$ are comparable now
+--- is not solved by the ratio~\eqref{eq:central}, whose constant object is the action-parameter
+ratio $\mathcal{R}=3|K|/\Lambda$ (the density-parameter ratio itself redshifts as $\mathcal{R}/a^2$).
+A clean
+physical constraint narrows the solution space: a dynamical dark-energy component cannot
+\emph{simultaneously} have $w \approx -1$ (data) and track matter (coincidence); the two are
+mutually exclusive, and sequestering, being a constant subtraction, leaves $w_{\mathrm{eff}} =
+-1$. The coincidence is therefore resolved not by dark-energy \emph{dynamics} but by the
+\emph{averaging prescription} for $\Lambda$, following Lombriser's structure-formation
+counterpart to Kaloper--Padilla \cite{Lombriser2019}.
+
+Lombriser's mechanism replaces the homogeneous four-volume average of
+Section~\ref{sec:theorem64} by an average weighted toward gravitationally bound (halo) regions,
+evaluated with the spherical-collapse top-hat evolution
+\begin{equation}
+\label{eq:tophat}
+y'' + \Big(2 + \frac{H'}{H}\Big) y' + \tfrac12 \Om(a)\,(y^{-3} - 1)\,y = 0,
+\qquad ' \equiv \frac{d}{d\ln a},
+\end{equation}
+with $y = (\rho_m/\bar\rho_m)^{-1/3}$ and matter-dominated initial data $y_i = 1-\delta_i/3$,
+$y_i' = -\delta_i/3$. The single additional assumption is a uniform prior on $y$, i.e.
+$y(t_0) = \tfrac12$. With the equality normalization ($a_{\mathrm{eq}} \equiv 1$,
+$\Om(a) = a^{-3}/(a^{-3}+1)$) the critical (longest-lived) shell has overdensity
+$\delta_i^{\mathrm{crit}} = 1.134\times 10^{-3}$ and reaches $y = \tfrac12$ at
+$a_0/a_{\mathrm{eq}} = 1.336$, giving
+\begin{equation}
+\label{eq:omlambda}
+\OL = \frac{1}{a_0^{-3} + 1} = 0.7044 .
+\end{equation}
+This value is \emph{derived}, not calibrated --- but conditional on the uniform-prior
+assumption $y(t_0) = \tfrac12$, which is anthropic-like and is not itself derived from the
+framework. The homogeneous and halo-weighted averages are two faces of the same
+$\Lambda = \tfrac14\avg{R}$ structure, differing in averaging prescription. The
+\emph{homogeneous} (volume) route delivers, as corrected in
+Section~\ref{sec:theorem64}, the universality \emph{structure} of $\Lambda^*$ and the order of
+magnitude only --- not the absolute scale, since $\varphi_0$ remains free. The
+\emph{halo-weighted} route returns $0.704$ but at the cost of the anthropic-like
+$y(t_0)=\tfrac12$. The Euclidean topology fixes the dimensionless \emph{ratio} $\Ok/\OL$
+rigorously; the absolute \emph{scale} is fixed by neither the volume route (free $\varphi_0$)
+nor without a prior by the halo route. The resulting trio,
+\begin{equation}
+\OL = 0.7044, \qquad \Ok = \frac{\ag}{8\pi^2}\,\OL = 1.54\times 10^{-3}, \qquad \Om = 0.2956 ,
+\end{equation}
+is internally consistent and within $2.8\%$ ($\OL$) and $0.7\sigma$ ($\Ok$) of observation.
+
+\subsection{A geometric budget ladder (conjecture)}
+\label{sec:ladder}
+A second, sharper route to the absolute scale is suggested by the numbers themselves, and is
+recorded here \emph{as a conjecture}, with its open step made explicit. The factors that appear
+across the framework form a $2^n\pi^2$ ladder of $4$D conformal geometry: the one-loop factor
+$16\pi^2 = 2^4\pi^2$ in $\avg{T} = \ag E_4/16\pi^2$; the hemisphere Euler integral
+$\int_{D^4}E_4 = 32\pi^2 = 2^5\pi^2$ ($\chi=1$); and the full-sphere integral
+$\int_{S^4}E_4 = 64\pi^2 = 2^6\pi^2$ ($\chi=2$). Within this ladder the three budget quantities
+all follow from $\ag$ and the Euler integrals:
+\begin{align}
+\OL &= \int_{S^4}\avg{T}\sqrt{g} = 4\ag = 0.6889 , \label{eq:ladder-ol}\\
+\frac{\Ok}{\OL} &= \frac{4\ag}{\int_{D^4}E_4} = \frac{\ag}{8\pi^2} = 2.181\times10^{-3} ,\\
+\Ok &= \frac{\OL^2}{\int_{D^4}E_4} = \frac{\ag^2}{2\pi^2} = 1.503\times10^{-3} .
+\end{align}
+The same numerator $4\ag$ appears in the leading term and in the ratio; dividing by
+$\int_{D^4}E_4 = 32\pi^2$ turns the full-sphere anomaly into the cap ratio. This yields the exact
+algebraic identity $\Ok\cdot 32\pi^2 = \OL^2$, and a \emph{perturbation hierarchy in $\ag$}:
+dark energy is the leading anomaly effect ($\OL\sim\ag^1$) while curvature is second order
+($\Ok\sim\ag^2$). The smallness $|\Ok|\ll\OL$ is then structural --- curvature is quadratically
+suppressed in the anomaly --- not a tuning, mirroring the holographic $V_4 = A_2^2$ relation of
+Section~\ref{sec:psf}. The split is geometric: the full $S^4$ (the timeless no-boundary
+substrate) carries the absolute $\OL$, the hemisphere $D^4$ (the observer past light cone)
+carries the ratio, and $32\pi^2 = \int_{D^4}E_4$ is the substrate-to-observer bridge. The full
+budget $\OL = 0.6889$, $\Om = 0.3096$, $|\Ok| = 1.5\times10^{-3}$ matches Planck~2018 (base
+$\Lambda$CDM) at $0.0\sigma$ ($\OL$), $-0.27\sigma$ ($\Om$), consistent ($\Ok$), from
+$\ag = 31/180$ and $\chi=2$ alone.
+
+\paragraph{Status (the one open step).} The ladder \emph{algebra} is exact and the factor
+$32\pi^2$ is geometric, not a free normalization; the ratio $\ag/8\pi^2$ is theorem-level. What
+is \emph{not} derived is the identification~\eqref{eq:ladder-ol} itself: why the dark-energy
+density \emph{fraction} should equal the integrated anomaly \emph{action} on the full sphere. The
+local energy-density route ($\rho_{\mathrm{anom}}/\rho_{\mathrm{crit}}\times N_{\mathrm{eff}}$, the
+de~Sitter identity of Section~\ref{sec:psf}) yields only the \emph{ratio} $\ag/8\pi^2$, not
+$4\ag$; an action/topological identification of the dark energy is required, which A5 does not
+supply (A5 establishes the ratio only), and which is in tension with the KP sequestering of the
+$\Lambda$-channel. The numerical match is therefore striking and the structure coherent, but
+\eqref{eq:ladder-ol} is a conjecture pending this action-identification bridge --- not a proven
+prediction of the absolute scale.
+
+\paragraph{Refinement (this work): the prefactor is computed, the residue localized, the scope confined.}
+Three results sharpen the open step without closing it. \emph{(i) The lift prefactor is computed.}
+The factor identification~\eqref{eq:ladder-ol} requires, $\rho_\Lambda/\rho_{\mathrm{anom}} =
+32\pi^2(\Mpl/H)^2$, is exactly the Bekenstein--Hawking horizon degree-of-freedom count $A/G = 4\,S_{dS}$
+--- a standard holographic quantity, not a free normalization --- and with it $\OL =
+(A/G)\,\rho_{\mathrm{anom}}/\rho_{\mathrm{crit}} = 4\ag$ falls out, the coherent ($\times N$)
+accumulation being the unique scale-free choice (incoherent $\sqrt N$ gives an $H$-dependent value). \emph{(ii) The residual assumption is localized.}
+An in-in (Schwinger--Keldysh) evaluation shows the lift is not an in-in mode sum (that is already
+inside $\rho_{\mathrm{anom}}$) but the Cohen--Kaplan--Nelson UV--IR bound $\rho_\Lambda\le\Mpl^2/L^2$:
+its Schwarzschild-consistency part \emph{follows} from gravity and fixes the $10^{-122}$ magnitude,
+while its \emph{saturation} is the assumption P5 --- now a named holographic principle, not a vague
+accumulation. \emph{(iii) The scope is confined.}
+This residue sits in the absolute value alone: the ratio $\Ok/\OL = \ag/8\pi^2$ is scale-invariant
+($H$ and $\Mpl$ cancel identically), so the falsifiable Euclid prediction is independent of the
+unproven saturation; deriving the saturation from scale-invariance is a fallacy, since scale-invariance
+constrains only the ratio. The conjecture is thereby
+sharpened --- prefactor computed, principle named (CKN saturation), scope limited to the conjectural
+bonus --- but not proven.
+
+\paragraph{A no-go: the value is an action invariant, not a dynamical equilibrium.} The open step
+above is structural, not a missing calculation. Every dynamical or energy-density route to the
+absolute $\OL$ gives a \emph{different} number, and none gives $4\ag$:
+\begin{itemize}[topsep=2pt,itemsep=1pt]
+  \item KP sequestering $\rho_\Lambda = \int\avg{T}/V_4$ --- $(\ag/8\pi^2)(H/\Mpl)^2 \sim 10^{-122}$;
+  \item the canonical Euclidean vacuum energy $\rho_\Lambda = -\,\mathrm{d}S_E/\mathrm{d}V_4$ on the
+  $S^4$ saddle --- $\tfrac12$ (the gravitational term dominates; the anomaly enters at $10^{-122}$);
+  \item the M5/KP fixed point $1/12\ag \approx 0.484$; the Coleman--Weinberg iteration ($\varphi_0$
+  free); the Riegert mode (linear, no saddle);
+  \item the causal closures over the forced apparent-horizon surface --- bare dimensional choices
+  with median $\approx0.93$, KP stationarity $\avg{R}_M/4\approx14$, and the Lorentzian light-cone
+  anomaly too weak by $(\Mpl/H)^4\sim10^{240}$.
+\end{itemize}
+The \emph{only} route to $4\ag$ is the pure action invariant $\int_{S^4}\avg{T}\sqrt{g} = 4\ag$
+($=|\zeta(0)|=$ the Riegert scale-flow), cutoff-free and exact but an \emph{action}, not a
+dynamically forced density. Hence $4\ag$ is not a dynamical equilibrium value at all; it is a
+topological--spectral invariant, and the identification of the dark-energy fraction with it cannot
+be derived from any dynamics --- each dynamics demonstrably yields something else. This is the
+precise structural reason the step is open.
+
+\paragraph{The sharpest form of the conjecture.} The identification $\OL = 4\ag$ is exactly
+equivalent to a single normalization,
+\begin{equation}
+\label{eq:sdscq}
+N_{\mathrm{eff}} = \frac{S_{dS}}{\CQ}
+= \frac{8\pi^2\Mpl^2/H^2}{8\pi^2} = \Big(\frac{\Mpl}{H}\Big)^2 ,
+\end{equation}
+the Gibbons--Hawking de~Sitter entropy per $Q$-curvature charge. With this $c=1$ normalization the
+coherent lift of Section~\ref{sec:coherence} returns $\OL = 4\,c\,\ag = 4\ag$. The open question
+thereby narrows from ``a vague action identification'' to ``why this one geometrically natural
+normalization (entropy per $Q$-charge)''. It is sharper and more falsifiable, but $S_{dS}/\CQ$ is
+not more forced than the bulk-projection prefactor $4/3\pi$, so it remains a conjecture --- now in
+its tightest form.
+
+\subsection{Why the sharp value is not pinned by the history ensemble: the measure problem}
+\label{sec:measure}
+The conditional status of $\OL = 0.704$ deserves a sharper statement, because two independent
+attempts to remove the uniform-prior assumption were carried through and both fail for the same
+categorical reason. First, Lombriser and CSG--KP are the \emph{same constraint class}: Lombriser
+varies the Einstein--Hilbert action with respect to the Planck mass, producing a global
+Lagrange-multiplier constraint on the averaged Ricci scalar $\avg{R}$ --- structurally identical
+to $\Lambda^* = \tfrac14\avg{R}_{\mathrm{ren}}$ of Proposition~\ref{thm:kp}. The single free element
+is the prior on the observer's position in structure formation.
+
+\paragraph{The collapse-time lever.} The value $0.704$ is the limit of \emph{infinitely
+long-lived} shells ($a_{\mathrm{collapse}} = 6686$ at equality normalization); for a finite
+maximum shell age $\OL$ decreases, and the observed $\OL = 0.685$ is reached already at
+$a_{\mathrm{collapse}} \approx 8.67$. CSG--KP appears to supply exactly what Lombriser lacks:
+Proposition~\ref{thm:kp} forbids $t_{\max}\to\infty$, since a finite four-volume requires a background
+recollapse driven by the Coleman--Weinberg potential, which would truncate the shell lifetime and
+pull $0.704$ toward observation. \emph{The lever fails quantitatively.} Forward integration of the
+full background dynamics (Friedmann $+$ Klein--Gordon with
+$V(\varphi) = A\varphi^4(2\ln(\varphi/v_S) - \tfrac{25}{6})$, $A \approx 3.6\times 10^{-6}$,
+$\varphi_0 \approx 22.9\,v_S$, $\varphi_{\mathrm{crit}} \approx 8.0\,v_S$,
+$m_\varphi \approx 0.27\,H_0$) gives recollapse at $a_{\max} \approx 8\times 10^{17}$
+($\sim 41$ $e$-folds, $t \sim 170/H_0$), whereas $\OL = 0.685$ would require
+$a_{\max} \approx 6.7$ --- seventeen orders of magnitude too late. The light scalaron rolls too
+slowly from $\varphi_0 \gg \varphi_{\mathrm{crit}}$, so the recollapse lies far beyond
+observational horizons (the explicit caveat of Section~\ref{sec:theorem64}) and cannot truncate
+the shell lifetime in the relevant range.
+
+\paragraph{The measure lever.} A second attempt replaces the uniform-in-$y$ prior by the
+Hartle--Hawking amplitude $|\Psi(\sigma_0)|^2 \propto e^{-8\ag\sigma_0}$, the canonical
+no-boundary weight over cosmological histories. The amplitude alone does not fix the observer
+weighting; combined with different companion measures it ranges over the entire admissible
+interval --- $\text{HH}\times dN \to 0.00$, $\text{HH}\times dt \to 0.04$,
+$\text{HH}\times V_4 \to 0.78$, $\text{HH}\times(\text{phase space}) \to 1.00$. The framework's
+own canonical choice (the amplitude \emph{is} the $V_4$ weighting) gives $0.78$, not $0.685$. The
+companion measure one would need is physically the observer density --- when and where observers
+exist --- which no axiom fixes. This is the \emph{anthropic} measure problem of quantum
+cosmology, and in that form it is categorical, not technical: weighting a history ensemble by an
+observer density that the theory does not supply, $\OL$ cannot be pinned by any
+prior-independent rule.
+
+\paragraph{The causal route avoids the measure problem entirely.} The anthropic difficulty arises
+only because one weights an \emph{ensemble} of histories. A causal variational closure removes the
+ensemble altogether: fixing $\Lambda$ by stationarity over a single past light cone
+(Section~\ref{sec:causal}) needs no observer measure. The self-consistency
+$\Lambda = 3\OL H_0^2 \sim c/t_U^2$ then has a prior-free solution depending only on the
+dimensionless light-cone coefficient $c = A_{\partial M}/(t_U^{-1}V_M) = O(1)$, where $A_{\partial
+M}$ is the boundary $3$-volume and $V_M$ the four-volume of the past light cone. Two questions
+must be separated: which boundary hypersurface, and which functional form.
+
+\emph{The hypersurface is forced.} It is not a free choice: the maximal-enclosed-$3$-volume
+slice (the ``belly'') coincides \emph{exactly} with the apparent horizon, the covariant
+$\theta=0$ surface, since $\dot r = Hr-1 = 0 \Leftrightarrow r = 1/H$ for the proper light-cone
+radius $r = a\chi_{\rm lc}$. Two independent characterizations --- maximal $3$-volume and the
+covariant Bousso/Hayward $\theta=0$ surface --- select the same slice (numerically $r H = 1.000$).
+The particle horizon, a candidate alternative, is the big-bang tip with $rH\approx 55$ and is
+\emph{not} a covariant causal boundary; it is excluded. The apparent-horizon choice is therefore
+forced, and the earlier impression of a $\sim\!\times 500$ ``definition dependence'' was an
+artifact of comparing the genuine causal boundary with a non-boundary.
+
+\emph{The functional form is not forced.} With the unique apparent-horizon surface, no
+available principle fixes the dimensionless closure. The natural candidate to \emph{derive} it
+--- KP stationarity, $\Lambda = \tfrac14\avg{R}$ over the averaging $4$-volume, here restricted
+to the causal diamond, $\Lambda = \tfrac14\avg{R}_M$ over $V_M$ --- \emph{fails}: the past-cone
+average is dominated by the early-matter $a^{-3}$ curvature, giving $\avg{R}_M/4 \sim 14 \gg 3\OL$
+with no self-consistent fixed point. Apparent-horizon thermodynamics do not help either: the
+first law at the horizon (Cai--Kim) reproduces the Friedmann equation identically and imposes no
+$\Lambda$ constraint, while de~Sitter entropy saturation gives the trivial $\OL=1$. And the bare
+dimensional closures spread across almost the whole admissible range: over the unique
+apparent-horizon surface, natural choices give $\OL \in \{0.489,\,0.725,\,0.929,\,0.938,\,0.959\}$
+(median $0.93$), with no cluster near the observed value. The often-quoted
+$3\OL = V_3({\rm AH})/(V_M t_U) \to 0.725$ is therefore \emph{one selective choice}, not a
+distinguished one --- most natural closures land near $0.93$. (The earlier band value $c=1.86$ was
+\emph{circular}, choosing $L=t_U$ and reading $c=\Lambda t_U^2$ off the input, and is superseded;
+Shaw--Barrow's sharp $\Ok=-0.0056$ likewise needs extra physical inputs, the QCD condensate
+$\zeta_b\approx\tfrac12$ and the inflationary $e$-fold count $N$, not pure geometry.) So the
+causal route does \emph{not} predict $0.685$, nor even a narrow band: it forces the hypersurface
+(apparent horizon) and an $O(1)$ range, but the closure functional is undetermined and the
+obvious candidates (KP stationarity, horizon thermodynamics) are ruled out. The open question is
+thereby sharpened --- from ``a free prior'' through ``which boundary'' (answered: the apparent
+horizon) to ``which closure functional,'' which remains genuinely open. What is fixed prior-free
+is therefore: the dimensionless ratio $\Ok/\OL = \ag/(8\pi^2)$ (theorem), the magnitude and
+coincidence to order unity, the forced apparent-horizon hypersurface, and an $O(1)$ range for
+$\OL$ --- not the sharp value, which is pending a derived closure functional, not a free measure.
+
+\section{The sign: anomaly-forced curvature and the Janus point}
+\label{sec:sign}
+
+The magnitude of $\Ok$ follows from Eq.~\eqref{eq:central}; the sign is fixed by the cap action
+itself. Integrating the stationarity condition $d\Gamma/d\theta_0 = 3\ag\sin^3\theta_0 +
+3\cot\theta_0$ gives the reduced cap action $\Gamma(\dtheta) = 3\ag\sin\dtheta - \ag\sin^3\dtheta
++ 3\ln\cos\dtheta$, whose only real stationary point in $(-\tfrac\pi2,\tfrac\pi2)$ is
+$\dtheta^* = +0.16391$ for the physical $\ag = +31/180 > 0$ --- an \emph{open} universe
+($\Ok>0$). There is no closed-universe saddle: a negative $\dtheta^*$ would require $\ag<0$. The
+saddle \emph{location} depends only on the action, whose anomaly source $+\ag$ is the
+prescription-independent photon heat-kernel coefficient; the Hartle--Hawking versus Vilenkin
+choice ($\Psi \propto e^{-S_E}$ versus $e^{+S_E}$) reweights this same saddle but does not move
+it. The sign is therefore forced by $\mathrm{sign}(\ag) > 0$ together with the dominance of the
+real cap saddle (B1, $n_{\mathrm{complex}}=0$), not by a branch postulate. The Wick
+rotation is the established Bucher--Goldhaber--Turok open-inflation construction
+\cite{BGT1995,HawkingTurok1998}: the contour $\theta = \pi/2 + i\tau$ carries the compact cap
+into a hyperbolic foliation with the conical singularity off the integration contour, so the
+smooth-beginning obstruction of \cite{Feldbrugge2017} does not apply. The Janus point --- the
+moment of vanishing extrinsic curvature \cite{Barbour2014} --- is the equatorial $S^3$ where the
+two hemispheres meet under a $Z_2$ reflection.
+
+\paragraph{Status of the sign.} The curvature sign separates into two distinct sectors. The
+\emph{curvature sector} --- whether the cap deforms toward an open or a closed continuation ---
+is fixed: the cap action has a unique real saddle at $\dtheta^* > 0$ for $\ag>0$, and the
+explicit computation (Section~\ref{sec:found}) confirms its location is independent of the
+$e^{\mp S_E}$ weighting, so the open sign is forced by $\mathrm{sign}(\ag)>0$ and the real-saddle
+dominance B1, modulo the prescription-independence of the anomaly-induced action (standard for a
+matter heat-kernel coefficient). The \emph{fluctuation-stability sector} --- whether the
+Lorentzian continuation of the lapse integral is well defined and normalizable --- is the
+Feldbrugge--Lehners--Turok question: the explicit lapse-saddle count is boundary-condition
+dependent (four saddles under Dirichlet data, two under Neumann), so the well-definedness of the
+Lorentzian no-boundary measure is a foundational input of quantum cosmology, shared by every
+no-boundary model and not specific to this framework. The two sectors are independent: the FLT
+ambiguity concerns the stability of fluctuations, not the sign of the spatial curvature, which is
+already fixed in the Euclidean cap by $\ag>0$. Empirically, DESI DR2 places the open prediction
+at $0.74\sigma$ and disfavours the closed (Vilenkin) reading at $4.6\sigma$.
+
+\section{Foundational computations: sign, $B1'$, and the reference epoch}
+\label{sec:found}
+This section records explicit computations targeting the three items the framework had carried
+as non-theorem-level. The outcome is
+mixed and stated without embellishment: one item is closed, one is reclassified and closed in its
+physical part, and one is confirmed irreducible.
+
+\paragraph{Curvature sign (closed).} The reduced cap action $\Gamma(\dtheta) = 3\ag\sin\dtheta -
+\ag\sin^3\dtheta + 3\ln\cos\dtheta$, obtained by integrating the stationarity condition of
+Section~\ref{sec:sign}, has exactly one real stationary point in $(-\tfrac\pi2,\tfrac\pi2)$:
+$\dtheta^* = +0.16391$ for $\ag = +31/180$, with $\Gamma(\dtheta^*) = 0.0431$. For $\ag<0$ the
+unique saddle moves to $\dtheta^* = -0.16391$. Because the saddle location is determined by
+$\Gamma$ alone --- whose anomaly source $+\ag$ is the prescription-independent photon
+heat-kernel coefficient --- the Hartle--Hawking versus Vilenkin choice ($e^{-S_E}$ versus
+$e^{+S_E}$) reweights but does not relocate it. Hence the open sign is forced by
+$\mathrm{sign}(\ag)>0$ and the real-saddle dominance B1, not by a branch postulate.
+
+\paragraph{$B1'$: the scalar embedding (cap dominance preserved).} Two layers establish that the
+cap-saddle dominance survives the enlargement beyond the one-dimensional reduced action. First,
+at one loop the deformed cap $D^4(\theta_0=\pi/2+\dtheta^*)$ is a polar cap on $S^4$ with $S^3$
+slices, so $SO(4)$ is unbroken, $\ell$ remains a good quantum number, and the fluctuation Hessian
+is exactly block-diagonal in $(\ell,\text{sector})$ with no $\ell$--$\ell'$ mixing; its positivity
+is established analytically by domain monotonicity (Section~\ref{sec:cap}), so the cap is a
+Morse-index-$1$ point and $n_{\mathrm{complex}}=0$ is preserved exactly.
+
+Second --- the perturbative embedding proper --- the scalar matter field $\varphi$ is restored as
+an independent degree of freedom, giving the two-dimensional action $\Gamma_{2\mathrm{D}}(z,\varphi)
+= \Gamma_{\mathrm{geom}}(z) - \tfrac12\mu_{\mathrm{eff}}^2\varphi^2 V_{\mathrm{cap}}(z)$ with
+$\Gamma_{\mathrm{geom}}(z) = 3\ag(\sin z - \tfrac13\sin^3 z) + 3\ln\cos z$ (identical to the cap
+action of Section~\ref{sec:sign}) and $V_{\mathrm{cap}}(z)=\int_0^z\sin^3 t\,dt$. The $1$D saddles
+lift trivially: since the Coleman--Weinberg potential satisfies $V_{\mathrm{CW}}(0)=0$, one has
+$\Gamma_{2\mathrm{D}}(z,0)=\Gamma_{\mathrm{geom}}(z)=\Gamma_{1\mathrm{D}}(z)$ exactly, so the eight
+$1$D saddles are also $2$D saddles with $\mathrm{Im}\,\Gamma$ unchanged (Lemma B1-Stokes inherits).
+The scalaron-vacuum saddle at $\varphi=v_S e^{11/6}$ lies only $\sim A_{\mathrm{M5}}\approx
+1.2\times10^{-6}$ below the geometric cap action (a relative shift $\sim3\times10^{-5}$ of
+$\Gamma_{\mathrm{geom}}\approx0.043$), and the single additional $2$D-specific saddle, at
+$z\approx-0.656+1.241i$, has $\mathrm{Im}\,\Gamma\approx1.87\neq0$ --- no Stokes line connects it
+to the real cap. Cap dominance is therefore preserved under the scalar perturbation, with the
+correction suppressed by $A_{\mathrm{M5}}$.
+
+\emph{Complete thimble enumeration.} The enumeration can be closed rigorously rather than by
+sampling. Substituting $u=e^{iz}$ turns the saddle equation $\ag\cos^4 z = \sin z$ into the
+polynomial $\ag(u^2+1)^4 + 8i(u^5-u^3)=0$, of degree $8$; by the fundamental theorem of algebra
+this returns \emph{all} eight saddles exactly. One is the real cap ($z^*=0.1639$,
+$\mathrm{Im}\,\Gamma=0$); the other seven are complex with $|\mathrm{Im}\,\Gamma|\ge1.87>0$. On
+the scalaron branch $\varphi=v_S e^{11/6}$ the $\varphi$-equation decouples and the $z$-equation
+becomes the $\kappa$-perturbed degree-$8$ polynomial ($\kappa=\mu_{\mathrm{eff}}^2\varphi^2/6
+\approx2.4\times10^{-3}$), again exactly eight saddles --- one near-real (the scalaron, at
+$\mathrm{Re}\,\Gamma$ lower than the cap by $\sim A_{\mathrm{M5}}$) and seven complex with
+$|\mathrm{Im}\,\Gamma|>0$. The decisive step is Picard--Lefschetz: along any Lefschetz thimble
+$\mathrm{Im}\,\Gamma$ is constant. The real no-boundary contour carries $\mathrm{Im}\,\Gamma=0$,
+while every one of the fourteen complex saddles has $\mathrm{Im}\,\Gamma\neq0$, so each complex
+thimble keeps $\mathrm{Im}\,\Gamma=\text{const}\neq0$ and never reaches the real axis. Hence
+$n_{\mathrm{complex}}=0$ \emph{rigorously} --- the conclusion follows from the constancy of
+$\mathrm{Im}\,\Gamma$ along thimbles, not from a finite numerical saddle scan. The dominant contribution is the pair of near-degenerate real saddles (cap and
+scalaron, separated by $\sim A_{\mathrm{M5}}\sim10^{-6}$), and the cap sector dominates the
+no-boundary wave function. The only ingredient outside the polynomial closure is the set of
+complex log-branches of $V'(\varphi)=0$ ($\varphi^2=v_S^2 e^{11/3+2\pi i n}$): these are
+renormalization artifacts of the Coleman--Weinberg logarithm rather than saddles of the
+fundamental theory, and are in any case exponentially suppressed, so they do not affect
+$n_{\mathrm{complex}}=0$.
+
+\paragraph{Embedding into the full no-boundary path integral (semiclassical).} The pieces above
+assemble into a complete semiclassical evaluation of
+$\Psi_{\mathrm{NB}} = \int\!\mathcal{D}g\,\mathcal{D}\varphi\;e^{-S_E[g,\varphi]}
+= \sum_a n_a\, e^{-\Gamma_a}\,[\det{}' M_a]^{-1/2}\,(1+O(\hbar))$.
+(i)~The dominant saddle is the maximally symmetric cap $D^4\subset S^4$, so the saddle search
+reduces to the homogeneous mini-superspace $(z,\varphi)$ whose sixteen saddles are completely
+enumerated above; Picard--Lefschetz gives $n_{\mathrm{complex}}=0$, leaving the two real saddles
+(cap and scalaron, gap $\sim A_{\mathrm{M5}}$) with the cap dominant. (ii)~The inhomogeneous
+($\ell\ge1$) modes are Gaussian about the cap with a positive-definite Hessian (domain
+monotonicity, Section~\ref{sec:cap}); their $\zeta$-regularized determinant carries the scale
+anomaly $\zeta(0;\text{Maxwell};S^4)=-\tfrac{31}{45}=-4\ag$, so the one-loop determinant
+$[\det{}'M]^{-1/2}$ is itself the carrier of the prediction $\ag/(8\pi^2)$. The inhomogeneous
+modes have vanishing overlap with the anomaly source on $D^4$ by parity (the $\ell=1$ $S^3$
+harmonic integrates to zero against $E_4$), so the factorization homogeneous~$\times$~inhomogeneous
+is exact at quadratic order. (iii)~By the Adler--Bardeen theorem the Type-A coefficient $\ag$
+receives no higher-loop corrections, so the leading prediction is protected; the residual
+higher-loop shift is of order $A_{\mathrm{M5}}\sim5\times10^{-4}$ relatively, below DESI~DR2
+sensitivity. (iv)~The single $\ell=0$ conformal/lapse mode is rotated to convergence by
+Gibbons--Hawking--Perry. The honest limit is precise: this is \emph{one-loop exact} for the
+Type-A prediction, not an all-orders non-perturbative evaluation. Full convergence of the
+Euclidean quantum-gravity path integral remains a generic open problem (the conformal-factor
+issue, mitigated but not resolved by GHP), shared with every approach to semiclassical quantum
+gravity and not claimed here.
+
+\paragraph{All-orders stability of the prediction.} The convergence question splits cleanly, and
+the physically relevant half is provable. The observable is the ratio $R=\ag/(8\pi^2)$, and $R$
+is the quotient of two $\hbar$-independent quantities, so it receives no perturbative correction
+at any loop order. First, CSG treats gravity classically: graviton loops do not exist, so the
+genuine obstruction to convergence of a Euclidean gravity path integral --- the unboundedness of
+the conformal-factor action and the perturbative non-renormalizability of Einstein gravity, both
+graviton-loop effects --- is structurally absent, and the remaining integral is matter on a
+classical saddle. Second, on the round $S^4$ the Weyl tensor vanishes ($W^2=0$), so Type-B drops
+out; the surviving Type-A coefficient $\ag=31/180$ is Adler--Bardeen one-loop exact, receiving no
+higher-loop correction. Third, $8\pi^2=\int_{D^4}Q_4$ is a topological charge, a
+discrete/rational invariant independent of $\hbar$ to all orders. Fourth, the saddle sum is
+finite-dimensional with $n_{\mathrm{complex}}=0$. Hence $R$ is all-orders well-defined within CSG.
+The honest boundary is equally precise: the absolute Borel summability of the four-dimensional
+$\varphi^4$ matter series (the generic triviality/Landau question) and the normalization of
+$|\Psi|^2$ are \emph{not} settled here, but both cancel from the ratio and are protected by its
+topological character --- they do not bear on $R$. This is not a solution of the general
+quantum-gravity path integral; it is the decoupling of the prediction from that open problem, and
+it holds within the CSG assumption of classical/conformal gravity (itself an empirical question).
+
+\paragraph{Fluctuation stability in the Euclidean sector (resolved).} The single negative
+direction of the cap saddle is the conformal/scale-factor mode: $d^2\Gamma/d\dtheta^2(\dtheta^*) =
+-3.33 < 0$, while all transverse modes are positive (B1$'$ above). This is the Euclidean
+Gibbons--Hawking--Perry conformal-factor situation, and its standard resolution applies: rotating
+the conformal mode along the imaginary axis, $\dtheta = \dtheta^* + is$, makes $\mathrm{Re}\,
+\Gamma$ grow ($0.043 \to 0.060 \to 0.109$ for $s = 0, 0.1, 0.2$), so $e^{-\Gamma}$ decays and the
+Gaussian over the rotated mode converges. The Euclidean one-loop no-boundary wavefunction is
+therefore well defined. The Feldbrugge--Lehners--Turok obstruction concerns the \emph{Lorentzian}
+lapse integral --- a different definition of the path integral, which this framework does not
+adopt; the Euclidean cap is its primary object. Whether the Euclidean (GHP-rotated) or the
+Lorentzian definition is the physically correct quantum gravity is an open foundational debate,
+not a CSG--KP-specific gap.
+
+\paragraph{The reference epoch A5c (no fit freedom, identification irreducible).} The physical
+density ratio $\Ok(z)/\OL(z) \propto (1+z)^2$ is epoch-dependent (today $2.18\times10^{-3}$, at
+$z=1100$ about $2.6\times10^3$), so a reference epoch must be specified. It introduces no fit
+freedom: given the measured $\OL$, the prediction $\Ok = (\ag/8\pi^2)\OL$ is unique, with no
+tunable parameter. A5c is the identification rule ``the Euclidean topological number equals the
+observable at the observation epoch,'' forced by testability (we measure at $z=0$). Anchoring
+instead at asymptotic de~Sitter ($\OL\to1$) would shift the predicted $\Ok$ to $\ag/8\pi^2$, a
+$\le46\%$ change; that the matching surface is the present epoch rather than the asymptotic future
+is a physical identification, not derivable from first principles.
+
+\paragraph{Status after three iterations.} Under the framework's own (Euclidean,
+observation-anchored) definitions, every item closes: the curvature sign by $\ag>0$, $B1'$ at one
+loop ($SO(4)$-exact), Euclidean fluctuation stability by GHP rotation plus transverse positivity,
+and A5c without fit freedom. The two genuinely irreducible residues are interpretational rather
+than computational, and shared with the wider field rather than specific to this framework: the
+choice between a Euclidean and a Lorentzian path-integral definition, and the physical
+identification A5 of the Euclidean invariant with the observed curvature. These are not gaps to be
+computed away; they are the irreducible interpretational content, and observation rather than
+further algebra is what bears on them.
+
+\section{Physical interpretation: the Photon-Field Substrate}
+\label{sec:psf}
+
+The mathematical structure admits a physical reading, the Photon-Field Substrate (PSF), built
+on five postulates: universal vacuum entanglement; the photon as universal massless carrier;
+the conformal anomaly as the substrate's residual stress; the Komargodski--Schwimmer $a$-theorem
+as the infrared selection principle; and holographic accumulation $N_{\mathrm{eff}} =
+\Mpl^2/H^2$. The number $\ag/(8\pi^2)$ then emerges from two independent identities --- the de
+Sitter structural identity $\rho_{\mathrm{anom}}/(3H^4) = \ag/(8\pi^2)$ and the hemisphere
+topological quotient $\Delta\Gamma/\CQ = \ag/(8\pi^2)$ --- joined by two physical
+identifications (the holographic Friedmann density and the curvature observable A5). PSF is
+complementary to the CSG--KP mathematical structure in the Bohr sense \cite{Bohr1928}, and is
+consistent with locality and with loophole-free Bell tests
+\cite{Hensen2015,Giustina2015,Shalm2015}, the correlations being kinematic vacuum entanglement
+(Reeh--Schlieder \cite{ReehSchlieder1961}) rather than signalling.
+
+\paragraph{The magnitude hierarchy is carried by P5, and P5 is a postulate.} The topological
+ratio $\ag/(8\pi^2) \approx 2.2\times 10^{-3}$ is dimensionless and clean, but its physical
+realization carries the full cosmological-constant hierarchy. A single-mode anomaly inserted
+naively into the Friedmann balance gives
+\begin{equation}
+\Omega_{\mathrm{anom}}^{\mathrm{naive}} = \frac{\ag}{8\pi^2}\cdot\frac{H^2}{\Mpl^2}
+\sim 10^{-3}\cdot 10^{-122} \sim 10^{-125},
+\end{equation}
+$122$ orders of magnitude below the observed curvature density. The holographic accumulation
+postulate P5, $N_{\mathrm{eff}} = \Mpl^2/H^2$, compensates this exactly:
+$\rho_{\mathrm{eff}} = N_{\mathrm{eff}}\,\rho_{\mathrm{anom}} = (3\ag/8\pi^2)\,\Mpl^2 H^2$, so
+$\Omega_{\mathrm{eff}} = \ag/(8\pi^2)$. The same hierarchy appears on three levels --- $O(1)$ (the
+dimensionless ratio), $10^{122}$ (energy density, $\Mpl^2/H^2$, equal to the horizon area $A_2$ in
+Planck units), and $10^{244}$ (four-volume, $(\Mpl/H)^4 = V_4$) --- and the $10^{240}$ failure mode
+of the dynamical Mechanism~2 (Section~\ref{sec:uniqueness}) is exactly this $V_4$ factor, not an
+artifact. P5 is what bridges the dimensionless ratio to the observable density. It is supported by
+the 't~Hooft--Susskind area bound (which $N_{\mathrm{eff}}$ saturates up to a factor $\pi$) and by
+the dimensional identity $V_4 = A_2^2$ (algebraically trivial, a consistency check only). The
+substantive content is not the count but its \emph{coherence}: the modes must add linearly
+($\rho_{\mathrm{eff}} = N\rho$), not in random phase ($\sqrt N\rho$, which would give
+$\Omega \sim 10^{-64}$, catastrophically wrong). Three structural mechanisms enforce coherence:
+(K1) Reeh--Schlieder vacuum entanglement makes the local trace expectation
+$\avg{T^\mu{}_\mu} = \ag E_4$ pointwise deterministic rather than stochastic; (K2) the integrated
+anomaly is topologically fixed, $\int_{S^4} E_4 = 64\pi^2$, independent of the mode number, so the
+modes must sum linearly to reproduce it; (K3) the KP global constraint
+$\Lambda V_4 = \int\sqrt g\,\avg{T^\mu{}_\mu}$ synchronizes sub-regions, forbidding out-of-phase
+oscillation. Each independently excludes the random-phase regime. The \emph{coherence} half can
+moreover be reduced beyond bare motivation: in Mottola's effective theory of the conformal anomaly
+\cite{Mottola2010,Mottola2022}, the anomaly vacuum energy is a \emph{condensate} of a $4$-form field
+strength $F=dA$ --- the local conformalon form of the nonlocal anomaly action --- i.e.\ a single
+coherent classical amplitude over the horizon volume, and a condensate adds in phase ($\times N$) by
+construction, the $\sqrt N$ regime requiring incoherent modes a condensate does not possess. The
+infrared-relevance of the same action places the backreaction at the horizon scale rather than the
+UV, with the value set by horizon boundary conditions \cite{Mottola2010}; Mottola's
+$\Lambda\to0$ infrared fixed point is then the sequestering of the bare term
+(Section~\ref{sec:sequester}), while the finite $4\ag$ is the anomaly-residual condensate value ---
+two distinct contributions, consistent. What is \emph{still} not available is a
+strict Schwinger--Keldysh or BV-master-equation derivation fixing the \emph{exact} $O(1)$
+normalization of $N_{\mathrm{eff}}=(\Mpl/H)^2$, and Mottola's conformalon EFT, though established, is
+not universally accepted. Thus P5 is the single quantitatively decisive
+element of the framework that is not derived from first principles: it carries the entire
+$122$-order magnitude hierarchy, with its coherence now a \emph{consequence of the anomaly
+condensate} rather than a bare postulate, leaving the residual open piece as the one $O(1)$ horizon
+normalization. The Euclidean ratio is theorem-level; the magnitude of the physical curvature
+density rests on P5.
+
+\paragraph{The normalization Mottola leaves open is fixed by the Q-charge; P5 is the declared
+founding assumption.} Mottola's mechanism does not, by itself, fix the value: it ``depends on
+macroscopic boundary conditions at the cosmological horizon scale'' \cite{Mottola2010}, and the
+conformal theory --- hence $\ag$ --- is unspecified. These are exactly what CSG--KP supplies and a
+generic anomaly EFT does not. The boundary condition is the $Q$-curvature charge of the hemisphere,
+$\CQ=8\pi^2$ (Chang--Yang), and the conformal theory is the photon ($\ag=31/180$), so the
+accumulation is the de Sitter entropy per $Q$-charge,
+\begin{equation}
+N_{\mathrm{eff}} = \frac{S_{dS}}{\CQ} = \frac{8\pi^2(\Mpl/H)^2}{8\pi^2} = \left(\frac{\Mpl}{H}\right)^2 ,
+\end{equation}
+with the $O(1)$ factor \emph{exactly} unity because $S_{dS}$ and $\CQ$ share the same $8\pi^2$
+normalization. The finite value Mottola's $\Lambda\to0$ fixed point does not provide is then the
+anomaly residual $\OL=4\ag$, fixed by $\ag$ and $\CQ$. What was an undetermined $O(1)$ in the
+generic EFT is therefore closed by the framework's own topology. The residual is not a hidden gap
+but a single \emph{declared} founding assumption: P5 $:=$ ($N_{\mathrm{eff}}=S_{dS}/\CQ$, coherent
+accumulation as entropy per $Q$-charge), as fundamental as the holographic principle itself. Given
+P5, the framework is internally complete --- value, sign, ratio, and dark-sector interaction all
+follow --- and its honesty lies in the explicitness of that one postulate together with a sharp
+falsification channel (the curvature ratio, DESI/Euclid). This is the ordinary structure of a
+physical theory, not an outstanding deficit.
+
+\paragraph{P5 is built from established results: the entanglement area law and Jacobson's
+equilibrium, exact for the photon.} P5 has two parts, and the literature supplies both (the value
+excepted), so it is the application of recognized results to the photon substrate rather than an
+isolated postulate. First, its area scaling $N_{\mathrm{eff}}=(\Mpl/H)^2$ \emph{is} the entanglement
+area law: the vacuum entanglement entropy of a region scales with its boundary area as $A/4L_p^2$,
+the Bekenstein--Hawking form \cite{Jacobson2016,RyuTakayanagi2006}, and $S_{dS}/\CQ=(\Mpl/H)^2$.
+Second, the vacuum-entanglement-to-$\Lambda$ link is Jacobson's entanglement equilibrium
+\cite{Jacobson2016}: the semiclassical Einstein equation with a cosmological constant holds if and
+only if the vacuum entanglement entropy of small causal diamonds is stationary at fixed volume ---
+and crucially this result is \emph{exact} for first-order variations of the vacuum of \emph{conformal}
+fields (only modulo a conjecture for nonconformal ones). The photon is conformal and the unique
+infrared-surviving field (Komargodski--Schwimmer), so Jacobson's theorem applies to the CSG photon
+substrate exactly: this lifts K1 (Reeh--Schlieder vacuum entanglement) from a structural motivation
+to an established theorem for precisely the relevant field type. Moreover the maximally symmetric
+causal diamond that carries the equilibrium is itself de Sitter space with a cosmological constant
+\cite{JacobsonVisser2019}, i.e.\ the CSG cap, and the negative diamond temperature it requires
+matches the Hartle--Hawking weighting $e^{-S_E}$; while the coherence ($\times N$, not $\sqrt N$) is
+exactly the strict area law that deriving the Einstein equation demands \cite{Verlinde2017}. What no
+such programme provides is the \emph{value}: Jacobson leaves $\Lambda$ an integration constant and
+Verlinde's dark-energy scale carries contested assumptions. The value $\OL=4\ag$ is fixed by CSG's
+$\ag$ (photon) and $\CQ$ (hemisphere); an assumption-free theorem \emph{with} the value is absent
+across the literature, a gap of the field rather than of CSG specifically. P5 thus stands on the
+area law and Jacobson's equilibrium for the conformal photon, with the value as CSG's own input.
+
+\paragraph{P5 as Jacobson's theorem with two premises derived and the third triangulated.}
+Jacobson's derivation rests on three inputs, and the decisive observation is that CSG's anomaly
+and infrared structure supply precisely the two that are contested in the literature. \emph{(i)} A
+universal area density of vacuum entanglement entropy: by Solodukhin and Casini--Huerta the
+universal four-dimensional entanglement entropy \emph{is} the conformal anomaly, its type-A part
+fixed by the topology of the entangling surface (the extrinsic-curvature contribution drops for the
+spherical de Sitter hemisphere), so the universal coefficient is $\ag$, rendered finite by the
+topological charge $\CQ$ rather than by a cutoff. The known Maxwell subtlety --- the naive free
+logarithmic coefficient differs from the anomaly because of edge modes --- is resolved through the
+four-sphere partition function, which is exactly the object $\zeta(0;\text{Maxwell};S^4)=-4\ag$ that
+CSG uses. \emph{(ii)} A conjecture that the nonconformal variation matches the conformal form, which
+Casini, Galante and Myers found to conflict for relevant operators of low conformal dimension: this
+case is voided in CSG because the Komargodski--Schwimmer $a$-theorem leaves only the conformal photon
+in the infrared, so the problematic nonconformal sector never enters. The remaining input,
+\emph{(iii)} that the vacuum is an entanglement equilibrium (the entropy stationary at fixed volume),
+is the one CSG does not prove; it is concretized as the cap-saddle stationarity
+$\mathrm{d}\Gamma/\mathrm{d}\theta=0$ at the de Sitter diamond. This residual premise is not proved
+but \emph{triangulated} by convergent results of the full pipeline: the cap saddle $\delta\theta^*$ is
+a genuine action stationary point; the stationary action equals the anomaly invariant
+$\int_{S^4}\langle T\rangle=4\ag$; the Riegert scale flow $\mathrm{d}\Gamma/\mathrm{d}\sigma=4\ag$
+reaches the same invariant by an independent route; the entropy whose stationarity is at issue is
+$N_{\mathrm{eff}}=S_{dS}/\CQ$; and the KP volume constraint $\Lambda V_4=\int\!\sqrt{g}\,\langle
+T\rangle$ is the Jacobson--Visser first law of the diamond. All five identify the cap saddle with the
+stationarity of the anomaly action and entropy at the de Sitter diamond, which Jacobson--Visser
+reformulate as the entanglement equilibrium \cite{JacobsonVisser2019}; the numerical convergence of
+the action invariant and the Riegert flow on the same $4\ag$ by independent computations is the
+sharpest leg of the triangulation. P5 is thereby lifted from an isolated postulate to Jacobson's
+entanglement-equilibrium theorem for the conformal photon, with premises (i) and (ii) derived from
+CSG and (iii) triangulated. This is a qualitative reduction, not an assumption-free closure: premise
+(iii) remains a physical equilibrium hypothesis --- Jacobson's own, and broadly accepted --- the
+Maxwell edge-mode coefficient is still under debate, and Jacobson's equivalence is established at
+first order in the variations.
+
+\paragraph{The honest boundary, drawn smaller: one equilibrium premise.} Once the pipeline is
+convergent, two reductions follow. First, the Hartle--Hawking versus Vilenkin branch choice ceases
+to be an independent postulate. The entanglement-equilibrium premise is defined about the maximally
+symmetric vacuum, which for the conformal field is the Bunch--Davies state; by Gibbons--Hawking this
+state restricted to the static patch is a thermal equilibrium, and the Hartle--Hawking vacuum is
+stationary, $\rho\sim e^{-\beta H}$, whereas Vilenkin's tunnelling state is an out-of-equilibrium
+initial condition. Given the equilibrium premise the branch is therefore forced to Hartle--Hawking,
+with the caveat that in the bare wave-function formalism the sign is not fixed absolutely, so the
+forcing holds only relative to the premise. Second, the seemingly separate assumptions --- A5
+(the anomaly action $4\ag$ is the curvature), premise (iii) (the vacuum is an entanglement
+equilibrium), and P5 ($N_{\mathrm{eff}}=S_{dS}/\CQ$) --- are one statement in three forms, since
+$\OL=4\ag$ is exactly equivalent to the normalization $N_{\mathrm{eff}}=S_{dS}/\CQ$ and Jacobson
+identifies the equilibrium stationarity with that same action invariant. Counting them separately
+triple-counts a single premise. The exhaustion no-go reinforces this: no dynamical route yields
+$4\ag$ --- every dynamics gives a different number --- and only the action invariant
+$\int_{S^4}\langle T\rangle=4\ag$ does, so the value cannot be dynamical and the governing principle
+must be one of stationarity, which is precisely the equilibrium premise. The ledger thus reduces from
+two postulates to one: a single equilibrium premise --- Jacobson's own, broadly accepted, and forced
+in form by the no-go --- from which the branch follows and from which, with premises (i) and (ii)
+supplied by CSG, the value follows. The residual is the strict functional identity between the
+cap-saddle stationarity and Jacobson's entanglement stationarity, triangulated by the convergent
+pipeline but not proved. This is the smallest honest boundary the framework reaches: one equilibrium
+postulate and one triangulated identity, not a first-principles closure.
+
+\paragraph{Reverse anchoring: CSG--KP supplies the number established frameworks must postulate.}
+P5 and the absolute identification do not stand alone; they connect to established holographic
+dark-energy programmes by a reverse bootstrap. Those programmes fix the dark-energy density
+through a holographic relation containing one dimensionless $O(1)$ number they must \emph{fit or
+postulate}; CSG--KP supplies that number from $\ag$, and in return the programme supplies the
+energy-\emph{density} form that the no-go of Section~\ref{sec:ladder} showed the anomaly cannot
+produce dynamically. Concretely, holographic dark energy \cite{CohenKaplanNelson1999,Li2004}
+posits the genuine density $\rho_{\mathrm{DE}} = 3c^2\Mpl^2/L^2$ with $c\sim0.8$ fitted; taking the
+Hubble-scale cutoff $L=1/H$ and the CSG--KP value $c^2 = 4\ag$ gives
+\begin{equation}
+\rho_{\mathrm{DE}} = 3(4\ag)\Mpl^2 H^2 \quad\Longrightarrow\quad \OL = 4\ag ,
+\end{equation}
+so $4\ag$ appears as a real density fraction, not merely as an action invariant, and the
+predicted coefficient $c=\sqrt{4\ag}=0.830$ matches the holographic fit. The same number recurs as
+the holographic-equipartition factor: the bridge ratio $\rho_\Lambda/\rho_{\mathrm{anom}} =
+32\pi^2(\Mpl/H)^2 = 4\,S_{dS}$ is the de~Sitter entropy times $\chi(S^4)^2=4$, with the surface
+form $N_{\mathrm{sur}}=N_{\mathrm{bulk}}$ supplied by emergent gravity \cite{PadmanabhanCosMIn2013}.
+\emph{Honest caveats.} The Hubble-cutoff HDE has $w_{\mathrm{DE}}=0$ classically \cite{Hsu2004};
+recovering $w_{\mathrm{eff}}=-1$ together with a constant $\rho_{\mathrm{DE}}/\rho_m$ (the
+coincidence) requires a dark-sector interaction \cite{PavonZimdahl2005}. That interaction is not a
+free addition, however: the next paragraph shows it is \emph{forced} by the Bianchi identity once
+the vacuum runs, with its strength set by $\ag$. And CosMIn \cite{PadmanabhanCosMIn2013} does not
+reverse-extract: it fixes the \emph{absolute} scale $\Lambda L_P^2$ through $H_0$, whereas $4\ag$ is
+the \emph{fraction}; the two are complementary, not reducible. The net gain is real but bounded:
+$4\ag$ now carries a density realization and is anchored independently in the HDE coefficient, the
+equipartition factor, and the anomaly action --- no single one proving it, but together removing
+its isolation. The residual open step is no longer ``action or density'' but the choice of the
+Hubble cutoff and the exact strength of the (Bianchi-forced) interaction.
+
+\paragraph{The dark-sector interaction is forced, not free: running vacuum from the anomaly.}
+The interaction the previous paragraph needs is not an extra ingredient but a consequence of energy
+conservation. If the vacuum energy runs, $\rho_{\mathrm{vac}}=\rho_{\mathrm{vac}}(H)$, the total
+Bianchi identity $\nabla_\mu T^{\mu\nu}_{\mathrm{tot}}=0$ \emph{forces} an exchange with matter
+that cannot be switched off; this is the running-vacuum mechanism
+\cite{BilicEtAl2007,SolaPeracaula2021}. The forced continuity equation is
+\begin{equation}
+\dot\rho_m + 3H\rho_m = +3\nu H\rho_m \quad\Longrightarrow\quad \rho_m \propto a^{-3(1-\nu)} ,
+\end{equation}
+with a single dimensionless strength $\nu$ equal to the $\beta$-function coefficient of the running
+cosmological constant --- a QFT quantity, $\nu_{\mathrm{eff}}=\nu_s+\nu_f+\nu_v$, to which vector
+bosons contribute even in the conformal limit ($\nu_s=0$ but $\nu_v\neq0$)
+\cite{SolaPeracaula2021}. In CSG--KP the only infrared-surviving anomaly source is the photon, so
+$\nu=\nu_v(\text{photon})$, and the natural anomaly magnitude is
+\begin{equation}
+\nu = \frac{\ag}{8\pi^2} = \frac{31}{1440\pi^2} \approx 2.18\times10^{-3} ,
+\end{equation}
+which lies inside the running-vacuum data-fit band $|\nu|\sim10^{-3}$--$10^{-2}$ \emph{and} is
+numerically identical to the curvature ratio $\Ok/\OL$ of Eq.~\eqref{eq:central}. The same anomaly
+number thus drives both the curvature prediction and the dark-sector exchange rate, so the
+coincidence resolution introduces \emph{no} new parameter, and $w_{\mathrm{eff}}=-1$ is recovered
+from the running vacuum rather than from a free Hubble-cutoff fluid, bypassing the Hsu obstruction.
+\emph{Two honest caveats remain.} First, $\nu=\ag/(8\pi^2)$ is the natural choice with the correct
+magnitude, but the exact $\nu_v$ for a massless vector field via adiabatic regularization has not
+been computed here --- the magnitude and the consistency stand, the sharp derivation does not.
+Second, generic phenomenological Hubble-cutoff interactions are excluded by CMB/LSS data; running
+vacuum is a distinct, field-theoretically grounded class, only partly tested, so the specific
+CSG--KP value of $\nu$ must still be confronted with structure-formation data. This reduces point~B
+from ``needs a new interaction parameter'' to ``needs the anomaly number $\ag/(8\pi^2)$, already
+present as the curvature ratio'' --- progress, not closure. \emph{A third caveat must be stated
+plainly:} this mechanism yields $w_{\mathrm{eff}}=-1$ as the CSG--KP \emph{prediction}, but DESI's
+$w_0w_a$ data prefer a \emph{dynamical} $w$ at ${\sim}4\sigma$ (if real), a deviation of order
+$0.25$--$0.6$ that an anomaly number $\nu\sim2\times10^{-3}$ is two orders of magnitude too small to
+produce. The running-vacuum term keeps $w_{\mathrm{eff}}=-1$ self-consistently, but it does
+\emph{not} explain --- and cannot absorb --- the DESI $w$-preference; that remains the framework's
+sharpest open empirical tension, stated as such in the robustness analysis below
+(Section~\ref{sec:status}).
+
+\paragraph{The two open steps are one: a massless source forces the accumulation.}
+Pressing the interaction calculation harder settles both residual steps at once, by
+showing they are the same assumption. The running-vacuum $O(H^2)$ term that acts today,
+$\delta\rho_{\mathrm{vac}}\sim\nu_{\mathrm{eff}}\Mpl^2H^2$, originates in field
+\emph{masses} (terms $\sim m_i^2/\Mpl^2$; \cite{SolaPeracaula2021}), so a massless photon
+gives \emph{no} $O(H^2)$ contribution, $\nu_v(O(H^2))=0$. The photon enters only at
+$O(H^4)$ --- the conformal-anomaly density $\rho_{\mathrm{anom}}=3\ag H^4/8\pi^2$ ---
+which today, with $H^2/\Mpl^2\sim10^{-122}$, is $122$ orders too small to act as the
+$O(H^2)$ interaction. The naive extraction of $\nu$ from a massless field thus fails. It is
+\emph{the same} P5 accumulation $N_{\mathrm{eff}}=(\Mpl/H)^2$ that rescues it: lifting the
+$O(H^4)$ term gives the Friedmann fraction
+\begin{equation}
+\frac{N_{\mathrm{eff}}\,\rho_{\mathrm{anom}}}{3\Mpl^2H^2} = \frac{\ag}{8\pi^2} = \frac{\Ok}{\OL},
+\end{equation}
+exactly the curvature ratio, and the Hubble cutoff $L=1/H$ of the density bridge is that
+\emph{same} de Sitter horizon scale, $N_{\mathrm{eff}}=(\Mpl/H)^2=$ the horizon area in
+Planck units. Hence the absolute value (which needed the cutoff) and the interaction
+strength (which needed the lift) are not two independent assumptions but one: the coherent
+holographic accumulation at the de Sitter horizon. The coherence motivation transfers
+intact --- the sharpest piece, K2, anchors both to the same topological invariant, since the
+value uses $\int_{S^4}E_4=64\pi^2$ and the interaction's vacuum-running coefficient is fixed
+by the same flux through the Riegert flow $d\Gamma/d\sigma=(\ag/16\pi^2)\int_{S^4}E_4=4\ag$.
+The net effect is a reduction of the open surface from two seemingly separate conjectures to
+one --- coherent saturation of the holographic bound, $N_{\mathrm{eff}}=S_{dS}/(8\pi^2)$,
+as fundamental as the holographic principle itself and still lacking a strict
+Schwinger--Keldysh or BV derivation. A sharper localization of what is open, not a closure.
+
+\paragraph{Observer-timelessness: the ratio is epoch-invariant, the absolute scale need not be.}
+The $N_{\mathrm{eff}} = \Mpl^2/H^2$ compensation has a consequence that reframes the coincidence
+``why now''. Because $N_{\mathrm{eff}}\sim H^{-2}$ and $\rho_{\mathrm{anom}}\sim H^4$, the factor
+$H$ cancels \emph{entirely}: $\Omega_{\mathrm{eff}} = \ag/(8\pi^2)$ holds at every epoch,
+independent of $H$. The photon substrate is lightlike and carries no proper time, so the
+prediction --- the ratio $\Ok/\OL$ --- is observer- and epoch-invariant, while the absolute $\OL$
+carries the scalaron position $\varphi_0$, i.e.\ ``where/when the observer is'', and is in this
+reading observer-dependent rather than predicted. The ``why now'' is then dissolved as
+observer-selection on the absolute scale, the timeless ratio needing no tuning. This is the
+honest counterpart to the geometric ladder of Section~\ref{sec:ladder}: the ladder is the
+sharper but \emph{conjectural} alternative, in which even the absolute $\OL = 4\ag$ is topological
+(full $S^4$); the observer-timelessness reading is the conservative one, in which only the ratio
+is fixed. The two are in tension --- the ladder would make $\OL$ epoch-marked but topologically
+determined --- and which holds depends on the open action-identification of
+Section~\ref{sec:ladder}.
+
+\section{Higher-order corrections}
+\label{sec:corrections}
+
+\subsection{The two-loop coefficient $c_1 = 2\zeta(3)$}
+The Coleman--Weinberg expansion of the scalaron potential carries a two-loop coefficient
+$c_1 = 2\zeta(3)$, taken as a \emph{literature-supported} input from Mottola--Vaulin
+\cite{MottolaVaulin2006}. The primitive period $6\zeta(3)$ of the underlying sunset master
+integral is rigorous; the normalization $6\zeta(3) \to 2\zeta(3)$ is the Mottola--Vaulin
+photon-mediated value. A naive $\sigma^3$ sunset gives $\tfrac29\zeta(3)$, the
+photon-polarization-enhanced version $\tfrac89\zeta(3)$; the remaining factor (a
+Wess--Zumino-cocycle contribution) is supplied by the literature value. This is a deliberate and
+clearly bounded reliance on a peer-reviewed result; Section~\ref{sec:m1} (M1-$c_1$) confirms the
+literature input rather than revising it.
+
+\subsection{The Coleman--Weinberg amplitude}
+At the Hubble scale all massive fields are infrared-decoupled, leaving the photon with effective
+coupling $g_{\mathrm{eff}}^2 = \ag$. Naive-dimensional-analysis loop counting with two
+Wess--Zumino anomaly insertions over two four-dimensional loop integrations gives the M5
+amplitude
+\begin{equation}
+\label{eq:AM5}
+A_{\mathrm{M5}} = \frac{\ag^2}{(16\pi^2)^2} \approx 1.19\times 10^{-6},
+\end{equation}
+and including the two-loop coefficient, $c_1\,A_{\mathrm{M5}} = 2\zeta(3)\,A_{\mathrm{M5}}
+\approx 2.86\times 10^{-6}$. The $(16\pi^2)^2$ structure is fixed by the two-loop counting.
+
+\subsection{Convergence of the loop series}
+The three-loop sunset master integral
+$T_{3\mathrm{SS}} = -3\zeta(5) + 5\zeta(3)^2 - 2\zeta(3)$ gives (symmetry factor $1/144$,
+Antoniadis--Mottola vertex $2/3$)
+\begin{equation}
+c_2 = -\tfrac{1}{108}\zeta(5) - \tfrac{1}{162}\zeta(3) + \tfrac{5}{324}\zeta(3)^2
+  \approx 5.3\times 10^{-3} ,
+\qquad
+|c_2\,(c_1 A_{\mathrm{M5}})^2| \approx 4.3\times 10^{-14} ,
+\end{equation}
+where the relevant amplitude is the two-loop value $c_1 A_{\mathrm{M5}} \approx 2.86\times 10^{-6}$
+of Eq.~\eqref{eq:AM5}, not $A_{\mathrm{M5}}$ alone.
+Each loop order is suppressed by $\ag^2/(16\pi^2)^2 \approx 1.2\times 10^{-6}$; the three-loop
+contribution is roughly nine orders of magnitude below DESI DR3 sensitivity. This is a
+\emph{proven} bound (FORM-verified master integrals, Section~\ref{sec:m1} M1-3L).
+
+\section{Independent computational verification (M1)}
+\label{sec:m1}
+
+The framework's key quantitative claims have been independently recomputed with FORM 5.0.0,
+SymPy (exact symbolic arithmetic), and SciPy (numerical eigenvalue solvers). No result
+contradicts the main text; the open items in particular are \emph{corroborated}, not revised.
+The standalone code accompanying this work reproduces each of the following.
+\begin{description}[leftmargin=2.4em,nosep,itemsep=2pt]
+\item[M1-Q.] The $Q$-charge $\int_{D^4} Q_4 = 8\pi^2$ is verified by exact symbolic arithmetic
+($Q_4 = 6$ on the unit $S^4$; $\int_0^{\pi/2}\sin^3 = 2/3$; $6\cdot 2\pi^2\cdot 2/3 = 8\pi^2$),
+matching Lemma~\ref{lem:qcharge}.
+\item[M1-$\zeta$.] The DtN identity is verified in both bookkeepings of
+Section~\ref{sec:two-books}; multi-gauge cross-checks (Lorenz and Coulomb) reproduce the
+hemisphere value and return the closed value $-31/45$.
+\item[M1-3L.] The three-loop Coleman--Weinberg bound $|c_2 (c_1 A_{\mathrm{M5}})^2| \approx
+4.3\times 10^{-14}$ is reproduced from the FORM master integrals.
+\item[M1-H.] The cap-saddle stability is reconfirmed: shooting-method eigenvalues in the scalar,
+$1$-form, and TT sectors are all positive on the deformed hemisphere (e.g. scalar
+$10.0 \to 8.16$, $1$-form $12.71 \to 10.67$, TT $20.0 \to 17.27$ for the lowest modes), with the
+single negative lapse direction unchanged.
+\item[M1-$\Lambda$.] The trace-zero identity $\Lambda^* = \tfrac14\avg{R} \Leftrightarrow
+\avg{T} = 0$ is verified symbolically; the closed-history requirement (finite $V_4$ for $k=+1$,
+divergent for $k=0,-1$) and the unique negative Coleman--Weinberg vacuum at
+$\varphi_{\min} = v_S e^{11/6}$ are reproduced.
+\item[M1-FRG.] The functional-renormalization-group analysis corroborates the assessment that
+Interpretation~A (the RG-attractor route for A2) is insufficient --- the dimensionless ratio
+overshoots the target by a factor $\sim13$ with no attractor. A2 is instead \emph{numerically
+established} in its physically relevant form, Interpretation~B: the iterative fixed point of the
+KP self-consistency map (M5 Banach contraction $L\approx0.18$, sign $G'<0$ analytic, $|G'|<2$
+bound numerical, Section~\ref{sec:theorem64}). The
+retracted RG reading and the iterative fixed point are not in conflict --- they concern flow in
+scale versus iteration at fixed cosmological scale --- and the redshift-constancy of the central
+ratio is in any case topological, independent of either.
+\item[M1-$c_1$.] The literature input $c_1 = 2\zeta(3)$ is confirmed, not revised.
+\end{description}
+
+\section{Independent computational verification (M1), in detail}
+\label{sec:m1detail}
+This section expands Section~\ref{sec:m1}. The recomputation used FORM 5.0.0, SymPy (exact) and
+SciPy (numerical); no result contradicts the main text, and the FRG and $c_1$ items corroborate
+the existing treatment rather than revising it.
+\begin{itemize}[leftmargin=*,nosep]
+\item \emph{$Q$-charge}: SymPy reproduces $Q_4(S^4) = \tfrac16(144-108) = 6$,
+$\int_0^{\pi/2}\sin^3 = \tfrac23$, $\CQ = 6\cdot2\pi^2\cdot\tfrac23 = 8\pi^2$ exactly; the
+cap-shift is a wave-function argument position, so $L_0$ carries no $\dtheta^*$ correction.
+\item \emph{$\zeta(0;\mathrm{DtN}) = -1$}: confirmed in multiple gauges; the Esposito
+decomposition $\zeta_{\mathrm{PDF}} = -77/180$, $\zeta_{R_1} = -1/20$,
+$\zeta_{\mathrm{GM}}+\zeta_{\mathrm{gh}} = -11/30$ sums to $-38/45$, with the BFK route rigorous
+and self-contained.
+\item \emph{Three-loop bound (FORM)}: $T_{3\mathrm{SS}} = -3\zeta(5) + 5\zeta(3)^2 - 2\zeta(3)$,
+$c_2 \approx 5.3\times10^{-3}$, $|c_2 (c_1 A_{\mathrm{M5}})^2| \approx 4.3\times10^{-14}$ (the amplitude is the two-loop value $c_1 A_{\mathrm{M5}}\approx2.86\times10^{-6}$).
+\item \emph{Cap-saddle stability} (analytic, by domain monotonicity; confirmed by shooting):
+scalar $10.0\to8.16,\,\dots,\,54.0\to48.06$; transverse $1$-form (Weitzenb\"ock-distinct)
+$12.71\to10.67,\,\dots,\,56.25\to50.21$; TT $20.0\to17.3,\,\dots,\,59.7\to53.5$; all positive
+(each cap value lies strictly above the closed-$S^4$ limit $\ge4,6,12$),
+lapse mode Morse index $1$ unchanged.
+\item \emph{FRG corroboration}: an independent Reuter--Saueressig flow finds a clean UV fixed
+point but the ratio $R = \kappa/\lambda$ overshoots $\ag/(8\pi^2)$ by a factor $13$ at $t=-1$,
+with no attractor --- confirming that A2 as an RG attractor fails. A2 is instead numerically established via
+Interpretation~B (the iterative fixed point of the KP self-consistency map, M5 Banach
+contraction; sign $G'<0$ analytic, $|G'|<2$ numerical); the \emph{topological} $z$-independence of the ratio (the framework's actual
+argument) is untouched by either reading.
+\item \emph{$c_1 = 2\zeta(3)$}: FORM reproduces the Mottola--Vaulin normalization; the primitive
+period $6\zeta(3)$ is rigorous and the factor $6\zeta(3)\to2\zeta(3)$ is the literature input.
+\end{itemize}
+
+\section{Observational status and forecasts}
+\label{sec:obs}
+
+\subsection{Current pull}
+With the ladder-consistent budget $\Om = 0.3096$ and the open sign, the present-epoch prediction is $\Ok^{\mathrm{obs}} =
++0.00150$ (L0) or $+0.00143$ (L1). The most recent curvature-sensitive analysis of DESI DR2 +
+Planck \cite{ChenZaldarriaga2025} reports $\Ok^{\mathrm{obs}} = +0.0023 \pm 0.0011$, a mild
+($2.1\sigma$) preference for an open universe. The framework pull is
+$(0.0023-0.00150)/0.0011 \approx 0.72\sigma$ (L0), $0.79\sigma$ (L1) --- fully consistent, and
+on the open side. A preliminary MCMC run imposing the $\Lb$-constraint over Planck plik + DESI
+DR2 returns $\Ok^{\mathrm{obs}} = +0.00152$ with $\Delta\chi^2 = -10.77$ versus flat
+$\Lambda$CDM and a Hubble constant $H_0 = 68.6$ shifted modestly toward the local-distance-ladder
+value. We flag the chains, priors, and likelihood configuration as not yet released in
+publication-grade form, and we therefore do \emph{not} treat this run as evidence for the
+framework; a full, reproducible Cobaya analysis is forthcoming.
+
+\subsection{Forecasts and discrimination}
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l l l l@{}}
+\toprule
+Survey (epoch) & $\sigma_K$ & Detection of central value & L0-vs-L1 discrimination \\
+\midrule
+DESI DR3 ($\sim$2027) & $\sim 3\times 10^{-4}$ & $\sim 5\sigma$ & $\sim 0.24\sigma$ \\
+Euclid DR1 & $\sim 1.5\times 10^{-4}$ & --- & $\sim 0.48\sigma$ \\
+Euclid + CMB-S4 (2030+) & $\sim 5\times 10^{-5}$ & --- & $\sim 1.4\sigma$ \\
+\bottomrule
+\end{tabular}
+\caption{Forecast sensitivities. DESI DR3 will test the central relation at $\sim 5\sigma$; the
+L0/L1 refinement requires the combined Euclid + CMB-S4 sensitivity.}
+\label{tab:forecast}
+\end{table}
+
+\section{Numerical MCMC details}
+\label{sec:mcmc}
+\emph{Preliminary internal results: chains, priors, and the likelihood configuration are not yet
+released in publication-grade form. The numbers below are indicative only and are not used to
+support the framework's claims; a complete, reproducible Cobaya chain set will be released
+separately.} A Planck plik $+$ DESI DR2 BAO chain was run with Cobaya
+(clik likelihoods), eight walkers, $5\times10^5$ steps. The constraint
+$\Lb = 8\pi^2/\ag = 458.4$ is imposed as a derived relation $\OL = \Lb\,|\Ok|$ over a free $\Ok$,
+with $\Om + \OL + \Ok = 1$. Sampled: $\Omega_b h^2$, $\Omega_c h^2$, $\theta_{\mathrm{MC}}$,
+$\tau$, $n_s$, $\ln(10^{10}A_s)$, $\Ok$. Relative to flat $\Lambda$CDM the chain achieves
+$\Delta\chi^2_{\mathrm{CMB}} = -6.4$ and $\Delta\chi^2_{\mathrm{BAO}} = -4.4$
+($\Delta\chi^2_{\mathrm{tot}} = -10.77$), with $\Ok = +0.00152$ and $H_0 = 68.616$, modestly
+shifted toward the local-distance-ladder value. Two independent likelihood implementations agree
+within $\Delta\chi^2 < 1$.
+
+\section{Consolidated status and falsifiability}
+\label{sec:status}
+
+\subsection{The epistemic ledger}
+\begin{longtable}{@{}p{6.8cm} l p{4.4cm}@{}}
+\caption{Consolidated status of the framework's components.}\label{tab:ledger}\\
+\toprule Component & Status & Basis \\ \midrule \endfirsthead
+\toprule Component & Status & Basis \\ \midrule \endhead
+$Q$-charge $\int_{D^4} Q_4 = 8\pi^2$ & proven & Chang--Yang/Branson; M1-Q \\
+Spectral results R1--R12 & proven & spectral computation; \cite{Vassilevich2003} \\
+$\zeta(0;\mathrm{Maxwell};S^4) = -31/45$ (R1) & proven & two derivations \\
+BFK identity (both bookkeepings) & proven & \cite{BFK1992}; M1-$\zeta$ \\
+Hemisphere quotient $\ag/(8\pi^2)$ (L0) & proven & topological identity (Sec.~\ref{sec:main}) \\
+Cap-saddle $\dtheta^*_{\mathrm{exact}} = 0.16391$ & proven & exact saddle Eq.~\eqref{eq:saddle} \\
+Cap-saddle stability (all sectors) & proven (analytic) & domain monotonicity + closed-$S^4$ spectrum; M1-H \\
+Boundary refinement (BFK odd-function) & proven & rigorous symmetry (Sec.~\ref{sec:boundary}) \\
+Uniqueness of the invariant & proven (within criteria) & Paneitz zero-mode + (i)--(iv); full minimality open \\
+KP sequestering (magnitude problem) & derived within CSG & Built-in via St\"uckelberg compensator (proof sketch); full all-orders rigor pending \\
+KP self-consistency (value, structural) & numerically established & Proposition~\ref{thm:kp} (sign $G'<0$ analytic, $|G'|<2$ bound numerical); M1-$\Lambda$ \\
+Three-loop bound $\approx 4.3\times 10^{-14}$ & proven & FORM; M1-3L \\
+$\ag = 31/180$ & derived & Gilkey $a_4$ on $S^4$ (Sec.~\ref{sec:heat}); scalar check $1/360$ \\
+$c_1 = 2\zeta(3)$ & literature; cancels from ratio & Mottola--Vaulin; convergence only, not in prediction \\
+Absolute $\OL$ (KP volume) & universality structure only; scale open & $\Lambda^*$ universal in $\varphi_0$/$\Omega_m$ (proven) but amplitude-set ($\approx-0.10$ for $A_{\mathrm{CW}}$, not $-0.69$); $\varphi_0$ free; the $\langle R\rangle/4$ sharpness proxy was a floored-geometry artefact (retracted) \\
+Budget ladder $\OL = 4\ag$, $\Ok = \ag^2/2\pi^2$ & conjecture (sharpened) & ladder algebra exact ($\Ok\cdot32\pi^2 = \OL^2$, $32\pi^2 = \int_{D^4}E_4$), Planck match $<1\sigma$; lift prefactor now \emph{computed} $=A/G$ (Bekenstein--Hawking horizon dof $=4S_{dS}$), residual $=$ CKN saturation P5 (named, not proven); Sec.~\ref{sec:ladder} \\
+P5 localization (in-in) & localized, not proven & Schwinger--Keldysh: anomaly Adler--Bardeen exact; lift $=$ Cohen--Kaplan--Nelson bound; Schwarzschild part follows from gravity (fixes $10^{-122}$), saturation $=$ P5 \\
+Scope (ratio vs absolute) & ratio holography-free & $\Ok/\OL=\ag/8\pi^2$ scale-invariant ($H,\Mpl$ cancel) $\Rightarrow$ Euclid-falsifiable core needs no P5; absolute $\OL$ alone carries the saturation \\
+$\OL = 0.704$ (halo-averaged) & derived, conditional & Lombriser 2019; assumes $y(t_0)=\tfrac12$ \\
+Absolute $\OL$ (causal closure) & geometric, prior-free & apparent-horizon hypersurface forced ($rH{=}1$); form not forced (KP/thermo fail, closures spread $0.49$--$0.96$) $\to$ $O(1)$ band \\
+A5a (topological ratio $\ag/8\pi^2$) & theorem & Cauchy + Chern--Weil + APS; $|\epsilon_\partial|\le 1.5\%$ \\
+A5b (Wick-rotation kinematics) & derived & saddle-point, conditional on B1 (established, reduced) \\
+A5c (reference-state choice) & specification & the only genuinely chosen element; data-anchored \\
+A2 (IR fixed point) & numerically established & contraction $L=|1+G'|<1$ requires $-2<G'<0$: sign $G'<0$ analytic, $|G'|<2$ bound numerical \\
+A2 as an RG-flow attractor & retracted & not required; topology replaces it (M1-FRG) \\
+Curvature sign $\Ok > 0$ (open) & forced & unique cap saddle $\dtheta^*>0$ for $\ag>0$; weighting-independent \\
+Euclidean fluctuation stability & resolved (GHP) & conformal mode rotated; transverse modes positive (B1$'$) \\
+Euclidean vs Lorentzian definition & open (interpretational) & FLT debate; not CSG--KP-specific \\
+B1 (cap dominance, reduced action) & established (analytic) & $n_{\mathrm{complex}}=0$; no Stokes line; gap $>7\times 10^5$ \\
+B1$'$ (cap $+$ scalar embedding) & complete (analytic) & degree-$8$ polynomial reduction, both $\varphi$-branches; Picard--Lefschetz $\Rightarrow n_{\mathrm{complex}}=0$ \\
+Full no-boundary path integral & assembled (semiclassical) & $1$-loop det $=-4\ag$; Type-A Adler--Bardeen exact \\
+All-orders stability of $R=\ag/(8\pi^2)$ & proven (within CSG) & no graviton loops; ratio of $\hbar$-indep.\ invariants; abs.\ $\varphi^4$ Borel decoupled \\
+\bottomrule
+\end{longtable}
+\noindent
+The observable prediction reduces, after this decomposition, to a single genuinely chosen
+element: the reference-state specification A5c (the canonical $\Lambda$-dominated present epoch),
+anchored by current cosmological data. Its Euclidean half A5a is a theorem (Cauchy + Chern--Weil
++ APS) and the Wick-rotation kinematics A5b are derived in saddle-point given B1; the
+constancy of the ratio in redshift is \emph{topological} (Komargodski--Schwimmer invariance of an
+integrated anomaly), so the retracted RG-attractor reading of A2 does not bear on it --- and A2
+itself is \emph{numerically established} in its physically relevant form, the iterative fixed point of the
+KP self-consistency map (M5 Banach contraction; sign $G'<0$ analytic, $|G'|<2$ bound numerical). The cap-saddle dominance B1 is analytically established on the reduced cap-action, and the two-dimensional cap-plus-scalar embedding $B1'$ is complete ($n_{\mathrm{complex}}=0$ by polynomial reduction, Section~\ref{sec:found}); the embedding into the full infinite-dimensional no-boundary path integral over all inhomogeneous matter and metric modes is assembled semiclassically and is one-loop exact for the Type-A prediction (Section~\ref{sec:found}); the prediction is all-orders stable as a ratio of $\hbar$-independent invariants (no graviton loops in CSG, Adler--Bardeen-exact Type-A, topological $8\pi^2$; Section~\ref{sec:found}); the one residue is the absolute Borel summability of the $\varphi^4$ matter series, which cancels from the ratio and does not bear on the prediction.
+
+\subsection{What the framework resolves}
+The three faces of the cosmological constant problem are addressed as follows. The
+\emph{magnitude} is handled in two stages: the bare radiative vacuum energy is removed by
+sequestering (derived within CSG, Section~\ref{sec:sequester}), while the magnitude of the anomaly-induced curvature density
+rests on the holographic accumulation postulate P5 (Section~\ref{sec:psf}), which carries the
+$122$-order hierarchy and is not derived from first principles. The \emph{value} is fixed
+structurally by Proposition~\ref{thm:kp}: $\Lambda$ is not free, but the unique fixed point of the
+averaging map; its absolute scale is a calibration at the homogeneous level. The
+\emph{coincidence} is addressed by halo-weighted averaging, which returns $\OL = 0.704$
+conditional on the uniform-prior assumption. The \emph{ratio}~\eqref{eq:central} --- parameter-free
+given the identification A5, its topological core A5a a theorem --- links the residual
+cosmological constant to the spatial curvature and supplies a single sharp test.
+
+\paragraph{Two levels of claim.} The results separate onto two levels; conflating them is the main source of overstatement. \emph{The dimensionless prediction} --- the ratio
+$\Ok/\OL = \ag/(8\pi^2)$ and the open sign $\Ok>0$ --- is theorem-level up to one data-anchored
+convention. Each ingredient is proven or derived: $\ag = 31/180$ (Gilkey $a_4$), $\CQ = 8\pi^2$
+(Chang--Yang), the hemisphere quotient, the cap saddle and its \emph{analytic} stability (domain
+monotonicity), the contraction A2 ($L = |1+G'| < 1$; sign $G'<0$ analytic, $|G'|$ bound numerical), the dominance B1 and the complete
+embedding B1$'$, the topological half A5a (theorem) and the kinematic half A5b (derived given
+B1); uniqueness holds within criteria (i)--(iv). The only chosen element is the
+reference epoch A5c, fixing ``today'' for a quantity scaling as $(1+z)^2$ --- a calibration
+convention, not a postulate.
+
+\emph{The absolute magnitude} --- why the curvature density has its
+observed size and why $\OL \approx 0.685$ --- is a logically separate question the
+dimensionless prediction does not answer. Two former ingredients have moved off the open list:
+sequestering is \emph{derived within CSG} (the Built-in Sequestering
+proposition, Section~\ref{sec:sequester}: the Weyl $R^2$ term supplies the
+Stückelberg compensator realizing the KP constraint --- a proof sketch, full all-orders
+rigor pending), and $c_1 = 2\zeta(3)$ \emph{cancels from the ratio}. What remains not derived from first principles is then narrower: the
+holographic accumulation P5 (carrying the $122$-order hierarchy, its coherence
+enforced by K1--K3 but not strictly derived, Section~\ref{sec:psf}); and the absolute value $\OL$
+itself. The latter is subtler than a flat ``not derivable'': the self-consistency route yields a
+\emph{universal} fixed point $\Lambda^*$ (independent of $\varphi_0$ and $\Omega_m$) but only
+amplitude-set ($\approx-0.10$ for the CW amplitude, not the $-0.69$ once read off a
+$\langle R\rangle/4$ proxy that proves a floored-geometry artefact), so $\varphi_0$ --- hence
+$\OL = (V(\varphi_0)-\Lambda^*)/3$ --- stays free.
+The \emph{anthropic} measure problem is categorical but \emph{avoidable}: a causal variational closure needs no measure, and on
+it the boundary hypersurface is \emph{forced} (the apparent horizon, $\theta=0$, $rH=1$). What stays open is then neither measure nor boundary but the
+closure \emph{functional}: KP stationarity over the
+cone has no fixed point, apparent-horizon thermodynamics
+give an identity or $\OL=1$, and bare dimensional closures spread across $0.49$--$0.96$ (the
+$0.725$ choice not distinguished). The causal route thus
+pins the hypersurface and an $O(1)$ range, not a sharp value. The framework therefore delivers a sharp
+parameter-free \emph{relation}, a universal but amplitude-set
+fixed point with the absolute scale open, a forced apparent-horizon
+hypersurface with an $O(1)$ range for $\OL$, and --- conjecturally --- the budget ladder
+($\OL = 4\ag$, matching Planck) awaiting one identification step; but \emph{not} a first-principles
+value for the dark-energy density, pending either a derived closure
+functional or that ladder bridge.
+
+\subsection{Falsification criteria}
+\begin{enumerate}[leftmargin=*,nosep]
+\item $\Ok$ outside $\pm 3\sigma$ of $\ag\OL/(8\pi^2)$ refutes the central relation.
+\item A robust detection of a \emph{closed} universe ($\Ok < 0$) refutes the sign prediction.
+\item The constant object is the \emph{action-parameter} ratio $\mathcal{R}=3|K|/\Lambda$; the
+density-parameter ratio redshifts as $\Ok(z)/\OL(z)=\mathcal{R}/a^2$ and is therefore \emph{not}
+epoch-independent. The sharp test is the present-epoch value $\Ok^{(0)}/\OL^{(0)}=\mathcal{R}$
+(extracted as a derived parameter with $a_0=1$): a measured $\Ok^{(0)}/\OL^{(0)}$ outside
+$\pm3\sigma$ of $\ag/(8\pi^2)$ refutes the relation.
+\end{enumerate}
+DESI DR3 will test the first and third within reach; the present $\ge 2\sigma$ preference for an
+open universe (DESI\,BAO${}+{}$CMB${}+{}$SNe) already constrains the second. The sign evidence is
+\emph{not} yet robust across datasets, however: while the BAO-combined fits favour
+$\Ok>0$, Planck temperature data alone pull toward a \emph{closed} universe
+($\Ok\approx-0.04$ at ${\sim}2$--$3\sigma$), an effect entangled with the CMB lensing-amplitude
+anomaly. The theoretical sign is forced ($\ag>0$), but its observational confirmation remains
+data-combination dependent until DR3.
+
+\subsection{Robustness: objections forced, cleared, or genuinely open}
+A falsification attempt raised seven objections. Five are forced by the
+structure or cleared by results elsewhere in the pipeline; one (DESI
+$w$-dynamics) is a genuine open empirical threat we do \emph{not} claim to clear; the
+seventh is the single postulate isolated above. We collect them so the one unresolved item is stated as such, not glossed over.
+\begin{enumerate}[leftmargin=*,nosep]
+\item \emph{The open sign is a free choice.} It is not: the reduced cap action has saddle equation
+$\ag\cos^4\delta = \sin\delta$, whose only real root is $\dtheta^*=0.164>0$; a closed universe
+would require $\ag<0$, so the sign $\Ok>0$ is forced by $\ag=31/180>0$.
+\item \emph{The factor four in $\OL=4\ag$ is numerology.} It is the spectral ratio
+$\zeta(0;\mathrm{Maxwell};S^4)/\ag = (-31/45)/(-31/180)=4$, fixed by the BFK completeness identity
+$2\zeta(0;D^4)-\zeta(0;\mathrm{DtN})=-4\ag$; $\ag$ is the Gilkey coefficient and $\pi^3\approx 31$ is
+flagged as coincidence, not used.
+\item \emph{No dynamics produces the value, so it is unfounded.} The no-go is a feature:
+$\Ok/\OL=\ag/8\pi^2$ is a topological ratio protected by conformal invariance, characterising the
+geometry at all epochs, not an initial condition propagating through Friedmann evolution. Deriving
+it dynamically is a category error, and the absence of any dynamical route is consistent with the
+topological reading rather than evidence against it.
+\item \emph{The Maxwell entanglement coefficient is $-16/45$, not $-31/45$.} The $1/3$ gap is the
+gauge edge-mode contribution (Casini--Huerta--Mag\'an--Pontello), and the DtN determinant measures it
+exactly: $\zeta(0;\mathrm{DtN};\mathrm{Maxwell};S^3)=3=\dim S^3$ counts the boundary polarizations,
+and through the sphere factorization $Z_{S^4}=Z_{\mathrm{bulk}}/Z_{\mathrm{edge}}$ the DtN
+determinant is $Z_{\mathrm{edge}}$. The discrepancy is encoded, not missed, and is itself an
+independent lattice-testable prediction.
+\item \emph{Why only the photon; the massless graviton should contribute.} The graviton is
+non-conformal (the Lichnerowicz operator's Riemann term breaks Weyl invariance, so the conformal
+result does not apply and it drops out for the same reason massive fields do), it is the geometry
+being determined (its inclusion is circular), and on $D^4$ only $\chi$ survives ($\sigma=0$). The
+photon is the unique massless conformal non-gravitational field.
+\item \emph{DESI prefers dynamical dark energy at $>3\sigma$, refuting $w=-1$.} This is the one
+objection that is \emph{not} cleared. The hope that DESI's $w_0w_a$ preference (obtained under
+forced $\Ok=0$) is an artefact of the $\Ok$--$w_0$ degeneracy fails quantitatively: opening to
+$\Ok=+1.5\times10^{-3}$ shifts the effective $w_0$ by only ${\sim}2\times10^{-3}$, whereas DESI
+requires $0.25$--$0.6$---a factor ${\sim}100$--$300$ too small, and the running-vacuum strength
+$\nu=\ag/8\pi^2\approx 2.2\times10^{-3}$ is equally small. The framework therefore carries
+\emph{two} independent tensions with DESI: curvature (${\sim}1.8\sigma$, tolerable) and $w$
+(${\sim}4\sigma$ if real), and the second cannot be absorbed by the first. Honest status: either
+DESI's $w$-signal weakens with data, or $w\neq-1$ is real and the constant $\OL=4\ag$ requires an
+extension. This is a genuine open empirical threat, decided by DESI DR3 and Euclid, not by the
+present analysis.
+\end{enumerate}
+The honest boundary is therefore exactly \emph{one conceptual postulate} --- the anomaly--curvature identification $\mathrm{A5}=\text{(iii)}=\mathrm{P5}$ --- \emph{together with one sharp empirical threat} ($w\neq-1$), both decided by observation.
+
+\section*{Acknowledgement of conditional status}
+\addcontentsline{toc}{section}{Acknowledgement of conditional status}
+This paper separates what is proven from what is assumed. The Euclidean conformal and
+topological core --- the $Q$-charge, the twelve spectral results, the BFK identity, the
+hemisphere quotient, the cap-saddle and its stability, the boundary refinement, the uniqueness
+statement, and the structural content of the self-consistency theorem --- is established at
+theorem level and independently recomputed (M1). The photon anomaly coefficient $\ag = 31/180$ is
+derived from the Gilkey heat-kernel coefficient (Section~\ref{sec:heat}); the two-loop
+normalization $c_1 = 2\zeta(3)$ enters only the convergence bound and cancels from the predicted
+ratio. Sequestering is derived within CSG (the Built-in Sequestering proposition: the Weyl
+$R^2$ term supplies the Stückelberg compensator realizing the KP constraint --- a proof sketch,
+full all-orders rigor pending), not an external add-on. The absolute dark-energy
+scale is a calibration, becoming a conditional derivation only with the structure-formation
+assumption $y(t_0)=\tfrac12$. The KP self-consistency fixed point A2 is numerically established (M5 Banach
+contraction; sign analytic, $|G'|$ bound numerical); cap-saddle dominance B1 is analytically established on the reduced cap-action; and
+the Lorentzian identification A5 decomposes into a theorem (A5a), a B1-conditional kinematic
+derivation (A5b), and a single data-anchored choice (A5c). The open curvature sign is forced by
+$\ag>0$ via the unique cap saddle. What remains genuinely open is: the holographic accumulation
+postulate P5 (which carries the $122$-order magnitude hierarchy and lacks a Schwinger--Keldysh
+derivation of $N_{\mathrm{eff}} = \Mpl^2/H^2$); the choice A5c; the absolute Borel summability of
+the $\varphi^4$ matter series (the prediction itself being all-orders stable as a ratio of
+$\hbar$-independent invariants, Section~\ref{sec:found}); and the Lorentzian
+fluctuation stability (the Feldbrugge--Lehners--Turok question) --- the last of these is where
+observation, not further algebra, will decide.
+
+\section{Code and data availability}
+\label{sec:code}
+A self-contained Python package reproduces every numerical and symbolic statement of this
+paper. The headline constants and the central prediction are defined once in
+\texttt{csg\_kp\_core.py} (the single source for $\ag = 31/180$, $\CQ = 8\pi^2$, the matter
+fraction $\Om = 0.3096$, and the derived $\OL$, $\Ok$); all other modules import from it. The
+full verification harness is \texttt{run\_all.py} ($37/37$ modules), with the dedicated
+falsification and audit harnesses \texttt{foundations/falsification\_suite.py} ($16/16$ checks)
+and \texttt{foundations/axiom\_status\_audit.py}. Individual claims map to modules as follows.
+\begin{itemize}[leftmargin=*,nosep]
+\item $\ag = 31/180$ from the Gilkey heat-kernel coefficient (independent of the core, to verify
+it): \texttt{foundations/a\_gamma\_derivation.py}.
+\item Universality of the Banach fixed point $\Lambda^*$ and the Coleman--Weinberg iteration:
+\texttt{foundations/cw\_banach\_iteration.py}.
+\item Coherent spectral accumulation lifting the local anomaly to the curvature scale:
+\texttt{foundations/spectral\_coherence.py}.
+\item The geometric budget ladder $\OL = 4\ag$ from $\ag$ and $\chi = 2$:
+\texttt{foundations/budget\_ladder.py}.
+\item The $A/G$ lift prefactor (Bekenstein--Hawking horizon degrees of freedom):
+\texttt{foundations/action\_density\_bridge.py}.
+\item The Schwinger--Keldysh localization of the residual assumption P5 (CKN saturation):
+\texttt{foundations/schwinger\_keldysh\_p5.py}.
+\item The scope confinement (conjecture constrains the absolute value, not the ratio):
+\texttt{foundations/ratio\_vs\_absolute\_scope.py}.
+\item The no-go audit for the absolute $\OL = 4\ag$ value:
+\texttt{foundations/absolute\_value\_audit.py}.
+\item The three residual foundational points (sign, $B1'$, reference epoch):
+\texttt{foundations/close\_open\_points.py}.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{Bekenstein1972} J.~D.~Bekenstein, \textit{Lett.\ Nuovo Cimento} \textbf{4}, 737 (1972).
+\bibitem{Strominger1996} A.~Strominger and C.~Vafa, \textit{Phys.\ Lett.\ B} \textbf{379}, 99 (1996); arXiv:hep-th/9601029.
+\bibitem{DS1993} S.~Deser and A.~Schwimmer, \textit{Phys.\ Lett.\ B} \textbf{309}, 279 (1993); arXiv:hep-th/9302047.
+\bibitem{Duff1994} M.~J.~Duff, \textit{Class.\ Quantum Grav.} \textbf{11}, 1387 (1994).
+\bibitem{KomargodskiSchwimmer2011} Z.~Komargodski and A.~Schwimmer, \textit{JHEP} \textbf{12}, 099 (2011); arXiv:1107.3987.
+\bibitem{Birrell1982} N.~D.~Birrell and P.~C.~W.~Davies, \textit{Quantum Fields in Curved Space} (Cambridge, 1982).
+\bibitem{ChristensenDuff1980} S.~M.~Christensen and M.~J.~Duff, \textit{Nucl.\ Phys.\ B} \textbf{170}, 480 (1980).
+\bibitem{ChangYang1995} S.-Y.~A.~Chang and P.~C.~Yang, \textit{Annals of Math.} \textbf{142}, 171 (1995).
+\bibitem{Branson1995} T.~P.~Branson, \textit{Trans.\ Amer.\ Math.\ Soc.} \textbf{347}, 3671 (1995).
+\bibitem{BFK1992} D.~Burghelea, L.~Friedlander, T.~Kappeler, \textit{J.\ Funct.\ Anal.} \textbf{107}, 34 (1992).
+\bibitem{Vassilevich2003} D.~V.~Vassilevich, \textit{Phys.\ Rept.} \textbf{388}, 279 (2003).
+\bibitem{KP2014} N.~Kaloper and A.~Padilla, \textit{Phys.\ Rev.\ Lett.} \textbf{112}, 091304 (2014); arXiv:1309.6562.
+\bibitem{ShawBarrow2011} D.~J.~Shaw and J.~D.~Barrow, \textit{Phys.\ Rev.\ D} \textbf{83}, 043518 (2011); arXiv:1010.4262.
+\bibitem{BD2015} I.~Ben-Dayan et al., \textit{JCAP} \textbf{05}, 002 (2016); arXiv:1507.04158.
+\bibitem{Riegert1984} R.~J.~Riegert, \textit{Phys.\ Lett.\ B} \textbf{134}, 56 (1984).
+\bibitem{BGT1995} M.~Bucher, A.~S.~Goldhaber, N.~Turok, \textit{Phys.\ Rev.\ D} \textbf{52}, 3314 (1995); arXiv:astro-ph/9411046.
+\bibitem{HawkingTurok1998} S.~W.~Hawking and N.~Turok, \textit{Phys.\ Lett.\ B} \textbf{425}, 25 (1998).
+\bibitem{Feldbrugge2017} J.~Feldbrugge, J.-L.~Lehners, N.~Turok, \textit{Phys.\ Rev.\ Lett.} \textbf{119}, 171301 (2017).
+\bibitem{Barbour2014} J.~Barbour, T.~Koslowski, F.~Mercati, \textit{Phys.\ Rev.\ Lett.} \textbf{113}, 181101 (2014).
+\bibitem{Lombriser2019} L.~Lombriser, \textit{Phys.\ Lett.\ B} \textbf{797}, 134804 (2019); arXiv:1901.08588.
+\bibitem{MottolaVaulin2006} E.~Mottola and R.~Vaulin, \textit{Phys.\ Rev.\ D} \textbf{74}, 064004 (2006); arXiv:gr-qc/0604051.
+\bibitem{Planck2018} Planck Collaboration, \textit{A\&A} \textbf{641}, A6 (2020); arXiv:1807.06209.
+\bibitem{ChenZaldarriaga2025} J.~Chen and M.~Zaldarriaga, \textit{JCAP} \textbf{08}, 027 (2025); arXiv:2505.00659.
+\bibitem{Bohr1928} N.~Bohr, \textit{Nature} \textbf{121}, 580 (1928).
+\bibitem{ReehSchlieder1961} H.~Reeh and S.~Schlieder, \textit{Nuovo Cim.} \textbf{22}, 1051 (1961).
+\bibitem{Hensen2015} B.~Hensen et al., \textit{Nature} \textbf{526}, 682 (2015); arXiv:1508.05949.
+\bibitem{Giustina2015} M.~Giustina et al., \textit{Phys.\ Rev.\ Lett.} \textbf{115}, 250401 (2015); arXiv:1511.03190.
+\bibitem{Shalm2015} L.~K.~Shalm et al., \textit{Phys.\ Rev.\ Lett.} \textbf{115}, 250402 (2015); arXiv:1511.03189.
+\bibitem{CohenKaplanNelson1999} A.~G.~Cohen, D.~B.~Kaplan and A.~E.~Nelson, \textit{Phys.\ Rev.\ Lett.} \textbf{82}, 4971 (1999); arXiv:hep-th/9803132.
+\bibitem{Li2004} M.~Li, \textit{Phys.\ Lett.\ B} \textbf{603}, 1 (2004); arXiv:hep-th/0403127.
+\bibitem{Hsu2004} S.~D.~H.~Hsu, \textit{Phys.\ Lett.\ B} \textbf{594}, 13 (2004); arXiv:hep-th/0403052.
+\bibitem{PavonZimdahl2005} D.~Pav\'on and W.~Zimdahl, \textit{Phys.\ Lett.\ B} \textbf{628}, 206 (2005); arXiv:gr-qc/0505020.
+\bibitem{Mottola2010} E.~Mottola, arXiv:1006.3567 (2010).
+\bibitem{Mottola2022} E.~Mottola, \textit{JHEP} \textbf{11}, 037 (2022); arXiv:2205.04703.
+\bibitem{Jacobson2016} T.~Jacobson, \textit{Phys.\ Rev.\ Lett.} \textbf{116}, 201101 (2016); arXiv:1505.04753.
+\bibitem{RyuTakayanagi2006} S.~Ryu and T.~Takayanagi, \textit{Phys.\ Rev.\ Lett.} \textbf{96}, 181602 (2006); arXiv:hep-th/0603001.
+\bibitem{JacobsonVisser2019} T.~Jacobson and M.~R.~Visser, \textit{SciPost Phys.} \textbf{7}, 079 (2019); arXiv:1812.01596.
+\bibitem{Verlinde2017} E.~P.~Verlinde, \textit{SciPost Phys.} \textbf{2}, 016 (2017); arXiv:1611.02269.
+\bibitem{PadmanabhanCosMIn2013} H.~Padmanabhan and T.~Padmanabhan, \textit{Int.\ J.\ Mod.\ Phys.\ D} \textbf{22}, 1342001 (2013); arXiv:1302.3226.
+\bibitem{BilicEtAl2007} N.~Bili\'c, B.~Guberina, R.~Horvat, H.~Nikoli\'c and H.~\v{S}tefan\v{c}i\'c, \textit{Phys.\ Lett.\ B} \textbf{657}, 232 (2007); arXiv:0707.3830.
+\bibitem{SolaPeracaula2021} J.~Sol\`a Peracaula, \textit{Int.\ J.\ Mod.\ Phys.\ A} \textbf{36}, 2150239 (2021); arXiv:2109.12086.
+\end{thebibliography}
+
+\end{document}

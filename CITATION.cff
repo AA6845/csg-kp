@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "CSG-KP: A Conformal-Anomaly Resolution of the Cosmological Constant Problem"
+abstract: >-
+  A single internally consistent framework addressing the magnitude, value, and
+  coincidence faces of the cosmological constant problem under explicit stated
+  assumptions, yielding one sharp falsifiable prediction: a parameter-free curvature
+  fingerprint |Omega_K|/Omega_Lambda = a_gamma/(8 pi^2) = 31/(1440 pi^2) ~= 2.181e-3,
+  built from the photon type-A conformal anomaly a_gamma = 31/180 and the hemisphere
+  Q-curvature charge 8 pi^2. Includes the full spectral backbone and a Python
+  verification suite separating proven from assumed components.
+type: software
+authors:
+  - family-names: "Röhl"
+    given-names: "Lukas"
+    affiliation: "Independent Researcher, Kelmis (Belgium)"
+    orcid: "https://orcid.org/0009-0003-8121-7956"
+version: "0.5"
+date-released: "2026-05-23"
+license: MIT
+doi: "10.5281/zenodo.20356226"
+repository-code: "https://github.com/AA6845/csg-kp"
+keywords:
+  - cosmological constant problem
+  - conformal anomaly
+  - spatial curvature
+  - dark energy
+  - spectral geometry
+  - heat kernel
+  - Euclid

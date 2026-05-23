@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# LaTeX build artefacts (keep the .tex and the committed .pdf)
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Cobaya MCMC outputs
+cobaya_integration/chains/
+
+# OS
+.DS_Store
+Thumbs.db

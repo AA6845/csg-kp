@@ -1,0 +1,15 @@
+# CSG-KP — Python dependencies
+#
+# Core dependencies: required to run the full pipeline (python/run_all.py).
+# Verified: 37/37 modules pass with the versions noted in the comments below.
+numpy>=1.24      # verified with 2.4.4
+scipy>=1.10      # verified with 1.17.1
+sympy>=1.12      # verified with 1.14.0
+mpmath>=1.3.0    # verified with 1.3.0
+
+# --- Optional: only needed for cobaya_integration/ (MCMC vs Planck/DESI) ---
+# Not required for the core derivation pipeline. Install separately:
+#   pip install cobaya camb getdist
+# cobaya>=3.5
+# camb>=1.5
+# getdist>=1.4

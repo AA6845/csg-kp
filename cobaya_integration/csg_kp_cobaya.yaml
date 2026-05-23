@@ -1,0 +1,112 @@
+# CSG-KP Cobaya configuration
+#
+# Tests the CSG-KP curvature relation
+#     Omega_K = sign * (a_gamma / 8 pi^2) * Omega_Lambda,   a_gamma = 31/180,
+# against Planck 2018 + DESI DR2 BAO. The ratio is FIXED (not sampled): the
+# constraint is imposed by reparametrizing Omega_K as a deterministic function
+# of the sampled cosmology, the only clean way to enforce a hard theoretical
+# constraint in Cobaya. All quantities feeding Omega_K are INPUT parameters
+# (value:) so the dependency graph resolves before CAMB is called.
+#
+# Switches:
+#   * L0 vs L1 prediction  -> set csg_kp_ratio (0.00218122 = L0, 0.00207617 = L1)
+#   * open vs closed       -> set csg_kp_sign  (+1.0 = open/HH, -1.0 = closed)
+#
+# IMPORTANT: this file is the complete CODE. The likelihood DATA are not bundled
+# (multi-GB); install them once with cobaya-install (see README.md).
+
+theory:
+  camb:
+    extra_args:
+      lens_potential_accuracy: 1
+      num_massive_neutrinos: 1
+      nnu: 3.044
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE_lite: null
+  planck_2018_lowl.TT: null
+  planck_2018_lowl.EE: null
+  planck_2018_lensing.clik: null
+  # DESI DR2 BAO. Substitute bao.desi_dr2 with the name in your Cobaya release
+  # (e.g. baorsd.desi_dr2 / bao.desi_2024_bao_all) or a legacy SDSS BAO file.
+  bao.desi_dr2: null
+
+params:
+  # ---- sampled cosmological parameters ----
+  H0:
+    prior: {min: 60.0, max: 80.0}
+    ref: {dist: norm, loc: 68.6, scale: 1.0}
+    proposal: 0.5
+    latex: H_0
+  ombh2:
+    prior: {min: 0.005, max: 0.04}
+    ref: {dist: norm, loc: 0.02237, scale: 0.00015}
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+  omch2:
+    prior: {min: 0.001, max: 0.99}
+    ref: {dist: norm, loc: 0.1200, scale: 0.0012}
+    proposal: 0.0005
+    latex: \Omega_\mathrm{c} h^2
+  tau:
+    prior: {dist: norm, loc: 0.0544, scale: 0.0073}
+    ref: {dist: norm, loc: 0.055, scale: 0.006}
+    proposal: 0.003
+    latex: \tau_\mathrm{reio}
+  ns:
+    prior: {min: 0.8, max: 1.2}
+    ref: {dist: norm, loc: 0.9649, scale: 0.0042}
+    proposal: 0.002
+    latex: n_\mathrm{s}
+  logA:
+    prior: {min: 1.61, max: 3.91}
+    ref: {dist: norm, loc: 3.044, scale: 0.014}
+    proposal: 0.005
+    latex: \ln(10^{10} A_\mathrm{s})
+    drop: True
+  As:
+    value: "lambda logA: 1.0e-10 * np.exp(logA)"
+    latex: A_\mathrm{s}
+
+  # neutrino mass (fixed, single eigenstate) -- explicit for reproducibility
+  mnu: 0.06
+
+  # ---- CSG-KP constraint (all INPUT parameters; resolves before CAMB) ----
+  csg_kp_ratio:
+    value: 0.0021812199      # = a_gamma/(8 pi^2) = 31/(1440 pi^2); L1: 0.0020758964
+    latex: a_\gamma/8\pi^2
+  csg_kp_sign:
+    value: 1.0               # +1 open (Hartle-Hawking); -1 closed (Vilenkin)
+    latex: s_\mathrm{CSG}
+  _omegam_in:                # auxiliary INPUT (dropped, not sent to CAMB)
+    value: "lambda H0, ombh2, omch2: (ombh2 + omch2) / (H0/100.0)**2"
+    drop: True
+  omegak:                    # the curvature INPUT actually consumed by CAMB
+    value: "lambda _omegam_in, csg_kp_ratio, csg_kp_sign: csg_kp_sign * csg_kp_ratio * (1.0 - _omegam_in) / (1.0 + csg_kp_sign * csg_kp_ratio)"
+    latex: \Omega_K
+
+  # ---- derived diagnostics ----
+  omegam:
+    derived: "lambda H0, ombh2, omch2: (ombh2 + omch2) / (H0/100.0)**2"
+    latex: \Omega_\mathrm{m}
+  omegal:
+    derived: "lambda omegam, omegak: 1.0 - omegam - omegak"
+    latex: \Omega_\Lambda
+  H0_x_rdrag:
+    derived: True
+    latex: H_0 r_\mathrm{drag}
+
+sampler:
+  mcmc:
+    burn_in: 0
+    learn_proposal: True
+    learn_proposal_Rminus1_max: 2.0
+    Rminus1_stop: 0.05               # tighten to 0.01 for publication-grade chains
+    Rminus1_cl_stop: 0.2
+    max_tries: 10000
+    drag: False
+    oversample_power: 0.4
+
+output: chains/csg_kp_chain
+debug: False
+test: False

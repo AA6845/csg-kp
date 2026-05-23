@@ -1,0 +1,134 @@
+% =====================================================================
+% CSG-KP  --  CLEAN STRUCTURE
+% One assumption. Everything falsifiable conditional on it.
+% Magnitude postulates separated out (not part of the falsifiable core).
+% Status: [THM] theorem (verified) | [THM|H] theorem given the hemisphere
+%   selection | [DER|A] derived given A | [FALS] falsifiable prediction
+%   | [POST] postulate (not falsifiable) | [OPEN] open
+% =====================================================================
+
+\section*{The single assumption and what rests on it}
+
+\subsection*{Assumption (the only non-deductive, non-conventional input of the falsifiable core)}
+
+\begin{quote}
+\textbf{(L) Lorentzian realisation of the no-boundary construction.}
+There exists a well-defined analytic continuation $\Phi$ of the Euclidean
+no-boundary hemisphere $D^4\subset S^4$ to the present Lorentzian patch such
+that (i) $\Phi$ is stable against fluctuations, and (ii) $\Phi$ maps the
+scale-free Euclidean quotient $\rho_E$ onto the observed
+$\Ok/\OL$, and (iii) this identification persists to the present epoch.
+\end{quote}
+
+\textbf{Honest status of (L).} \emph{Open and contested.} The Lorentzian
+realisation of any no-boundary wavefunction is challenged by the
+Feldbrugge--Lehners--Turok instability (PRL 119, 171301; PRD 97, 023509):
+the Lorentzian path integral weights tensor fluctuations as growing modes.
+CSG does \emph{not} resolve this; its proven stability result is the
+\emph{Euclidean} Hessian positivity of the cap saddle, a different object.
+The cap saddle is Robin-deformed and distinct from the FLT de~Sitter saddle,
+which leaves open---but does not establish---that the deformation evades the
+instability. (L) bundles what the manuscript separates as A1 (no-boundary),
+A5b (quotient preservation under $\Phi$) and A6 (persistence); they are
+coupled manifestations of this one open question, not three independent gaps.
+
+\textbf{Honest qualification: (L) is the only \emph{open} assumption, not the
+only assumption.} A self-falsification of the core (verify\_clean\_pipeline.py)
+shows the falsifiable claim also rests on two non-vacuous, but \emph{not open},
+inputs: (i) \textbf{A3}, that the photon is the sole infrared conformal
+contributor, which is literature-supported by the Komargodski--Schwimmer
+$a$-theorem but carries three testable sub-assumptions (A3.1 no extra massless
+conformal sector beyond SM$+$gravity --- which silently includes the graviton
+premise; A3.2 mass-hierarchy genericity; A3.3 CFT applicability of the deep UV
+and present IR); and (ii) the \textbf{hemisphere selection} of the $Q$-charge
+normalisation, a theorem in value but a choice in relevance, fixed by (L)'s
+no-boundary geometry plus the uniqueness criteria (i)--(iv). The precise honest
+statement is therefore: \emph{one open assumption (L); plus A3
+(literature-supported, with the graviton premise inside A3.1); plus the
+hemisphere selection.} ``One assumption'' is a simplification of this.
+
+\subsection*{The falsifiable core --- everything below is theorem or sharp prediction given (L)}
+
+\begin{description}[leftmargin=2.8em,itemsep=3pt]
+\item[C1 {[THM]}]
+  $\ag=-\tfrac14\zeta(0;\text{Maxwell};S^4)=\tfrac{31}{180}$ (heat-kernel
+  $b_4$; scalar control $1/360$). Independent of (L). \emph{Verified.}
+\item[C2 {[THM\,$|$\,H]}]
+  $\CQ=\int_{D^4}Q_4=8\pi^2$ (Chang--Yang). The \emph{value} is a theorem;
+  that the hemisphere $Q$-charge is the relevant normalisation follows from
+  the no-boundary geometry of (L) and the uniqueness criteria (i)--(iv).
+  \emph{Verified.}
+\item[C3 {[THM]}]
+  $\displaystyle \rho_E=\frac{\ag}{\CQ}=\frac{31}{1440\pi^2}=2.181\times10^{-3}$,
+  scale-free ($H,\Mpl$ cancel). Independent of (L). \emph{Verified.}
+\item[C4 {[STRUCT\,$|$\,(L)]}]
+  $\displaystyle \frac{\Ok}{\OL}=\Phi_*(\rho_E)=\frac{\ag}{8\pi^2}$.
+  This is C3 transported by (L); it is the entire empirical content. A
+  \emph{structural} claim, conditional on (L); it carries no numeric content
+  of its own beyond C3.
+\item[C5 {[DER\,$|$\,(L), cap saddle]}]
+  Sign: the cap-saddle equation $\ag\cos^4\delta=\sin\delta$ has the unique
+  real root $\delta^*=0.16391>0$; $\delta^*>0\Leftrightarrow\ag>0$, hence
+  $\Ok>0$ (open). \emph{Root verified.} Conditional on (L)'s Hartle--Hawking
+  branch.
+\item[C6 {[FALS]}]
+  \textbf{The falsifiable number is the dimensionless ratio itself:}
+  $\Ok/\OL = 2.181\times10^{-3}$ (L0) $\to 2.076\times10^{-3}$ (L1, cap
+  refinement). The DESI~DR3 / Euclid test compares the \emph{measured} ratio
+  $\Ok/\OL$ directly to this value; \emph{no} $\OL$ value is fed in, so the
+  ladder conjecture M4 cannot leak into the test. If an absolute $\Ok$ is
+  quoted, it is the ratio times the \emph{measured} $\OL$ (external), never the
+  ladder value. \textbf{Falsifiers:} (a) measured $\Ok/\OL$ outside
+  $\ag/8\pi^2 \pm 3\sigma$; (b) a robust closed universe ($\Ok<0$); (c)
+  confirmed dynamical dark energy ($w\neq-1$), which voids the constant-$\Lambda$
+  premise of C4. Reach: $\sigma_K\sim3\times10^{-4}$.
+\end{description}
+
+\paragraph{Reading.} The falsifiable core C1--C6 rests on exactly one open
+assumption (L). C1 and C3 are (L)-independent theorems; C2 needs only the
+hemisphere selection; C4--C5 are (L) transported; C6 is the sharp,
+parameter-free, presently-testable consequence. There is no free parameter
+in $\rho_E$. Confirmation of C6 supports (L) (a Bekenstein-1974-type test);
+it does not prove (L), since a measured agreement is evidence for, not a
+derivation of, the identification.
+
+\subsection*{Separated: the magnitude sector (NOT part of the falsifiable core)}
+
+The following fix the \emph{absolute} scale and are logically independent of
+the ratio C4; they are postulates or conjectures, not falsifiable predictions,
+and are quarantined here so they cannot inflate the status of the core.
+
+\begin{description}[leftmargin=2.8em,itemsep=3pt]
+\item[M1 {[POST]}] A2 (Kaloper--Padilla sequestering): removes the bare
+  $\Mpl^4$ vacuum. Carries the cancellation of the $10^{122}$ hierarchy.
+\item[M2 {[POST]}] P5 (coherent accumulation $N_{\mathrm{eff}}=(\Mpl/H)^2$):
+  supplies the magnitude. \emph{This alone carries all $122$ orders of
+  magnitude.} Not derived; triangulated via Jacobson, not proven.
+\item[M3 {[DER\,$|$\,A2; numeric]}] KP self-consistency: $\Lambda$ is not free,
+  sign negative, fixed point $\Lambda^*$ universal ($\varphi_0$-independent).
+  \emph{Cannot} pin the observable: universality $\Rightarrow$ blindness to the
+  contingent $\varphi_0$. Closed-history existence only ($k=+1$).
+\item[M4 {[CONJ]}] Budget ladder $\OL=4\ag=0.6889$: matches Planck central
+  value at $0.0\sigma$ ($\sigma=\pm0.0056$); an action-invariant, not derivable
+  from any dynamics (every dynamical route gives a different number).
+  Conjecture.
+\item[M5 {[POST]}] A3 (photon-only IR via Komargodski--Schwimmer): fixes which
+  anomaly enters; A5c (reference epoch): convention.
+\end{description}
+
+\paragraph{Why this separation is the honest framing.}
+The entire testable claim is C1--C6 under the single assumption (L). The
+magnitude sector M1--M5 neither strengthens nor is tested by C6: the ratio is
+scale-free, so confirming it says nothing about M2's $10^{122}$. Presenting
+M1--M5 as part of "the resolution of the cosmological constant problem"
+overstates; they are separate, mostly open, and one (M4) is a numerical
+coincidence. The defensible claim is exactly: \emph{under one open assumption
+(L), the photon conformal anomaly yields a parameter-free, sharply falsifiable
+curvature ratio; the magnitude remains an open postulate.}
+
+\subsection*{One-line summary}
+Under the single (open, FLT-contested) assumption that the no-boundary
+construction has a stable Lorentzian realisation preserving the scale-free
+anomaly quotient, $\;\Ok/\OL=\ag/8\pi^2=2.18\times10^{-3}\;$ with $\Ok>0$,
+parameter-free and falsifiable by DESI DR3 / Euclid. Everything else
+(magnitude, absolute $\OL$) is a separate, open postulate.

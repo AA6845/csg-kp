@@ -1,0 +1,43 @@
+The cosmological constant problem has three faces: the magnitude problem (why the
+observed vacuum energy is ~10^-120 in Planck units rather than of order unity), the
+value problem (what fixes the residual scale once radiative contributions are removed),
+and the coincidence problem (why the dark-energy and matter densities are comparable now).
+
+This paper assembles a single, internally consistent framework that addresses all three
+under explicit, stated assumptions (notably the physical identifications A5 and P5) and,
+as a by-product, yields one sharp falsifiable prediction. The magnitude problem is handled
+by Kaloper-Padilla vacuum-energy sequestering. The value problem is addressed by a
+self-consistency result: the residual cosmological constant is a fixed point of the
+four-volume averaging map (Lambda = (1/4)<R>_ren), equivalent to the trace-zero condition,
+and is therefore not a free parameter; uniqueness rests on a Banach contraction so far
+established numerically. The coincidence problem is addressed by structure-formation
+(halo-weighted) averaging following Lombriser, returning Omega_Lambda ~ 0.704 conditional
+on an anthropic-like prior; the framework's own budget ladder instead points to
+Omega_Lambda = 4 a_gamma = 0.6889, coinciding with the Planck+BAO value to four decimals
+(an empirical coincidence, not a proof; the absolute value rests on the open
+holographic-saturation conjecture P5).
+
+Threading through all three is a relation -- parameter-free as a ratio of two scale-free
+invariants, though its identification with the observable curvature rests on the physical
+postulate A5 -- between the residual cosmological constant and the spatial curvature:
+
+    |Omega_K| / Omega_Lambda  =  a_gamma / (8 pi^2)  =  31 / (1440 pi^2)  ~  2.181 x 10^-3.
+
+Its two inputs -- the photon type-A conformal anomaly coefficient a_gamma = 31/180 and the
+Q-curvature charge 8 pi^2 of the hemisphere -- contain no scale, no Newton constant, and no
+Planck mass. The rigorous spectral backbone is given in full: twelve proven spectral results
+(R1-R12), the Burghelea-Friedlander-Kappeler gluing identity, the cap-variational saddle and
+its stability in every sector, the higher-loop convergence bound, and an independent
+recomputation. Every step carries an explicit status: proven, literature-supported,
+calibrated, or open.
+
+The prediction is sharply falsifiable: a robust Omega_K outside +/-3 sigma of
+a_gamma * Omega_Lambda / (8 pi^2), or a robust detection of a closed universe, would refute
+the framework as stated. Current DESI DR2 + Planck data give Omega_K = +0.0023 +/- 0.0011
+(a ~0.7 sigma pull on the open side); DESI DR3 (~2027) reaches the decisive ~5 sigma test.
+
+This record bundles the manuscript (40 pp) and the complete Python verification suite. The
+suite separates what is proven from what is assumed: run_all.py (37/37 modules) and
+verify_clean_pipeline.py independently recompute the numeric identities and print the
+proven/assumed dependency graph. Reproduction: pip install -r requirements.txt; cd python;
+python3 run_all.py. Code licensed MIT; manuscript licensed CC-BY-4.0.
