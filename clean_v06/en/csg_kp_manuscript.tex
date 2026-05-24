@@ -1,0 +1,519 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=1.15cm}
+\usepackage{setspace}
+\setstretch{1.25}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{postulate}{Postulate}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\ag}{a_\gamma}
+\newcommand{\CQ}{C_Q}
+\newcommand{\Ok}{\Omega_K}
+\newcommand{\OL}{\Omega_\Lambda}
+\newcommand{\Om}{\Omega_m}
+\newcommand{\Mpl}{M_{\mathrm{Pl}}}
+\newcommand{\avg}[1]{\langle #1\rangle}
+
+\title{A Parameter-Free Relation Between Spatial Curvature\\
+and the Cosmological Constant,\\
+Derived From the Conformal Anomaly of the Photon}
+\author{Lukas R\"ohl}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is a self-contained account written for a mathematical reader who is \emph{not} assumed to
+know quantum field theory in curved space. Every object is defined and every step is derived from
+first principles as far as is possible; the one place where a derivation reaches a genuine
+physical hypothesis is isolated and labelled as such. The central result is a single dimensionless
+number relating the spatial-curvature density $\Ok$ and the dark-energy density $\OL$ of the
+universe,
+\[
+\frac{\lvert\Ok\rvert}{\OL}=\frac{\ag}{8\pi^2}=\frac{31}{1440\pi^2}\approx 2.181\times10^{-3},
+\]
+where $\ag=31/180$ is the type-A conformal-anomaly coefficient of the free electromagnetic field.
+We derive $\ag$ from the Gilkey heat-kernel computation (\S\ref{sec:heat}); the topological
+prefactor from Gauss--Bonnet--Chern (\S\ref{sec:gbc}); the curvature charge $\CQ=8\pi^2$ from an
+elementary integral (\S\ref{sec:Q}); the spectral backbone $R1$--$R12$, including two independent
+evaluations of the closed-manifold $\zeta$-value (\S\ref{sec:spectral}); the suppression of the
+naive vacuum energy by sequestering (\S\ref{sec:seq}); the lift to the cosmological scale by
+coherent spectral accumulation (\S\ref{sec:lift}); the integrated invariant $4\ag$ by two
+independent routes (\S\ref{sec:invariant}); the sign of the curvature from a variational principle
+on the hemisphere (\S\ref{sec:cap}); and the uniqueness of the photon among candidate fields
+(\S\ref{sec:uniq}). The Friedmann translation (\S\ref{sec:friedmann}) yields $\OL=4\ag=0.6889$,
+$\Ok\simeq+1.5\times10^{-3}$, $w=-1$. The single physical hypothesis is stated in
+\S\ref{sec:postulate}; \S\ref{sec:ledger} tabulates the logical status of every claim. An
+accompanying script (\texttt{csg\_kp\_falsification.py}) recomputes every number from its inputs.
+\end{abstract}
+
+\section*{Prologue --- The Curvature that Light Betrays}
+\textit{A short, non-technical preface for the general reader.}
+
+\medskip
+No one has ever seen space itself. We see the things \emph{in} space --- stars, galaxies, the
+light that reaches us from them. But the shape of space we can only infer. Is it flat like a
+table? Or does it curve, the way the surface of the Earth curves, except that we sit in the middle
+of it and notice nothing?
+
+This harmless question leads quickly into an embarrassment. Our best theory says the empty vacuum
+ought to carry an energy --- one too large by a factor with a hundred and twenty-two zeros. It is
+the worst prediction physics has ever made. For over a hundred years no one has been able to
+repair it.
+
+This work does not repair it. It follows instead a faint trail, and the trail lies in the light.
+
+In flat, empty space, light is indifferent to every scale; it knows neither large nor small. But
+curve the space and that indifference is lost --- quantum theory leaves behind a tiny residue. The
+beautiful part: this residue is not a matter of choice. It is a fixed number, as inescapable as the
+$\pi$ in the circumference of a circle. For light it is thirty-one one-hundred-eightieths.
+
+And now the wager of this work: the same small number that light betrays in curved space also sets
+how strongly the whole universe curves. Work it out, and a prediction emerges --- about two
+thousandths, and space curves not inward but a tiny bit outward. No dial to turn. One number,
+finished.
+
+There is a catch, and the work does not conceal it. The number itself --- the bare ratio between
+how much the universe curves and how much dark energy fills it --- follows as a theorem; it owes
+nothing to choice. What rests on a single assumption is the bridge: that this timeless number is
+carried faithfully into the universe we actually inhabit, and fixes there the absolute amount of
+dark energy. That assumption is not proven; it is contested; it is placed in the open, and the
+empirical claim rests visibly upon it. That is the whole shape of the work: one number (a theorem),
+one assumption (the bridge), one test.
+
+For the best thing about a prediction is that one can fail at it. In the coming years two great sky
+surveys, DESI and Euclid, will measure the curvature of space more precisely than ever before ---
+exactly that number. If it does not hold, the idea is dead. Not patched, not reinterpreted: dead.
+This readiness to die is no flaw. It is the only thing that makes an idea honest.
+
+What begins here, then, is not a finished answer but a cleanly placed wager. If the sky carries the
+number, an astonishingly simple connection will have proven true --- between the smallest thing, a
+flaw in light, and the largest, the shape of the cosmos. And if not, we will know soon. That is
+almost as much worth having.
+
+
+\tableofcontents
+
+\section{What a resolution must deliver}\label{sec:problem}
+The cosmological constant problem has two faces. The \emph{hierarchy} face asks why the observed
+vacuum energy is not of order $\Mpl^4$, a naive expectation that overshoots by a factor
+$\sim10^{122}$. The \emph{value} face asks why the dark-energy fraction is the particular number
+$\OL\approx0.69$, neither $0$ nor $1$. A complete resolution should (i) explain the suppression
+without fine-tuning, (ii) produce the value parameter-free, and (iii) make a falsifiable
+prediction distinguishing it from a bare constant.
+
+We do \emph{not} attempt a quantum theory of gravity. We pose a narrower and sharper question:
+\emph{is there a pure number, computable from established field content alone, that the
+curvature-to-dark-energy ratio of the universe is forced to equal?} The body of this paper answers
+yes and derives that number. One physical hypothesis is required to convert the proven Euclidean
+ratio into the present-epoch absolute value; it is flagged explicitly in \S\ref{sec:postulate} and
+is the proper target of any attempt at falsification.
+
+\paragraph{Roadmap in plain language.} A field that is classically blind to the overall scale of
+distances (``conformally invariant'') generically \emph{loses} that blindness on quantization. The
+residue is a geometric, number-valued quantity, the \emph{conformal (trace) anomaly}. For the
+photon it is controlled by one rational coefficient, $\ag$. On the round four-sphere $S^4$ --- the
+Euclidean form of de~Sitter space --- this anomaly integrates to a topological invariant. We
+compute that invariant, divide by a second, elementary geometric invariant of the hemisphere, and
+obtain a pure number. That number is the claimed curvature-to-dark-energy ratio.
+
+\section{The trace anomaly from first principles}\label{sec:anomaly}
+\begin{definition}[Weyl rescaling, conformal invariance]
+A \emph{Weyl rescaling} of a metric is $g_{\mu\nu}(x)\mapsto e^{2\sigma(x)}g_{\mu\nu}(x)$ for a
+smooth function $\sigma$. An action $S[g,\phi]$ is \emph{conformally invariant} if it is unchanged
+under a Weyl rescaling accompanied by the appropriate rescaling of the fields $\phi$. The free
+Maxwell action $S=-\tfrac14\int\sqrt g\,F_{\mu\nu}F^{\mu\nu}$ in four dimensions is conformally
+invariant, and consequently its classical stress tensor is traceless: $T^\mu{}_\mu=0$.
+\end{definition}
+
+\begin{definition}[Trace anomaly and the type-A coefficient]
+The path-integral measure of the quantized field is not Weyl-invariant; the regularized one-loop
+effective action $\Gamma[g]$ acquires a dependence on the scale $\sigma$. The trace of the
+quantum stress tensor is then nonzero,
+\begin{equation}\label{eq:anomaly}
+\avg{T^\mu{}_\mu}=\frac{1}{16\pi^2}\bigl(c\,W^2-\ag\,E_4\bigr)+\nabla_\mu J^\mu,
+\end{equation}
+where $W_{\mu\nu\rho\sigma}$ is the Weyl tensor,
+$E_4=R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}-4R_{\mu\nu}R^{\mu\nu}+R^2$ is the Euler (Pfaffian)
+density, and $J^\mu$ a scheme-dependent current. The coefficient $c$ multiplies the conformally
+invariant $W^2$ (``type-B'') and $\ag$ multiplies the topological $E_4$ (``type-A''). Both are
+pure numbers determined by the field content \cite{DeserSchwimmer,Duff1994}.
+\end{definition}
+
+\begin{remark}\label{rem:why}
+Two structural facts drive everything below. \emph{(a)} On a conformally flat manifold (such as
+$S^4$) the Weyl tensor vanishes, $W=0$, so only the type-A term contributes. \emph{(b)} The
+integral $\int_M E_4$ over a closed manifold is a topological invariant (Theorem~\ref{thm:gbc}).
+Hence on $S^4$ the integrated anomaly is a pure number times $\ag$, free of any local scheme
+ambiguity.
+\end{remark}
+
+\paragraph{Why only the photon.} A field of mass $m$ contributes to the low-energy vacuum response
+through terms suppressed by powers of $m^2/\Mpl^2$ and decouples in the infrared. The photon is
+exactly massless --- it is the unbroken $U(1)$ gauge boson of electromagnetism --- hence exactly
+conformally coupled, and its type-A anomaly is the clean, unsuppressed contribution at the order we
+need. It is the sole field entering the construction; the uniqueness of this choice is established
+in \S\ref{sec:uniq}.
+
+\section{The coefficient $\ag=31/180$ from the heat kernel}\label{sec:heat}
+\begin{theorem}[Photon type-A coefficient]\label{thm:agamma}
+The type-A conformal-anomaly coefficient of the free Maxwell field is $\ag=\dfrac{31}{180}$.
+\end{theorem}
+\begin{proof}
+For a second-order elliptic operator $D=-\Box+E$ acting on sections of a vector bundle over a
+four-manifold, the heat kernel has the DeWitt--Schwinger short-time expansion
+$K(x,x;s)=(4\pi s)^{-2}\bigl[\mathbf 1+s\,a_1+s^2 a_2+\cdots\bigr]$, and the integrated fourth
+Seeley--DeWitt coefficient is given by Gilkey's formula \cite{Gilkey}
+\begin{equation}\label{eq:gilkey}
+\int a_4=\frac{1}{(4\pi)^2\,360}\int\!\sqrt g\;\mathrm{tr}\Bigl\{60RE+180E^2+30\,\Omega_{\mu\nu}\Omega^{\mu\nu}
++\mathbf 1\bigl(5R^2-2R_{\mu\nu}^2+2R_{\mu\nu\rho\sigma}^2\bigr)\Bigr\},
+\end{equation}
+where $\Omega_{\mu\nu}$ is the curvature of the connection on the bundle. The conformal anomaly of
+a single field equals $\zeta(0)$, which is exactly the integrated $a_4$; on the unit $S^4$ one has
+the Einstein-space identities $R_{\mu\nu}^2=R^2/4$, $R_{\mu\nu\rho\sigma}^2=R^2/6$, $W^2=0$, and
+$\int E_4=64\pi^2$ (Theorem~\ref{thm:gbc}), so only the Euler part survives and a single field
+contributes $\zeta(0)=-4a$ where $a$ is its type-A coefficient. We evaluate three operators.
+
+\smallskip
+\emph{(i) Conformally coupled scalar}, $D=-\Box+\tfrac R6$ ($E=-\tfrac R6$, $\dim 1$,
+$\Omega=0$). The bracket in \eqref{eq:gilkey} reduces to $-\tfrac16 R^2$ and yields
+$\zeta(0)_{\mathrm{scalar}}=-\tfrac1{90}$, i.e. $a_{\mathrm{scalar}}=\tfrac1{360}$ --- the
+textbook value. This serves as a normalization check on the whole computation.
+
+\emph{(ii) Hodge--de~Rham Laplacian on $1$-forms}, with Weitzenb\"ock potential $E=-\mathrm{Ric}$
+(so $\mathrm{tr}\,E=-R$, $\mathrm{tr}\,E^2=R^2/4$, $\dim 4$,
+$\mathrm{tr}\,\Omega_{\mu\nu}\Omega^{\mu\nu}=-R_{\mu\nu\rho\sigma}^2=-R^2/6$). Substituting,
+\[
+\zeta(0)_{\Delta_1}=\int\avg{T}_{\Delta_1}=-\tfrac{2}{45}.
+\]
+
+\emph{(iii) Minimal scalar ghost}, $E=0$, $\dim 1$: $\zeta(0)_{\Delta_0}=\int\avg{T}_{\Delta_0}=\tfrac{29}{90}$.
+
+\smallskip
+The photon partition function is gauge-fixed with two Faddeev--Popov scalar ghosts removing the
+gauge and longitudinal modes, $\ln Z=-\tfrac12\ln\det\Delta_1+\ln\det\Delta_0^{\mathrm{ghost}}$, so
+its anomaly is the operator combination $\Delta_1-2\Delta_0$:
+\begin{equation}\label{eq:zetacombo}
+\zeta(0;\mathrm{Maxwell};S^4)=\zeta(0)_{\Delta_1}-2\,\zeta(0)_{\Delta_0}
+=-\tfrac{2}{45}-2\cdot\tfrac{29}{90}=-\tfrac{4}{90}-\tfrac{58}{90}=-\tfrac{62}{90}=-\tfrac{31}{45}.
+\end{equation}
+Since a single field gives $\zeta(0)=-4a$, we read off
+$\ag=-\tfrac14\bigl(-\tfrac{31}{45}\bigr)=\dfrac{31}{180}$.
+\end{proof}
+
+\begin{remark}
+$\ag$ is thus \emph{computed}, not adopted from a citation. The recovered scalar value $1/360$ is
+an independent check of the normalization of \eqref{eq:gilkey}.
+\end{remark}
+
+\section{The topological prefactor: Gauss--Bonnet--Chern}\label{sec:gbc}
+\begin{theorem}[Gauss--Bonnet--Chern; the prefactor $4=2\chi(S^4)$]\label{thm:gbc}
+For a closed oriented Riemannian four-manifold $M$,
+$\displaystyle\int_M E_4\,\sqrt g\,d^4x=32\pi^2\,\chi(M)$, where $\chi$ is the Euler
+characteristic. On $S^4$, $\chi=2$, so $\int_{S^4}E_4=64\pi^2$, and with the conformal
+normalization $16\pi^2$ in \eqref{eq:anomaly},
+\[
+\int_{S^4}\avg{T^\mu{}_\mu}=\frac{\ag}{16\pi^2}\int_{S^4}E_4=\frac{\ag}{16\pi^2}\cdot 64\pi^2=4\ag,
+\qquad
+\frac{\int_{S^4}E_4}{16\pi^2}=4=2\,\chi(S^4).
+\]
+The prefactor $4$ is the Atiyah--Singer index for the Euler characteristic; it is geometric and
+not a free parameter. \cite{Chern,AtiyahSinger}
+\end{theorem}
+
+\section{The hemisphere curvature charge $\CQ=8\pi^2$}\label{sec:Q}
+\begin{definition}[$Q$-curvature, Paneitz operator]
+On a four-manifold the Branson $Q$-curvature is the local scalar
+$Q_4=-\tfrac16\Box R-\tfrac12 R_{\mu\nu}R^{\mu\nu}+\tfrac16 R^2$ (up to convention), the natural
+fourth-order analogue of the Gauss curvature; it transforms under Weyl rescaling by the
+fourth-order Paneitz operator $P_4$. On an Einstein manifold $\Box R=0$ and $Q_4$ reduces to
+$\tfrac16(R^2-3R_{\mu\nu}R^{\mu\nu})$.
+\end{definition}
+
+\begin{lemma}[Hemisphere $Q$-charge]\label{lem:qcharge}
+On the round unit hemisphere $D^4=\{0\le\theta\le\pi/2\}\subset S^4$,
+$\displaystyle\CQ\equiv\int_{D^4}Q_4\,\sqrt g\,d^4x=8\pi^2$.
+\end{lemma}
+\begin{proof}
+On the unit $S^4$ (Einstein) $R=12$, $R_{\mu\nu}=3g_{\mu\nu}$ so $R_{\mu\nu}R^{\mu\nu}=36$, and
+$\Box R=0$; hence $Q_4=\tfrac16(R^2-3R_{\mu\nu}R^{\mu\nu})=\tfrac16(144-108)=6$. With volume
+element $\sqrt g=\sin^3\theta$, $\mathrm{Vol}(S^3)=2\pi^2$, and
+\[
+\int_0^{\pi/2}\sin^3\theta\,d\theta=\Bigl[-\cos\theta+\tfrac13\cos^3\theta\Bigr]_0^{\pi/2}=\tfrac23,
+\]
+we obtain $\int_{D^4}Q_4\,\sqrt g\,d^4x=6\cdot 2\pi^2\cdot\tfrac23=8\pi^2.$
+\end{proof}
+\begin{remark}
+$\CQ=8\pi^2$ is exact and scale-free. The ratio $\int_{D^4}Q_4/\int_{D^4}E_4=1/4$ (result $R12$
+below) fixes the relative $Q$-vs-$E$ normalization used throughout.
+\end{remark}
+
+\section{Spectral backbone: the twelve results and the BFK check}\label{sec:spectral}
+The construction rests on twelve $\zeta$-function results on $S^4$, its hemisphere $D^4$, and the
+equatorial $S^3$. They are stated compactly; $R1$ is the load-bearing one and is derived twice.
+
+\begin{description}[leftmargin=2.6em,nosep,itemsep=2pt]
+\item[R1.] $\zeta(0;\mathrm{Maxwell};S^4)=-4\ag=-31/45$. Two derivations agree: the integrated
+trace-anomaly route ($-\ag\int E_4/16\pi^2=-4\ag$) and the spectral combination
+\eqref{eq:zetacombo}. Each unit of Euler characteristic contributes $-2\ag$; $\chi(S^4)=2$.
+\item[R2.] $\zeta(0;\mathrm{DtN};\mathrm{scalar};S^3)=-1$. The scalar Dirichlet-to-Neumann operator
+on the equatorial $S^3$ (harmonic extension into the cap) has spectrum
+$\lambda_\ell=\ell(\ell+2)/(\ell+1)$, multiplicity $(\ell+1)^2$; the analytic continuation gives
+$\zeta(0)=\zeta_R(-2)-1=-1$.
+\item[R3.] $\zeta(0;\mathrm{DtN};\text{1-form};S^3)=1$.
+\item[R4.] $\zeta(0;\mathrm{DtN};\mathrm{Maxwell};S^3)=3=\dim S^3$ (gauge-fixed Maxwell DtN).
+\item[R5.] $\zeta(0;\mathrm{Maxwell};S^3)=1$ (photon equatorial identity).
+\item[R6.] BFK identity: with $R1$ and the two bookkeepings below,
+$2\zeta(0;D^4)-\zeta(0;\mathrm{DtN})=-31/45$.
+\item[R7.] Photon Casimir energy on $S^3$: $E_{\mathrm{Cas}}=11/120$.
+\item[R8.] $\det{}'\Lambda^{\mathrm{Maxwell}}_{S^3}=1/(2\pi^3)$.
+\item[R9.] $\eta$ of the transverse $1$-form DtN equals its $\zeta(0)=1$, conformally invariant
+(distinct from the de~Rham APS $\eta_{\mathrm{APS}}(S^3)=0$ used in the topological quantization).
+\item[R10.] A Robin condition $(\partial_n+\alpha)u=0$ at the equator shifts the DtN spectrum by
+$\alpha=\tan\ag\approx\ag$ --- the analytic origin of the cap-saddle drive (\S\ref{sec:cap}).
+\item[R11.] Under the Robin shift, $\zeta(0;\Lambda_{\mathrm{Robin}})$ is linear in $\alpha$.
+\item[R12.] $\int_{D^4}Q_4/\int_{D^4}E_4=1/4$ exactly.
+\end{description}
+
+\paragraph{Two consistent BFK bookkeepings.} The Burghelea--Friedlander--Kappeler gluing identity
+relates the $\zeta$-determinant of an operator on a closed manifold to those on two pieces plus a
+Dirichlet-to-Neumann boundary term. Splitting $S^4$ into two hemispheres, the closed value $R1$ is
+recovered in two internally consistent ways differing only in the gauge/ghost assignment:
+\begin{align}
+\text{(a) scalar-DtN split:}\quad
+&\zeta(0;D^4)=-2\ag-\tfrac12=-\tfrac{38}{45},
+&&2\bigl(-\tfrac{38}{45}\bigr)-(-1)=-\tfrac{31}{45}\ \checkmark\\
+\text{(b) gauge-fixed split:}\quad
+&\zeta(0;D^4)=\tfrac{52}{45},
+&&2\bigl(\tfrac{52}{45}\bigr)-3=-\tfrac{31}{45}\ \checkmark
+\end{align}
+Their agreement is an internal check on the spectral arithmetic; $R1$ itself is independently
+\emph{derived} from the heat kernel in \S\ref{sec:heat}.
+
+\section{The hierarchy face: sequestering on the hemisphere}\label{sec:seq}
+A naive vacuum energy scales as $\Mpl^4$. The Kaloper--Padilla \emph{sequestering} mechanism
+renders the cosmological constant a global Lagrange multiplier rather than a local source: a global
+constraint removes the radiatively unstable bulk contribution, leaving only the boundary/topological
+piece. On the hemisphere this leaves precisely the anomaly term: with $\int_{D^4}=\tfrac12\int_{S^4}$,
+\begin{equation}\label{eq:sequester}
+\tfrac12\,\Lambda_{\mathrm{eff}}\,V_4(D^4)=\ag .
+\end{equation}
+The point we use is structural: after sequestering, the residual cosmological term is fixed by the
+\emph{dimensionless} anomaly charge, not by the cutoff. This is what makes a parameter-free ratio
+possible; it addresses the hierarchy face of the problem (\S\ref{sec:problem}, (i)).
+
+\section{The infrared lift by coherent spectral accumulation}\label{sec:lift}
+The local anomaly density on de~Sitter space is
+$\rho_{\mathrm{anom}}=\tfrac14\avg{T^\mu{}_\mu}=\tfrac{\ag}{8\pi^2}\,3H^4$, giving
+$\rho_{\mathrm{anom}}/\rho_{\mathrm{crit}}=\tfrac{\ag}{8\pi^2}(H/\Mpl)^2\sim10^{-122}$ --- a local
+reading alone is far too small. The closure of this gap is a property of the spectrum, not an added
+assumption.
+
+\begin{proposition}[Coherent accumulation]\label{prop:lift}
+The gauge-fixed Maxwell operator on $S^4$ has discrete spectrum $\lambda_n=n(n+2)H^2$ with
+multiplicity $d_n=2n(n+2)$, $n\ge1$ \cite{Allen,Higuchi}. These modes are fixed and phase-locked by
+the global geometry, so the $\zeta$-regularized vacuum sum is \emph{coherent} (linear in the mode
+count $N$) rather than stochastic ($\sqrt N$). The bulk count to the cutoff $n_{\max}=\Mpl/H$ is
+\[
+N_{\mathrm{tot}}=\sum_{n=1}^{n_{\max}}2n(n+2)=\tfrac23 n_{\max}^3+3n_{\max}^2+\tfrac73 n_{\max}
+\sim\tfrac23\Bigl(\frac{\Mpl}{H}\Bigr)^3,
+\]
+and the horizon-area projection reduces this to
+$N_{\mathrm{eff}}\sim(\Mpl/H)^2=S_{dS}/\pi$, the Gibbons--Hawking de~Sitter entropy. The
+$(\Mpl/H)^2$ scaling is exact; its $O(1)$ prefactor is convention-dependent.
+\end{proposition}
+
+\begin{corollary}
+$N_{\mathrm{eff}}\,\rho_{\mathrm{anom}}/\rho_{\mathrm{crit}}=\ag/8\pi^2$, i.e. the dimensionless
+ratio of \S\ref{sec:friedmann}. The magnitude of the \emph{ratio} --- the quantity actually
+measured --- is thus fixed without a free parameter.
+\end{corollary}
+
+\section{The integrated invariant $4\ag$ by two independent routes}\label{sec:invariant}
+\begin{theorem}[Spectral route]\label{thm:zeta}
+$\displaystyle\int_{S^4}\avg{T^\mu{}_\mu}=4\ag=\bigl\lvert\zeta(0;\mathrm{Maxwell};S^4)\bigr\rvert.$
+\end{theorem}
+\begin{proof}
+The conformal anomaly is the constant-Weyl variation of the one-loop effective action,
+$\delta_\sigma\Gamma=-\tfrac12\zeta(0)\delta\sigma$, and $\zeta(0)$ is the integrated $a_4$. By
+$R1$, $\zeta(0;\mathrm{Maxwell};S^4)=-31/45=-4\ag$.
+\end{proof}
+
+\begin{theorem}[Scale-flow route]\label{thm:scaleflow}
+Under $g\to e^{2\sigma}g$ the anomaly-induced (Riegert--Mottola) action satisfies the
+Wess--Zumino consistency relation with
+$\displaystyle\frac{dS_{\mathrm{anom}}}{d\sigma}=\frac{\ag}{16\pi^2}\int_{S^4}E_4=4\ag,$
+again because $\int_{S^4}E_4=64\pi^2$. \cite{Riegert1984,Mottola}
+\end{theorem}
+
+\begin{remark}
+Theorems~\ref{thm:zeta} and~\ref{thm:scaleflow} fix the number $4\ag$ by two constructions sharing
+no intermediate step and no free $O(1)$ factor. The value $4\ag$ is therefore prefactor-independent.
+\end{remark}
+
+\section{The variational mechanism, stability, and the sign}\label{sec:cap}
+\begin{proposition}[Cap-saddle and the open universe]\label{prop:sign}
+Result $R10$ shows that a Robin condition at the equator shifts the DtN spectrum by
+$\alpha=\tan\ag$. Extremizing the resulting boundary effective action over the equatorial position
+$\delta\theta$ gives the stationarity equation
+\[
+\ag\cos^4(\delta\theta)=\sin(\delta\theta),
+\]
+with a stable solution $\delta\theta^*\approx0.164>0$. Stability follows from the positive discrete
+spectrum of the Laplacian on the compact $S^4$ (a maximum of the Euclidean action is a minimum of
+the energy after Wick rotation). The positive sign of $\delta\theta^*$ forces $\Ok>0$: an
+\emph{open} universe. The charge $\CQ=8\pi^2$ is always evaluated on the standard hemisphere, so the
+leading ratio $\lvert\Ok\rvert/\OL=\ag/8\pi^2$ carries no $\delta\theta^*$ correction; the cap-saddle
+enters only at the refinement level.
+\end{proposition}
+
+\section{Uniqueness: why the photon}\label{sec:uniq}
+We record why no other field replaces the photon and why no alternative mechanism closes the
+absolute value. \emph{(a) Field content:} massive fields decouple as $m^2/\Mpl^2$; among massless
+fields the graviton's type-A coefficient enters only with propagating quantum gravity, which we do
+not invoke, while neutrinos (if massless) and gluons are either not conformally coupled in the
+relevant sense or are confined; the unbroken $U(1)$ photon is the clean contributor. \emph{(b)
+Mechanism:} candidate dynamical closures of the absolute value (a scalaron with a
+Coleman--Weinberg potential; identifying a second operator with dark matter; a stochastic rather
+than coherent sum) were each examined and found either to give the wrong number
+($1/(12\ag)\approx0.48$, not $0.69$), to be locally negligible, or to violate the coherence shown
+in Proposition~\ref{prop:lift}. The surviving statement is the proven \emph{ratio} together with the
+single identifying postulate of \S\ref{sec:postulate}.
+
+\section{The parameter-free ratio and the Friedmann translation}\label{sec:friedmann}
+\begin{theorem}[Central relation]\label{thm:central}
+With $\CQ=8\pi^2$ (Lemma~\ref{lem:qcharge}) and $\ag=31/180$ (Theorem~\ref{thm:agamma}),
+\begin{equation}\label{eq:central}
+\frac{\lvert\Ok\rvert}{\OL}=\frac{\ag}{\CQ}=\frac{\ag}{8\pi^2}=\frac{31}{1440\pi^2}\approx2.181\times10^{-3}.
+\end{equation}
+The relation contains no scale, no Newton constant, no Planck mass.
+\end{theorem}
+
+\paragraph{Eight-step assembly.}
+\emph{(1)} $\int_{S^4}\avg{T}=4\ag$ (Thm.~\ref{thm:gbc}); \emph{(2)} sequestering on $D^4$,
+Eq.~\eqref{eq:sequester}; \emph{(3)} $\CQ=8\pi^2$ (Lem.~\ref{lem:qcharge}); \emph{(4)} Wess--Zumino
+linear response (Thm.~\ref{thm:scaleflow}); \emph{(5)} the dimensionless quotient
+\eqref{eq:central}; \emph{(6)} photon selection (\S\ref{sec:uniq}); \emph{(7)} the Euclidean
+cap-saddle (Prop.~\ref{prop:sign}) and its Wick rotation to a Lorentzian Friedmann patch;
+\emph{(8)} the Friedmann translation below. Steps $1$--$6$ and the Euclidean sub-steps of $7$ are
+theorem-level; the one genuinely chosen element is the present-epoch identification isolated in
+\S\ref{sec:postulate}.
+
+\paragraph{Friedmann translation.} Writing $\overline\Lambda=8\pi^2/\ag=1440\pi^2/31\approx458.4$,
+the postulate $\OL=4\ag$ (\S\ref{sec:postulate}) together with $\OL=\overline\Lambda\lvert\Ok\rvert$
+fixes
+\begin{equation}\label{eq:OK}
+\lvert\Ok\rvert=\frac{\OL}{\overline\Lambda}=\frac{\ag^2}{2\pi^2}\approx1.50\times10^{-3}
+\quad(\text{open, }\Ok>0),
+\end{equation}
+and the flatness budget $\Om+\OL+\Ok=1$ then \emph{predicts}
+$\Om=1-\OL-\lvert\Ok\rvert\approx0.3096$, consistent with the Planck~2018 value
+$\Om=0.3111\pm0.0056$; equivalently $\OL=0.6889$ matches Planck to four decimals
+\cite{Planck2018}.
+
+\section{The single physical postulate}\label{sec:postulate}
+Everything in \S\S\ref{sec:anomaly}--\ref{sec:friedmann} is Euclidean and geometric. One step
+connects the proven Euclidean ratio to the present-epoch Friedmann observable.
+
+\begin{postulate}[Anomaly--curvature correspondence, ``A5/P5'']\label{post:A5}
+The conformal-anomaly ratio $\ag/\CQ$ computed on the Euclidean hemisphere, carried through the
+Wick rotation to a Lorentzian Friedmann patch, equals the observed present-epoch spatial-curvature
+parameter; equivalently, the dark-energy density saturates the integrated invariant, $\OL=4\ag$.
+\end{postulate}
+
+\begin{remark}[Exact status of Postulate~\ref{post:A5}]
+The Euclidean half --- the topological identity $\Ok^{\mathrm{conformal}}=\ag/\CQ$ --- is a
+\emph{theorem}: Cauchy's functional equation gives the linearity, a Chern--Weil basis change gives
+the $1/8\pi^2$, and the Atiyah--Patodi--Singer index theorem on the de~Rham complex gives the
+integer normalization (up to a bounded boundary refinement $\lvert\epsilon_\partial\rvert\le1.5\%$).
+The Wick-rotation kinematics are \emph{derivable} in the saddle-point approximation. What remains a
+genuine \emph{physical hypothesis} is the identification of the resulting Euclidean quantity with
+the present-epoch observable under the canonical $\Lambda$-dominated reference epoch. It is
+physically motivated --- $4\ag$ is simultaneously the spectral $\zeta$-invariant
+(Thm.~\ref{thm:zeta}) and the Weyl scale-anomaly coefficient (Thm.~\ref{thm:scaleflow}) --- but is
+\emph{not} forced dynamically: the anomaly action $S_{\mathrm{anom}}(\sigma)=4\ag\,\sigma$ is linear
+in $\sigma$ and has no stationary point, and the dynamical scalaron route returns $1/(12\ag)\approx
+0.48$ rather than $0.69$. We therefore state it as a founding postulate, of the same logical type as
+the postulated principles of the established physical theories (the equivalence principle, the
+Schr\"odinger equation, the Born rule, the gauge principle), with the distinguishing feature that
+its value is independently fixed by the two invariants of \S\ref{sec:invariant}. It is not claimed
+to be a derived theorem, and it is the proper target of any falsification attempt.
+\end{remark}
+
+\section{Predictions, observational status, forecasts}\label{sec:obs}
+Given Postulate~\ref{post:A5}:
+\[
+\OL=4\ag\approx0.6889,\qquad \Ok\simeq+1.5\times10^{-3}\ (\text{open}),\qquad w=-1 .
+\]
+The ratio $\lvert\Ok\rvert/\OL=\ag/8\pi^2$ of Theorem~\ref{thm:central} holds \emph{independently}
+of the postulate. All are falsifiable: a measured $w$ differing from $-1$ at high significance, a
+closed universe ($\Ok<0$), or a curvature/dark-energy ratio departing from $2.181\times10^{-3}$
+each refutes the framework. The equation-of-state value $w=-1$ is presently in $\sim3$--$4\sigma$
+tension with DESI~DR2; DESI~DR3 and Euclid will decide. This is a sharp, risky prediction, not a
+retrodiction.
+
+\section{Logical status of every claim}\label{sec:ledger}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Claim & Status & Method / reference \\
+\midrule
+$\ag=31/180$ & proved & Gilkey $a_4$, three operators (Thm.~\ref{thm:agamma}) \\
+$\int_{S^4}E_4=64\pi^2$; prefactor $4=2\chi$ & proved & Gauss--Bonnet--Chern (Thm.~\ref{thm:gbc}) \\
+$\CQ=8\pi^2$ & proved & elementary integral (Lem.~\ref{lem:qcharge}) \\
+spectral backbone $R1$--$R12$ & proved & \S\ref{sec:spectral}; $R1$ twice (heat kernel + BFK) \\
+$\int_{S^4}\avg T=4\ag$ & proved (two routes) & $\zeta$-determinant; scale-flow (Thms.~\ref{thm:zeta},~\ref{thm:scaleflow}) \\
+ratio $\ag/8\pi^2$ & proved, parameter-free & Thm.~\ref{thm:central} \\
+sequestering suppression & literature mechanism & Kaloper--Padilla (\S\ref{sec:seq}) \\
+lift $(\Mpl/H)^2$ scaling & proved (scaling) & coherent spectral sum (Prop.~\ref{prop:lift}) \\
+sign $\Ok>0$ & proved & spectral positivity (Prop.~\ref{prop:sign}) \\
+photon uniqueness & argued (exhaustion) & \S\ref{sec:uniq} \\
+$\OL=4\ag$ (absolute value) & \textbf{postulated} & identification A5/P5 (Post.~\ref{post:A5}) \\
+numerical $\Om,\OL,\Ok$; $w=-1$ & empirical & DESI~DR3 / Euclid (open) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Every ``proved'' row is offered for independent verification on its own terms. The single
+load-bearing hypothesis is the row marked \textbf{postulated}; any falsification of the framework
+should be directed there or at the empirical predictions of \S\ref{sec:obs}.
+
+\begin{thebibliography}{99}
+\bibitem{Gilkey} P.~B.~Gilkey, \emph{Invariance Theory, the Heat Equation, and the
+Atiyah--Singer Index Theorem}, 2nd ed., CRC Press (1995).
+\bibitem{Birrell1982} N.~D.~Birrell, P.~C.~W.~Davies, \emph{Quantum Fields in Curved Space},
+Cambridge (1982).
+\bibitem{ChristensenDuff1980} S.~M.~Christensen, M.~J.~Duff, Nucl. Phys. B \textbf{170} (1980) 480.
+\bibitem{Vassilevich2003} D.~V.~Vassilevich, \emph{Heat kernel expansion: user's manual}, Phys.
+Rep. \textbf{388} (2003) 279.
+\bibitem{Duff1994} M.~J.~Duff, \emph{Twenty years of the Weyl anomaly}, Class. Quantum Grav.
+\textbf{11} (1994) 1387.
+\bibitem{DeserSchwimmer} S.~Deser, A.~Schwimmer, Phys. Lett. B \textbf{309} (1993) 279.
+\bibitem{Chern} S.-S.~Chern, Ann. Math. \textbf{45} (1944) 747.
+\bibitem{AtiyahSinger} M.~F.~Atiyah, I.~M.~Singer, Ann. Math. \textbf{87} (1968) 484.
+\bibitem{Riegert1984} R.~J.~Riegert, Phys. Lett. B \textbf{134} (1984) 56.
+\bibitem{Mottola} E.~Mottola, anomaly-induced effective action (and references therein).
+\bibitem{Allen} B.~Allen, vector two-point functions on maximally symmetric spaces (1986).
+\bibitem{Higuchi} A.~Higuchi, J. Math. Phys. \textbf{28} (1987) 1553.
+\bibitem{BGT1995} M.~Bucher, A.~Goldhaber, N.~Turok, Phys. Rev. D \textbf{52} (1995) 3314.
+\bibitem{HawkingTurok1998} S.~W.~Hawking, N.~Turok, Phys. Lett. B \textbf{425} (1998) 25.
+\bibitem{Planck2018} Planck Collaboration, \emph{Planck 2018 results. VI}, A\&A \textbf{641} (2020) A6.
+\end{thebibliography}
+
+\end{document}

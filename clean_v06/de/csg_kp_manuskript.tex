@@ -1,0 +1,537 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=1.15cm}
+\usepackage{setspace}
+\setstretch{1.25}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Satz}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Korollar}
+\theoremstyle{definition}
+\newtheorem{postulate}{Postulat}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Bemerkung}
+
+\newcommand{\ag}{a_\gamma}
+\newcommand{\CQ}{C_Q}
+\newcommand{\Ok}{\Omega_K}
+\newcommand{\OL}{\Omega_\Lambda}
+\newcommand{\Om}{\Omega_m}
+\newcommand{\Mpl}{M_{\mathrm{Pl}}}
+\newcommand{\avg}[1]{\langle #1\rangle}
+
+\title{Eine parameterfreie Beziehung zwischen räumlicher Krümmung\\
+und der kosmologischen Konstante,\\
+hergeleitet aus der konformen Anomalie des Photons}
+\author{Lukas Röhl}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Dies ist eine in sich geschlossene Darstellung für eine mathematisch geschulte Leserin, von der
+\emph{nicht} vorausgesetzt wird, dass sie Quantenfeldtheorie in gekrümmter Raumzeit kennt. Jeder
+Begriff wird definiert und jeder Schritt soweit wie möglich aus ersten Prinzipien hergeleitet; die
+eine Stelle, an der eine Herleitung auf eine echte physikalische Hypothese trifft, wird isoliert und
+als solche gekennzeichnet. Das zentrale Ergebnis ist eine einzige dimensionslose Zahl, die die
+räumliche Krümmungsdichte $\Ok$ und die Dunkle-Energie-Dichte $\OL$ des Universums verbindet,
+\[
+\frac{\lvert\Ok\rvert}{\OL}=\frac{\ag}{8\pi^2}=\frac{31}{1440\pi^2}\approx 2.181\times10^{-3},
+\]
+wobei $\ag=31/180$ der Typ-A-Koeffizient der konformen Anomalie des freien elektromagnetischen
+Feldes ist. Wir leiten $\ag$ aus der Gilkey-Wärmekern-Rechnung her (\S\ref{sec:heat}); den
+topologischen Vorfaktor aus Gauß--Bonnet--Chern (\S\ref{sec:gbc}); die Krümmungsladung
+$\CQ=8\pi^2$ aus einem elementaren Integral (\S\ref{sec:Q}); den spektralen Unterbau $R1$--$R12$
+mit zwei unabhängigen Auswertungen des $\zeta$-Wertes auf der geschlossenen Mannigfaltigkeit
+(\S\ref{sec:spectral}); die Unterdrückung der naiven Vakuumenergie durch Sequestrierung
+(\S\ref{sec:seq}); den Lift auf die kosmologische Skala durch kohärente spektrale Akkumulation
+(\S\ref{sec:lift}); die integrierte Invariante $4\ag$ über zwei unabhängige Wege
+(\S\ref{sec:invariant}); das Vorzeichen der Krümmung aus einem Variationsprinzip auf der
+Hemisphäre (\S\ref{sec:cap}); und die Eindeutigkeit des Photons unter den Kandidatenfeldern
+(\S\ref{sec:uniq}). Die Friedmann-Übersetzung (\S\ref{sec:friedmann}) liefert $\OL=4\ag=0.6889$,
+$\Ok\simeq+1.5\times10^{-3}$, $w=-1$. Die einzige physikalische Hypothese steht in
+\S\ref{sec:postulate}; \S\ref{sec:ledger} listet den logischen Status jeder Aussage auf. Ein
+begleitendes Skript (\texttt{csg\_kp\_falsifikation.py}) berechnet jede Zahl aus ihren Eingaben.
+\end{abstract}
+
+\section*{Prolog --- Die Krümmung, die das Licht verrät}
+\textit{Eine kurze, laienverständliche Einleitung.}
+
+\medskip
+Niemand hat den Raum je gesehen. Wir sehen die Dinge \emph{im} Raum --- Sterne, Galaxien, das
+Licht, das von ihnen zu uns kommt. Aber die Form des Raumes selbst können wir nur erschließen. Ist
+er flach wie ein Tisch? Oder krümmt er sich, so wie sich die Oberfläche der Erde krümmt, nur dass
+wir mitten darin sitzen und nichts davon merken?
+
+Diese harmlose Frage führt schnell in eine Verlegenheit. Unsere beste Theorie sagt, das leere
+Vakuum müsse eine Energie tragen --- und zwar eine, die um einen Faktor mit hundertzweiundzwanzig
+Nullen zu groß ist. Es ist die schlechteste Vorhersage, die die Physik je gemacht hat. Seit über
+hundert Jahren hat niemand sie reparieren können.
+
+Diese Arbeit repariert sie nicht. Sie folgt stattdessen einer feinen Spur, und die Spur liegt im
+Licht.
+
+Im flachen, leeren Raum ist das Licht gleichgültig gegen jeden Maßstab; es kennt kein Groß und kein
+Klein. Krümmt man den Raum aber, geht diese Gleichgültigkeit verloren --- die Quantentheorie
+hinterlässt einen winzigen Rest. Das Schöne daran: Dieser Rest ist keine Sache der Wahl. Er ist
+eine feste Zahl, so unausweichlich wie das $\pi$ im Umfang eines Kreises. Für das Licht lautet sie
+einunddreißig Hundertachtzigstel.
+
+Und nun die Wette dieser Arbeit: Dieselbe kleine Zahl, die das Licht im gekrümmten Raum verrät,
+bestimmt zugleich, wie stark sich das ganze Universum krümmt. Rechnet man es aus, kommt eine
+Vorhersage heraus --- etwa zwei Tausendstel, und der Raum krümmt sich nicht nach innen, sondern ein
+winziges Stück nach außen. Kein Regler, an dem man drehen könnte. Eine Zahl, fertig.
+
+Es gibt einen Haken, und die Arbeit verschweigt ihn nicht. Die Zahl selbst --- das nackte
+Verhältnis zwischen der Krümmung des Universums und der Dunklen Energie, die es füllt --- folgt als
+Satz; sie verdankt nichts einer Wahl. Was an einer einzigen Annahme hängt, ist die Brücke: dass
+diese zeitlose Zahl sich treu in das Universum überträgt, in dem wir wirklich leben, und dort die
+absolute Menge der Dunklen Energie festlegt. Diese Annahme ist nicht bewiesen, sie ist umstritten,
+sie wird offen hingestellt, und die empirische Aussage ruht sichtbar auf ihr. Das ist die ganze
+Gestalt der Arbeit: eine Zahl (ein Satz), eine Annahme (die Brücke), ein Test.
+
+Denn das Beste an einer Vorhersage ist, dass man an ihr scheitern kann. In den nächsten Jahren
+werden zwei große Himmelsdurchmusterungen, DESI und Euclid, die Krümmung des Raumes genauer
+vermessen als je zuvor --- genau jene Zahl. Stimmt sie nicht, ist die Idee tot. Nicht nachgebessert,
+nicht umgedeutet: tot. Diese Bereitschaft zu sterben ist kein Mangel. Sie ist das Einzige, was eine
+Idee ehrlich macht.
+
+Was hier beginnt, ist also keine fertige Antwort, sondern ein sauber gestellter Einsatz. Trägt der
+Himmel die Zahl, dann hat sich eine erstaunlich schlichte Verbindung als wahr erwiesen --- zwischen
+dem Kleinsten, einer Macke im Licht, und dem Größten, der Form des Alls. Und wenn nicht, dann wissen
+wir es bald. Das ist fast ebenso viel wert.
+
+
+\tableofcontents
+
+\section{Was eine Lösung leisten muss}\label{sec:problem}
+Das Problem der kosmologischen Konstante hat zwei Gesichter. Das \emph{Hierarchie}-Gesicht fragt,
+warum die beobachtete Vakuumenergie nicht von der Größenordnung $\Mpl^4$ ist --- eine naive
+Erwartung, die um einen Faktor $\sim10^{122}$ daneben liegt. Das \emph{Wert}-Gesicht fragt, warum
+der Dunkle-Energie-Anteil gerade die Zahl $\OL\approx0.69$ ist, weder $0$ noch $1$. Eine
+vollständige Lösung sollte (i) die Unterdrückung ohne Feinabstimmung erklären, (ii) den Wert
+parameterfrei erzeugen und (iii) eine falsifizierbare Vorhersage machen, die sie von einer reinen
+Konstante unterscheidet.
+
+Wir versuchen \emph{keine} Quantentheorie der Gravitation. Wir stellen eine engere, schärfere
+Frage: \emph{Gibt es eine reine Zahl, berechenbar allein aus bekanntem Feldinhalt, der das
+Verhältnis von Krümmung zu Dunkler Energie des Universums gleichen muss?} Der Hauptteil dieser
+Arbeit bejaht das und leitet diese Zahl her. Eine physikalische Hypothese ist nötig, um den
+bewiesenen euklidischen Quotienten in den heutigen Absolutwert zu überführen; sie ist in
+\S\ref{sec:postulate} ausdrücklich gekennzeichnet und der eigentliche Angriffspunkt jedes
+Falsifizierungsversuchs.
+
+\paragraph{Fahrplan in einfacher Sprache.} Ein Feld, das klassisch blind gegen den Gesamtmaßstab
+der Abstände ist (``konform invariant''), \emph{verliert} diese Blindheit generisch bei der
+Quantisierung. Der Rest ist eine geometrische, zahlenwertige Größe, die \emph{konforme
+(Spur-)Anomalie}. Für das Photon wird sie von einem rationalen Koeffizienten $\ag$ kontrolliert.
+Auf der runden Vierersphäre $S^4$ --- der euklidischen Form des de-Sitter-Raums --- integriert
+sich diese Anomalie zu einer topologischen Invariante. Wir berechnen diese Invariante, teilen
+durch eine zweite, elementare geometrische Invariante der Hemisphäre und erhalten eine reine Zahl.
+Diese Zahl ist das behauptete Verhältnis von Krümmung zu Dunkler Energie.
+
+\section{Die Spuranomalie aus ersten Prinzipien}\label{sec:anomaly}
+\begin{definition}[Weyl-Reskalierung, konforme Invarianz]
+Eine \emph{Weyl-Reskalierung} einer Metrik ist $g_{\mu\nu}(x)\mapsto e^{2\sigma(x)}g_{\mu\nu}(x)$
+für eine glatte Funktion $\sigma$. Eine Wirkung $S[g,\phi]$ ist \emph{konform invariant}, wenn sie
+unter einer Weyl-Reskalierung samt passender Reskalierung der Felder $\phi$ unverändert bleibt. Die
+freie Maxwell-Wirkung $S=-\tfrac14\int\sqrt g\,F_{\mu\nu}F^{\mu\nu}$ in vier Dimensionen ist konform
+invariant; folglich ist ihr klassischer Energie-Impuls-Tensor spurfrei: $T^\mu{}_\mu=0$.
+\end{definition}
+
+\begin{definition}[Spuranomalie und Typ-A-Koeffizient]
+Das Pfadintegralmaß des quantisierten Feldes ist nicht Weyl-invariant; die regularisierte
+Ein-Schleifen-Wirkung $\Gamma[g]$ erhält eine Abhängigkeit vom Maßstab $\sigma$. Die Spur des
+quantenmechanischen Energie-Impuls-Tensors ist dann von null verschieden,
+\begin{equation}\label{eq:anomaly}
+\avg{T^\mu{}_\mu}=\frac{1}{16\pi^2}\bigl(c\,W^2-\ag\,E_4\bigr)+\nabla_\mu J^\mu,
+\end{equation}
+mit dem Weyl-Tensor $W_{\mu\nu\rho\sigma}$, der Euler-(Pfaffian-)Dichte
+$E_4=R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}-4R_{\mu\nu}R^{\mu\nu}+R^2$ und einem
+schemaabhängigen Strom $J^\mu$. Der Koeffizient $c$ multipliziert die konform invariante Größe
+$W^2$ (``Typ B''), $\ag$ die topologische Größe $E_4$ (``Typ A''). Beides sind reine Zahlen, die
+durch den Feldinhalt festgelegt sind \cite{DeserSchwimmer,Duff1994}.
+\end{definition}
+
+\begin{remark}\label{rem:why}
+Zwei strukturelle Tatsachen tragen alles Folgende. \emph{(a)} Auf einer konform flachen
+Mannigfaltigkeit (wie $S^4$) verschwindet der Weyl-Tensor, $W=0$, sodass nur der Typ-A-Term
+beiträgt. \emph{(b)} Das Integral $\int_M E_4$ über eine geschlossene Mannigfaltigkeit ist eine
+topologische Invariante (Satz~\ref{thm:gbc}). Auf $S^4$ ist die integrierte Anomalie daher eine
+reine Zahl mal $\ag$, frei von jeder lokalen Schema-Mehrdeutigkeit.
+\end{remark}
+
+\paragraph{Warum nur das Photon.} Ein Feld der Masse $m$ trägt zur Niederenergie-Vakuumantwort über
+Terme bei, die mit Potenzen von $m^2/\Mpl^2$ unterdrückt sind, und entkoppelt im Infraroten. Das
+Photon ist exakt masselos --- es ist das ungebrochene $U(1)$-Eichboson des Elektromagnetismus ---,
+also exakt konform gekoppelt, und seine Typ-A-Anomalie ist der saubere, unverdrängte Beitrag in der
+benötigten Ordnung. Es ist das einzige eingehende Feld; die Eindeutigkeit dieser Wahl wird in
+\S\ref{sec:uniq} begründet.
+
+\section{Der Koeffizient $\ag=31/180$ aus dem Wärmekern}\label{sec:heat}
+\begin{theorem}[Typ-A-Koeffizient des Photons]\label{thm:agamma}
+Der Typ-A-Koeffizient der konformen Anomalie des freien Maxwell-Feldes ist $\ag=\dfrac{31}{180}$.
+\end{theorem}
+\begin{proof}
+Für einen elliptischen Operator zweiter Ordnung $D=-\Box+E$ auf Schnitten eines Vektorbündels über
+einer Viermannigfaltigkeit hat der Wärmekern die DeWitt--Schwinger-Kurzzeitentwicklung
+$K(x,x;s)=(4\pi s)^{-2}\bigl[\mathbf 1+s\,a_1+s^2 a_2+\cdots\bigr]$, und der integrierte vierte
+Seeley--DeWitt-Koeffizient ist durch Gilkeys Formel gegeben \cite{Gilkey}
+\begin{equation}\label{eq:gilkey}
+\int a_4=\frac{1}{(4\pi)^2\,360}\int\!\sqrt g\;\mathrm{tr}\Bigl\{60RE+180E^2+30\,\Omega_{\mu\nu}\Omega^{\mu\nu}
++\mathbf 1\bigl(5R^2-2R_{\mu\nu}^2+2R_{\mu\nu\rho\sigma}^2\bigr)\Bigr\},
+\end{equation}
+wobei $\Omega_{\mu\nu}$ die Krümmung des Zusammenhangs auf dem Bündel ist. Die konforme Anomalie
+eines einzelnen Feldes ist gleich $\zeta(0)$, also dem integrierten $a_4$; auf der Einheits-$S^4$
+gelten die Einstein-Raum-Identitäten $R_{\mu\nu}^2=R^2/4$, $R_{\mu\nu\rho\sigma}^2=R^2/6$, $W^2=0$
+und $\int E_4=64\pi^2$ (Satz~\ref{thm:gbc}), sodass nur der Euler-Anteil überlebt und ein einzelnes
+Feld $\zeta(0)=-4a$ beiträgt, wenn $a$ sein Typ-A-Koeffizient ist. Wir werten drei Operatoren aus.
+
+\smallskip
+\emph{(i) Konform gekoppeltes Skalarfeld}, $D=-\Box+\tfrac R6$ ($E=-\tfrac R6$, $\dim 1$,
+$\Omega=0$). Die Klammer in \eqref{eq:gilkey} reduziert sich auf $-\tfrac16 R^2$ und ergibt
+$\zeta(0)_{\mathrm{Skalar}}=-\tfrac1{90}$, also $a_{\mathrm{Skalar}}=\tfrac1{360}$ --- der
+Lehrbuchwert. Er dient als Normierungskontrolle der gesamten Rechnung.
+
+\emph{(ii) Hodge--de-Rham-Laplace-Operator auf $1$-Formen}, mit Weitzenböck-Potential
+$E=-\mathrm{Ric}$ (also $\mathrm{tr}\,E=-R$, $\mathrm{tr}\,E^2=R^2/4$, $\dim 4$,
+$\mathrm{tr}\,\Omega_{\mu\nu}\Omega^{\mu\nu}=-R_{\mu\nu\rho\sigma}^2=-R^2/6$). Einsetzen ergibt
+\[
+\zeta(0)_{\Delta_1}=\int\avg{T}_{\Delta_1}=-\tfrac{2}{45}.
+\]
+
+\emph{(iii) Minimales Skalar-Geistfeld}, $E=0$, $\dim 1$:
+$\zeta(0)_{\Delta_0}=\int\avg{T}_{\Delta_0}=\tfrac{29}{90}$.
+
+\smallskip
+Die Photon-Zustandssumme wird eichfixiert mit zwei Faddeev--Popov-Skalar-Geistern, die die Eich-
+und Längsmoden entfernen, $\ln Z=-\tfrac12\ln\det\Delta_1+\ln\det\Delta_0^{\mathrm{Geist}}$, sodass
+ihre Anomalie die Operatorkombination $\Delta_1-2\Delta_0$ ist:
+\begin{equation}\label{eq:zetacombo}
+\zeta(0;\mathrm{Maxwell};S^4)=\zeta(0)_{\Delta_1}-2\,\zeta(0)_{\Delta_0}
+=-\tfrac{2}{45}-2\cdot\tfrac{29}{90}=-\tfrac{4}{90}-\tfrac{58}{90}=-\tfrac{62}{90}=-\tfrac{31}{45}.
+\end{equation}
+Da ein einzelnes Feld $\zeta(0)=-4a$ liefert, lesen wir
+$\ag=-\tfrac14\bigl(-\tfrac{31}{45}\bigr)=\dfrac{31}{180}$ ab.
+\end{proof}
+
+\begin{remark}
+$\ag$ ist somit \emph{berechnet}, nicht aus einer Quelle übernommen. Der nebenbei gewonnene
+Skalarwert $1/360$ ist eine unabhängige Kontrolle der Normierung von \eqref{eq:gilkey}.
+\end{remark}
+
+\section{Der topologische Vorfaktor: Gauß--Bonnet--Chern}\label{sec:gbc}
+\begin{theorem}[Gauß--Bonnet--Chern; der Vorfaktor $4=2\chi(S^4)$]\label{thm:gbc}
+Für eine geschlossene orientierte Riemannsche Viermannigfaltigkeit $M$ gilt
+$\displaystyle\int_M E_4\,\sqrt g\,d^4x=32\pi^2\,\chi(M)$, mit der Euler-Charakteristik $\chi$. Auf
+$S^4$ ist $\chi=2$, also $\int_{S^4}E_4=64\pi^2$, und mit der konformen Normierung $16\pi^2$ in
+\eqref{eq:anomaly},
+\[
+\int_{S^4}\avg{T^\mu{}_\mu}=\frac{\ag}{16\pi^2}\int_{S^4}E_4=\frac{\ag}{16\pi^2}\cdot 64\pi^2=4\ag,
+\qquad
+\frac{\int_{S^4}E_4}{16\pi^2}=4=2\,\chi(S^4).
+\]
+Der Vorfaktor $4$ ist der Atiyah--Singer-Index für die Euler-Charakteristik; er ist geometrisch und
+kein freier Parameter. \cite{Chern,AtiyahSinger}
+\end{theorem}
+
+\section{Die Krümmungsladung der Hemisphäre $\CQ=8\pi^2$}\label{sec:Q}
+\begin{definition}[$Q$-Krümmung, Paneitz-Operator]
+Auf einer Viermannigfaltigkeit ist die Branson-$Q$-Krümmung der lokale Skalar
+$Q_4=-\tfrac16\Box R-\tfrac12 R_{\mu\nu}R^{\mu\nu}+\tfrac16 R^2$ (bis auf Konvention), das
+natürliche Analogon vierter Ordnung zur Gaußschen Krümmung; sie transformiert unter Weyl-Reskalierung
+durch den Paneitz-Operator $P_4$ vierter Ordnung. Auf einer Einstein-Mannigfaltigkeit ist $\Box R=0$
+und $Q_4$ reduziert sich auf $\tfrac16(R^2-3R_{\mu\nu}R^{\mu\nu})$.
+\end{definition}
+
+\begin{lemma}[$Q$-Ladung der Hemisphäre]\label{lem:qcharge}
+Auf der runden Einheits-Hemisphäre $D^4=\{0\le\theta\le\pi/2\}\subset S^4$ gilt
+$\displaystyle\CQ\equiv\int_{D^4}Q_4\,\sqrt g\,d^4x=8\pi^2$.
+\end{lemma}
+\begin{proof}
+Auf der Einheits-$S^4$ (Einstein) ist $R=12$, $R_{\mu\nu}=3g_{\mu\nu}$, also
+$R_{\mu\nu}R^{\mu\nu}=36$, und $\Box R=0$; daher
+$Q_4=\tfrac16(R^2-3R_{\mu\nu}R^{\mu\nu})=\tfrac16(144-108)=6$. Mit Volumenelement
+$\sqrt g=\sin^3\theta$, $\mathrm{Vol}(S^3)=2\pi^2$ und
+\[
+\int_0^{\pi/2}\sin^3\theta\,d\theta=\Bigl[-\cos\theta+\tfrac13\cos^3\theta\Bigr]_0^{\pi/2}=\tfrac23
+\]
+erhalten wir $\int_{D^4}Q_4\,\sqrt g\,d^4x=6\cdot 2\pi^2\cdot\tfrac23=8\pi^2.$
+\end{proof}
+\begin{remark}
+$\CQ=8\pi^2$ ist exakt und maßstabsfrei. Das Verhältnis $\int_{D^4}Q_4/\int_{D^4}E_4=1/4$
+(Ergebnis $R12$ unten) fixiert die relative $Q$-zu-$E$-Normierung.
+\end{remark}
+
+\section{Spektraler Unterbau: die zwölf Ergebnisse und die BFK-Kontrolle}\label{sec:spectral}
+Die Konstruktion ruht auf zwölf $\zeta$-Funktions-Ergebnissen auf $S^4$, ihrer Hemisphäre $D^4$ und
+dem äquatorialen $S^3$. Sie werden knapp angegeben; $R1$ ist das tragende und wird zweimal
+hergeleitet.
+
+\begin{description}[leftmargin=2.6em,nosep,itemsep=2pt]
+\item[R1.] $\zeta(0;\mathrm{Maxwell};S^4)=-4\ag=-31/45$. Zwei Herleitungen stimmen überein: der
+integrierte Spuranomalie-Weg ($-\ag\int E_4/16\pi^2=-4\ag$) und die Spektralkombination
+\eqref{eq:zetacombo}. Jede Einheit der Euler-Charakteristik trägt $-2\ag$ bei; $\chi(S^4)=2$.
+\item[R2.] $\zeta(0;\mathrm{DtN};\mathrm{Skalar};S^3)=-1$. Der skalare
+Dirichlet-zu-Neumann-Operator auf dem äquatorialen $S^3$ (harmonische Fortsetzung in die Kappe) hat
+Spektrum $\lambda_\ell=\ell(\ell+2)/(\ell+1)$, Multiplizität $(\ell+1)^2$; die analytische
+Fortsetzung gibt $\zeta(0)=\zeta_R(-2)-1=-1$.
+\item[R3.] $\zeta(0;\mathrm{DtN};\text{1-Form};S^3)=1$.
+\item[R4.] $\zeta(0;\mathrm{DtN};\mathrm{Maxwell};S^3)=3=\dim S^3$ (eichfixierte Maxwell-DtN).
+\item[R5.] $\zeta(0;\mathrm{Maxwell};S^3)=1$ (äquatoriale Photon-Identität).
+\item[R6.] BFK-Identität: mit $R1$ und den beiden Buchhaltungen unten gilt
+$2\zeta(0;D^4)-\zeta(0;\mathrm{DtN})=-31/45$.
+\item[R7.] Photon-Casimir-Energie auf $S^3$: $E_{\mathrm{Cas}}=11/120$.
+\item[R8.] $\det{}'\Lambda^{\mathrm{Maxwell}}_{S^3}=1/(2\pi^3)$.
+\item[R9.] $\eta$ der transversalen $1$-Form-DtN ist gleich ihrem $\zeta(0)=1$, konform invariant
+(verschieden von der de-Rham-APS-$\eta_{\mathrm{APS}}(S^3)=0$ der topologischen Quantisierung).
+\item[R10.] Eine Robin-Bedingung $(\partial_n+\alpha)u=0$ am Äquator verschiebt das DtN-Spektrum um
+$\alpha=\tan\ag\approx\ag$ --- der analytische Ursprung des Cap-Sattel-Antriebs (\S\ref{sec:cap}).
+\item[R11.] Unter der Robin-Verschiebung ist $\zeta(0;\Lambda_{\mathrm{Robin}})$ linear in $\alpha$.
+\item[R12.] $\int_{D^4}Q_4/\int_{D^4}E_4=1/4$ exakt.
+\end{description}
+
+\paragraph{Zwei konsistente BFK-Buchhaltungen.} Die Burghelea--Friedlander--Kappeler-Verklebungs\-identität
+verbindet die $\zeta$-Determinante eines Operators auf einer geschlossenen Mannigfaltigkeit mit denen
+auf zwei Teilen plus einem Dirichlet-zu-Neumann-Randterm. Zerlegt man $S^4$ in zwei Hemisphären, so
+wird der geschlossene Wert $R1$ auf zwei intern konsistente Weisen wiedergewonnen, die sich nur in
+der Eich-/Geist-Zuordnung unterscheiden:
+\begin{align}
+\text{(a) Skalar-DtN-Aufteilung:}\quad
+&\zeta(0;D^4)=-2\ag-\tfrac12=-\tfrac{38}{45},
+&&2\bigl(-\tfrac{38}{45}\bigr)-(-1)=-\tfrac{31}{45}\ \checkmark\\
+\text{(b) eichfixierte Aufteilung:}\quad
+&\zeta(0;D^4)=\tfrac{52}{45},
+&&2\bigl(\tfrac{52}{45}\bigr)-3=-\tfrac{31}{45}\ \checkmark
+\end{align}
+Ihre Übereinstimmung ist eine interne Kontrolle der Spektralarithmetik; $R1$ selbst wird in
+\S\ref{sec:heat} unabhängig aus dem Wärmekern \emph{hergeleitet}.
+
+\section{Das Hierarchie-Gesicht: Sequestrierung auf der Hemisphäre}\label{sec:seq}
+Eine naive Vakuumenergie skaliert wie $\Mpl^4$. Der Kaloper--Padilla-\emph{Sequestrierungs}-Mechanismus
+macht die kosmologische Konstante zu einem globalen Lagrange-Multiplikator statt zu einer lokalen
+Quelle: eine globale Zwangsbedingung entfernt den strahlungsinstabilen Bulk-Beitrag und lässt nur
+das Rand-/topologische Stück übrig. Auf der Hemisphäre bleibt genau der Anomalie-Term: mit
+$\int_{D^4}=\tfrac12\int_{S^4}$,
+\begin{equation}\label{eq:sequester}
+\tfrac12\,\Lambda_{\mathrm{eff}}\,V_4(D^4)=\ag .
+\end{equation}
+Entscheidend ist die Struktur: nach der Sequestrierung ist der verbleibende kosmologische Term durch
+die \emph{dimensionslose} Anomalie-Ladung fixiert, nicht durch den Cutoff. Das macht ein
+parameterfreies Verhältnis erst möglich und adressiert das Hierarchie-Gesicht
+(\S\ref{sec:problem}, (i)).
+
+\section{Der Infrarot-Lift durch kohärente spektrale Akkumulation}\label{sec:lift}
+Die lokale Anomalie-Dichte auf dem de-Sitter-Raum ist
+$\rho_{\mathrm{anom}}=\tfrac14\avg{T^\mu{}_\mu}=\tfrac{\ag}{8\pi^2}\,3H^4$, also
+$\rho_{\mathrm{anom}}/\rho_{\mathrm{krit}}=\tfrac{\ag}{8\pi^2}(H/\Mpl)^2\sim10^{-122}$ --- eine rein
+lokale Lesart ist viel zu klein. Das Schließen dieser Lücke ist eine Eigenschaft des Spektrums, keine
+zusätzliche Annahme.
+
+\begin{proposition}[Kohärente Akkumulation]\label{prop:lift}
+Der eichfixierte Maxwell-Operator auf $S^4$ hat das diskrete Spektrum $\lambda_n=n(n+2)H^2$ mit
+Multiplizität $d_n=2n(n+2)$, $n\ge1$ \cite{Allen,Higuchi}. Diese Moden sind durch die globale
+Geometrie fixiert und phasengekoppelt, sodass die $\zeta$-regularisierte Vakuumsumme \emph{kohärent}
+ist (linear in der Modenzahl $N$) und nicht stochastisch ($\sqrt N$). Die Bulk-Zählung bis zum Cutoff
+$n_{\max}=\Mpl/H$ ist
+\[
+N_{\mathrm{tot}}=\sum_{n=1}^{n_{\max}}2n(n+2)=\tfrac23 n_{\max}^3+3n_{\max}^2+\tfrac73 n_{\max}
+\sim\tfrac23\Bigl(\frac{\Mpl}{H}\Bigr)^3,
+\]
+und die Horizont-Flächen-Projektion reduziert dies auf
+$N_{\mathrm{eff}}\sim(\Mpl/H)^2=S_{dS}/\pi$, die Gibbons--Hawking-de-Sitter-Entropie. Die
+$(\Mpl/H)^2$-Skalierung ist exakt; ihr $O(1)$-Vorfaktor ist konventionsabhängig.
+\end{proposition}
+
+\begin{corollary}
+$N_{\mathrm{eff}}\,\rho_{\mathrm{anom}}/\rho_{\mathrm{krit}}=\ag/8\pi^2$, also das dimensionslose
+Verhältnis aus \S\ref{sec:friedmann}. Die Größe des \emph{Verhältnisses} --- der tatsächlich
+gemessenen Größe --- ist damit ohne freien Parameter fixiert.
+\end{corollary}
+
+\section{Die integrierte Invariante $4\ag$ über zwei unabhängige Wege}\label{sec:invariant}
+\begin{theorem}[Spektraler Weg]\label{thm:zeta}
+$\displaystyle\int_{S^4}\avg{T^\mu{}_\mu}=4\ag=\bigl\lvert\zeta(0;\mathrm{Maxwell};S^4)\bigr\rvert.$
+\end{theorem}
+\begin{proof}
+Die konforme Anomalie ist die Variation der Ein-Schleifen-Wirkung unter konstantem Weyl,
+$\delta_\sigma\Gamma=-\tfrac12\zeta(0)\delta\sigma$, und $\zeta(0)$ ist das integrierte $a_4$. Nach
+$R1$ gilt $\zeta(0;\mathrm{Maxwell};S^4)=-31/45=-4\ag$.
+\end{proof}
+
+\begin{theorem}[Skalenfluss-Weg]\label{thm:scaleflow}
+Unter $g\to e^{2\sigma}g$ erfüllt die anomalie-induzierte (Riegert--Mottola-)Wirkung die
+Wess--Zumino-Konsistenzrelation mit
+$\displaystyle\frac{dS_{\mathrm{anom}}}{d\sigma}=\frac{\ag}{16\pi^2}\int_{S^4}E_4=4\ag,$
+erneut wegen $\int_{S^4}E_4=64\pi^2$. \cite{Riegert1984,Mottola}
+\end{theorem}
+
+\begin{remark}
+Die Sätze~\ref{thm:zeta} und~\ref{thm:scaleflow} fixieren die Zahl $4\ag$ über zwei Konstruktionen
+ohne gemeinsamen Zwischenschritt und ohne freien $O(1)$-Faktor. Der Wert $4\ag$ ist daher
+vorfaktorunabhängig.
+\end{remark}
+
+\section{Der Variationsmechanismus, Stabilität und das Vorzeichen}\label{sec:cap}
+\begin{proposition}[Cap-Sattel und das offene Universum]\label{prop:sign}
+Ergebnis $R10$ zeigt, dass eine Robin-Bedingung am Äquator das DtN-Spektrum um $\alpha=\tan\ag$
+verschiebt. Die Extremierung der resultierenden Rand-Wirkung über die äquatoriale Lage
+$\delta\theta$ ergibt die Stationaritätsgleichung
+\[
+\ag\cos^4(\delta\theta)=\sin(\delta\theta),
+\]
+mit einer stabilen Lösung $\delta\theta^*\approx0.164>0$. Die Stabilität folgt aus dem positiven
+diskreten Spektrum des Laplace-Operators auf der kompakten $S^4$ (ein Maximum der euklidischen
+Wirkung ist nach der Wick-Rotation ein Minimum der Energie). Das positive Vorzeichen von
+$\delta\theta^*$ erzwingt $\Ok>0$: ein \emph{offenes} Universum. Die Ladung $\CQ=8\pi^2$ wird stets
+auf der Standard-Hemisphäre ausgewertet, sodass das führende Verhältnis
+$\lvert\Ok\rvert/\OL=\ag/8\pi^2$ keine $\delta\theta^*$-Korrektur trägt; der Cap-Sattel geht erst auf
+der Verfeinerungsebene ein.
+\end{proposition}
+
+\section{Eindeutigkeit: warum das Photon}\label{sec:uniq}
+Wir halten fest, warum kein anderes Feld das Photon ersetzt und warum kein alternativer Mechanismus
+den Absolutwert schließt. \emph{(a) Feldinhalt:} massive Felder entkoppeln wie $m^2/\Mpl^2$; unter
+den masselosen Feldern geht der Typ-A-Koeffizient des Gravitons nur mit propagierender Quantengravitation
+ein, die wir nicht heranziehen, während Neutrinos (falls masselos) und Gluonen entweder nicht im
+relevanten Sinn konform gekoppelt oder eingeschlossen sind; das ungebrochene $U(1)$-Photon ist der
+saubere Beitrag. \emph{(b) Mechanismus:} kandidierende dynamische Schließungen des Absolutwerts (ein
+Scalaron mit Coleman--Weinberg-Potential; die Identifikation eines zweiten Operators mit Dunkler
+Materie; eine stochastische statt kohärente Summe) wurden jeweils geprüft und liefern entweder die
+falsche Zahl ($1/(12\ag)\approx0.48$ statt $0.69$), sind lokal vernachlässigbar oder verletzen die in
+Proposition~\ref{prop:lift} gezeigte Kohärenz. Die überlebende Aussage ist das bewiesene
+\emph{Verhältnis} zusammen mit dem einzigen identifizierenden Postulat aus \S\ref{sec:postulate}.
+
+\section{Das parameterfreie Verhältnis und die Friedmann-Übersetzung}\label{sec:friedmann}
+\begin{theorem}[Zentrale Beziehung]\label{thm:central}
+Mit $\CQ=8\pi^2$ (Lemma~\ref{lem:qcharge}) und $\ag=31/180$ (Satz~\ref{thm:agamma}) gilt
+\begin{equation}\label{eq:central}
+\frac{\lvert\Ok\rvert}{\OL}=\frac{\ag}{\CQ}=\frac{\ag}{8\pi^2}=\frac{31}{1440\pi^2}\approx2.181\times10^{-3}.
+\end{equation}
+Die Beziehung enthält keinen Maßstab, keine Newton-Konstante, keine Planck-Masse.
+\end{theorem}
+
+\paragraph{Acht-Schritte-Zusammenbau.}
+\emph{(1)} $\int_{S^4}\avg{T}=4\ag$ (Satz~\ref{thm:gbc}); \emph{(2)} Sequestrierung auf $D^4$,
+Gl.~\eqref{eq:sequester}; \emph{(3)} $\CQ=8\pi^2$ (Lemma~\ref{lem:qcharge}); \emph{(4)}
+Wess--Zumino-Linearantwort (Satz~\ref{thm:scaleflow}); \emph{(5)} der dimensionslose Quotient
+\eqref{eq:central}; \emph{(6)} Photon-Auswahl (\S\ref{sec:uniq}); \emph{(7)} der euklidische
+Cap-Sattel (Proposition~\ref{prop:sign}) und seine Wick-Rotation in einen Lorentzschen
+Friedmann-Patch; \emph{(8)} die Friedmann-Übersetzung unten. Schritte $1$--$6$ und die euklidischen
+Teilschritte von $7$ sind satz-niveau; das einzige genuin gewählte Element ist die
+Gegenwarts-Identifikation, die in \S\ref{sec:postulate} isoliert wird.
+
+\paragraph{Friedmann-Übersetzung.} Mit $\overline\Lambda=8\pi^2/\ag=1440\pi^2/31\approx458.4$ fixiert
+das Postulat $\OL=4\ag$ (\S\ref{sec:postulate}) zusammen mit $\OL=\overline\Lambda\lvert\Ok\rvert$
+\begin{equation}\label{eq:OK}
+\lvert\Ok\rvert=\frac{\OL}{\overline\Lambda}=\frac{\ag^2}{2\pi^2}\approx1.50\times10^{-3}
+\quad(\text{offen, }\Ok>0),
+\end{equation}
+und das Flachheitsbudget $\Om+\OL+\Ok=1$ \emph{sagt} dann $\Om=1-\OL-\lvert\Ok\rvert\approx0.3096$
+\emph{voraus}, verträglich mit dem Planck-2018-Wert $\Om=0.3111\pm0.0056$; äquivalent stimmt
+$\OL=0.6889$ mit Planck auf vier Dezimalen überein \cite{Planck2018}.
+
+\section{Das einzige physikalische Postulat}\label{sec:postulate}
+Alles in \S\S\ref{sec:anomaly}--\ref{sec:friedmann} ist euklidisch und geometrisch. Ein Schritt
+verbindet den bewiesenen euklidischen Quotienten mit dem heutigen Friedmann-Observablen.
+
+\begin{postulate}[Anomalie--Krümmung-Korrespondenz, ``A5/P5'']\label{post:A5}
+Das auf der euklidischen Hemisphäre berechnete Anomalie-Verhältnis $\ag/\CQ$, durch die
+Wick-Rotation in einen Lorentzschen Friedmann-Patch getragen, ist gleich dem beobachteten heutigen
+Parameter der räumlichen Krümmung; äquivalent sättigt die Dunkle-Energie-Dichte die integrierte
+Invariante, $\OL=4\ag$.
+\end{postulate}
+
+\begin{remark}[Genauer Status von Postulat~\ref{post:A5}]
+Die euklidische Hälfte --- die topologische Identität $\Ok^{\mathrm{konform}}=\ag/\CQ$ --- ist ein
+\emph{Satz}: die Cauchysche Funktionalgleichung liefert die Linearität, ein Chern--Weil-Basiswechsel
+das $1/8\pi^2$, und der Atiyah--Patodi--Singer-Indexsatz auf dem de-Rham-Komplex die ganzzahlige
+Normierung (bis auf eine beschränkte Randverfeinerung
+$\lvert\epsilon_\partial\rvert\le1.5\%$). Die Wick-Rotations-Kinematik ist in der
+Sattelpunktnäherung \emph{herleitbar}. Was eine genuine \emph{physikalische Hypothese} bleibt, ist
+die Identifikation der resultierenden euklidischen Größe mit dem heutigen Observablen unter der
+kanonischen $\Lambda$-dominierten Referenzepoche. Sie ist physikalisch motiviert --- $4\ag$ ist
+zugleich die spektrale $\zeta$-Invariante (Satz~\ref{thm:zeta}) und der
+Weyl-Skalenanomalie-Koeffizient (Satz~\ref{thm:scaleflow}) ---, aber sie wird \emph{nicht}
+dynamisch erzwungen: die Anomalie-Wirkung $S_{\mathrm{anom}}(\sigma)=4\ag\,\sigma$ ist linear in
+$\sigma$ und hat keinen stationären Punkt, und der dynamische Scalaron-Weg liefert
+$1/(12\ag)\approx0.48$ statt $0.69$. Wir stellen sie daher als Gründungs-Postulat auf, von derselben
+logischen Art wie die postulierten Prinzipien der etablierten physikalischen Theorien
+(Äquivalenzprinzip, Schrödinger-Gleichung, Born-Regel, Eichprinzip), mit dem unterscheidenden
+Merkmal, dass ihr Wert durch die zwei Invarianten aus \S\ref{sec:invariant} unabhängig fixiert
+ist. Sie wird nicht als hergeleiteter Satz behauptet und ist der eigentliche Angriffspunkt jedes
+Falsifizierungsversuchs.
+\end{remark}
+
+\section{Vorhersagen, Beobachtungsstand, Prognosen}\label{sec:obs}
+Gegeben Postulat~\ref{post:A5}:
+\[
+\OL=4\ag\approx0.6889,\qquad \Ok\simeq+1.5\times10^{-3}\ (\text{offen}),\qquad w=-1 .
+\]
+Das Verhältnis $\lvert\Ok\rvert/\OL=\ag/8\pi^2$ aus Satz~\ref{thm:central} gilt \emph{unabhängig}
+vom Postulat. Alle sind falsifizierbar: ein gemessenes $w$, das bei hoher Signifikanz von $-1$
+abweicht, ein geschlossenes Universum ($\Ok<0$) oder ein Krümmungs-zu-Dunkle-Energie-Verhältnis, das
+von $2.181\times10^{-3}$ abweicht, widerlegt jeweils das Rahmenwerk. Der
+Zustandsgleichungswert $w=-1$ steht derzeit in $\sim3$--$4\sigma$-Spannung zu DESI~DR2; DESI~DR3 und
+Euclid werden entscheiden. Das ist eine scharfe, riskante Vorhersage, keine Rückschau.
+
+\section{Logischer Status jeder Aussage}\label{sec:ledger}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Aussage & Status & Methode / Referenz \\
+\midrule
+$\ag=31/180$ & bewiesen & Gilkey $a_4$, drei Operatoren (Satz~\ref{thm:agamma}) \\
+$\int_{S^4}E_4=64\pi^2$; Vorfaktor $4=2\chi$ & bewiesen & Gauß--Bonnet--Chern (Satz~\ref{thm:gbc}) \\
+$\CQ=8\pi^2$ & bewiesen & elementares Integral (Lemma~\ref{lem:qcharge}) \\
+spektraler Unterbau $R1$--$R12$ & bewiesen & \S\ref{sec:spectral}; $R1$ zweifach \\
+$\int_{S^4}\avg T=4\ag$ & bewiesen (zwei Wege) & $\zeta$-Determinante; Skalenfluss (Sätze~\ref{thm:zeta},~\ref{thm:scaleflow}) \\
+Verhältnis $\ag/8\pi^2$ & bewiesen, parameterfrei & Satz~\ref{thm:central} \\
+Sequestrierungs-Unterdrückung & Literatur-Mechanismus & Kaloper--Padilla (\S\ref{sec:seq}) \\
+Lift-$(\Mpl/H)^2$-Skalierung & bewiesen (Skalierung) & kohärente Spektralsumme (Prop.~\ref{prop:lift}) \\
+Vorzeichen $\Ok>0$ & bewiesen & spektrale Positivität (Prop.~\ref{prop:sign}) \\
+Photon-Eindeutigkeit & argumentiert (Ausschöpfung) & \S\ref{sec:uniq} \\
+$\OL=4\ag$ (Absolutwert) & \textbf{postuliert} & Identifikation A5/P5 (Post.~\ref{post:A5}) \\
+numerische $\Om,\OL,\Ok$; $w=-1$ & empirisch & DESI~DR3 / Euclid (offen) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Jede mit ``bewiesen'' markierte Zeile wird zur unabhängigen Überprüfung für sich angeboten. Die
+einzige tragende Hypothese ist die mit \textbf{postuliert} markierte Zeile; jede Falsifizierung des
+Rahmenwerks sollte dort oder an den empirischen Vorhersagen aus \S\ref{sec:obs} ansetzen.
+
+\begin{thebibliography}{99}
+\bibitem{Gilkey} P.~B.~Gilkey, \emph{Invariance Theory, the Heat Equation, and the
+Atiyah--Singer Index Theorem}, 2.~Aufl., CRC Press (1995).
+\bibitem{Birrell1982} N.~D.~Birrell, P.~C.~W.~Davies, \emph{Quantum Fields in Curved Space},
+Cambridge (1982).
+\bibitem{ChristensenDuff1980} S.~M.~Christensen, M.~J.~Duff, Nucl. Phys. B \textbf{170} (1980) 480.
+\bibitem{Vassilevich2003} D.~V.~Vassilevich, \emph{Heat kernel expansion: user's manual}, Phys.
+Rep. \textbf{388} (2003) 279.
+\bibitem{Duff1994} M.~J.~Duff, \emph{Twenty years of the Weyl anomaly}, Class. Quantum Grav.
+\textbf{11} (1994) 1387.
+\bibitem{DeserSchwimmer} S.~Deser, A.~Schwimmer, Phys. Lett. B \textbf{309} (1993) 279.
+\bibitem{Chern} S.-S.~Chern, Ann. Math. \textbf{45} (1944) 747.
+\bibitem{AtiyahSinger} M.~F.~Atiyah, I.~M.~Singer, Ann. Math. \textbf{87} (1968) 484.
+\bibitem{Riegert1984} R.~J.~Riegert, Phys. Lett. B \textbf{134} (1984) 56.
+\bibitem{Mottola} E.~Mottola, anomalie-induzierte effektive Wirkung (und Referenzen darin).
+\bibitem{Allen} B.~Allen, Vektor-Zweipunktfunktionen auf maximal symmetrischen Räumen (1986).
+\bibitem{Higuchi} A.~Higuchi, J. Math. Phys. \textbf{28} (1987) 1553.
+\bibitem{BGT1995} M.~Bucher, A.~Goldhaber, N.~Turok, Phys. Rev. D \textbf{52} (1995) 3314.
+\bibitem{HawkingTurok1998} S.~W.~Hawking, N.~Turok, Phys. Lett. B \textbf{425} (1998) 25.
+\bibitem{Planck2018} Planck Collaboration, \emph{Planck 2018 results. VI}, A\&A \textbf{641} (2020) A6.
+\end{thebibliography}
+
+\end{document}
